@@ -5,6 +5,7 @@ import avatar from './Ellipse 45.png'
 import s from './profile.module.css'
 import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 export const Profile = () => {
 
@@ -17,14 +18,14 @@ export const Profile = () => {
     return (
         <div className={s.profileBlock}>
             Внимание! Проверка на залоггированность закоменчена для рабочего процесса!
-            <span>Personal Information</span>
+            <span className={s.personalInfo}>Personal Information</span>
             <img src={avatar} alt="avatar" className={s.imgAvatar}/>
             <div>
-                <span>Ivan</span>
-                <button>change name</button>
+                <span className={s.nameText}>Ivan</span>
+                <DriveFileRenameOutlineIcon/>
             </div>
-            <span>j&johnson@gmail.com</span>
-            <Button  variant="outlined" startIcon={<Logout/>}>
+            <span className={s.mailText}>j&johnson@gmail.com</span>
+            <Button variant="outlined" startIcon={<Logout/>}>
                 Log out
             </Button>
         </div>
