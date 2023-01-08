@@ -16,8 +16,10 @@ export default function MenuAppBar() {
     return (
         <Box sx={{flexGrow: 1}}>
 
-            <AppBar position="static" color="transparent">
-                <Toolbar>
+            <AppBar position="static" color="transparent" >
+                <Toolbar sx={{
+                    justifyContent: 'space-between'
+                }}>
                     <img src={logo} alt="logo"/>
                     {isLoggedIn && (
                         <span>Ivan photo</span>
