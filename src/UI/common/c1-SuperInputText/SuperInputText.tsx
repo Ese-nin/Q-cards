@@ -19,6 +19,7 @@ type SuperInputTextPropsType = Omit<DefaultInputPropsType, 'type'> & {
     onEnter?: () => void
     error?: ReactNode
     spanClassName?: string
+    type?:string
 }
 
 const SuperInputText: React.FC<SuperInputTextPropsType> = (
@@ -31,6 +32,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
         className,
         spanClassName,
         id,
+        type,
 
         ...restProps // все остальные пропсы попадут в объект restProps
     }
@@ -58,7 +60,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
         <div className={s.inputWrapper}>
             <input
                 id={id}
-                type={'text'}
+                type={type? type : "text"}
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}

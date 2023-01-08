@@ -1,12 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useAppSelector} from "../../../bll/store";
 import {Navigate, NavLink} from "react-router-dom";
 import SuperInputText from "../../common/c1-SuperInputText/SuperInputText";
 import SuperCheckbox from "../../common/c3-SuperCheckbox/SuperCheckbox";
 import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import classes from "./login.module.css";
+import {FormControl, IconButton, Input, InputAdornment, InputLabel} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 export const LoginPage = () => {
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -14,11 +18,13 @@ export const LoginPage = () => {
         return <Navigate to={'/'}/>
     }
 
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     return (
         <div className={classes.loginPage_renamed}>
-            <div className={classes.header}>
-                LOGIN PAGE - тут будет компонента хедер
-            </div>
             <div className={classes.loginPage_container}>
                 <div className={classes.login_container}>
                     <div className={classes.singIn}>
@@ -40,9 +46,16 @@ export const LoginPage = () => {
                                     Password
                                 </div>
                                 <div className={classes.input_container}>
-                                    <SuperInputText className={classes.input_login_password}/>
+                                    <div className={classes.password_security}>
+                                        <SuperInputText className={classes.input_login_password} type={showPassword ? 'text' : 'password'}></SuperInputText>
+                                    <IconButton className={classes.visual_password}
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}>
+                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                    </IconButton>
+                                    </div>
                                     <div className={classes.rectangle}/>
-
                                 </div>
                             </div>
                         </div>
