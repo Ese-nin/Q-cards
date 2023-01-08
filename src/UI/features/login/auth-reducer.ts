@@ -42,6 +42,18 @@ export const logoutTC = () => (dispatch: Dispatch<AuthActionsType>) => {
 }
 
 
+export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
+  authAPI.register(email, password)
+    .then((res) => {
+      console.log(res.data)
+      // redirect to login
+    })
+    .catch((err)=>{
+      console.log(err.response.data.error)
+      // view snackbar with error
+    })
+}
+
 // types
 
 export type InitialAuthStateType = {

@@ -17,5 +17,9 @@ export const authAPI = {
     },
     logOut() {
         return instance.delete(`auth/me`);
+
+    },
+    register(email: string, password: string) {
+        return instance.post(`auth/register`, {email, password})
     }
 }
