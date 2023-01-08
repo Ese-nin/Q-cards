@@ -1,15 +1,18 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../../../dal/api";
+
 const initialState = {
-    isLoggedIn: false
+  isLoggedIn: false
 }
 
 export const authReducer = (state: InitialAuthStateType = initialState, action: AuthActionsType): InitialAuthStateType => {
-    switch (action.type) {
-        case 'AUTH/SET_LOG_IN':
-        case 'AUTH/SET_LOG_OUT':
-            return {...state, isLoggedIn: action.isLoggedIn}
-        default:
-            return state
-    }
+  switch (action.type) {
+    case 'AUTH/SET_LOG_IN':
+    case 'AUTH/SET_LOG_OUT':
+      return {...state, isLoggedIn: action.isLoggedIn}
+    default:
+      return state
+  }
 }
 
 
@@ -19,14 +22,29 @@ export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as con
 export const logOutAC = () => ({type: 'AUTH/SET_LOG_OUT', isLoggedIn: false} as const)
 
 
+// thunks
+
+export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
+  authAPI.register(email, password)
+    .then((res) => {
+      console.log(res.data)
+      // redirect to login
+    })
+    .catch((err)=>{
+      console.log(err.response.data.error)
+      // view snackbar with error
+    })
+}
+
 // types
 
 export type InitialAuthStateType = {
-    isLoggedIn: boolean
+  isLoggedIn: boolean
 }
 
 export type AuthActionsType = LogInActionType
-    | LogOutActionType
+  | LogOutActionType
 
 type LogInActionType = ReturnType<typeof logInAC>
 type LogOutActionType = ReturnType<typeof logOutAC>
+
