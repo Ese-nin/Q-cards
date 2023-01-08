@@ -1,13 +1,24 @@
-import React from 'react';
-import {useAppSelector} from '../../../bll/store';
+import React, {useCallback} from 'react';
+import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate} from 'react-router-dom';
 import avatar from './Ellipse 45.png'
 import s from './profile.module.css'
 import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import {logoutTC} from '../login/auth-reducer';
+
+
+
+
 
 export const Profile = () => {
+    const dispatch = useAppDispatch()
+
+
+    const LogOutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [])
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -25,7 +36,7 @@ export const Profile = () => {
                 <DriveFileRenameOutlineIcon/>
             </div>
             <span className={s.mailText}>j&johnson@gmail.com</span>
-            <Button variant="outlined" startIcon={<Logout/>}>
+            <Button variant="outlined" startIcon={<Logout/>} onClick={LogOutHandler}>
                 Log out
             </Button>
         </div>
