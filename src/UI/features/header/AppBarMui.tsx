@@ -3,7 +3,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import logo from './Group 753.png'
-import {useAppDispatch, useAppSelector} from '../../../bll/store';
+import {useAppSelector} from '../../../bll/store';
 import SuperButton from '../../common/c2-SuperButton/SuperButton';
 import s from './header.module.css';
 import {NavLink} from 'react-router-dom';
@@ -12,7 +12,7 @@ import {NavLink} from 'react-router-dom';
 export default function MenuAppBar() {
     // добавленный код
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const dispatch = useAppDispatch()
+    // const dispatch = useAppDispatch()
 
 
     return (
@@ -41,8 +41,6 @@ export default function MenuAppBar() {
                                     Sign in
                                 </SuperButton>
                             </NavLink>
-
-
                         </>
                     )}
                 </Toolbar>

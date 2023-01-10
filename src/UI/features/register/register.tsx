@@ -7,10 +7,11 @@ import {Navigate, NavLink} from "react-router-dom";
 import {registerTC} from "../login/auth-reducer";
 import {useAppDispatch, useAppSelector} from "../../../bll/store";
 
-type FormikErrorsType = {
+export type FormikErrorsType = {
   email?: string
   password?: string
   confirmPassword?: string
+  rememberMe?: boolean
 }
 
 const validate = (values: FormikErrorsType) => {

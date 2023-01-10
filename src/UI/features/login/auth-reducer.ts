@@ -10,6 +10,7 @@ const initialState = {
 export const authReducer = (state: InitialAuthStateType = initialState, action: AuthActionsType): InitialAuthStateType => {
   switch (action.type) {
     case 'AUTH/SET_LOG_IN':
+      return {...state, isLoggedIn: action.isLoggedIn}
     case 'AUTH/SET_LOG_OUT':
       return {...state, isLoggedIn: action.isLoggedIn}
     case 'AUTH/SET_HAVE_ACC':
@@ -63,6 +64,23 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
       // dispatch(setAppStatusAC('failed'))
     })
 }
+
+// log in
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
+  // dispatch(setAppStatusAC('loading'))
+  authAPI.logIn(email, password, rememberMe)
+      .then((res) => {
+        dispatch(logInAC())
+      })
+      .catch((err: AxiosError<{ error: string }>) => {
+        const error = err.response
+            ? err.response.data.error
+            : (err.message + ', more details in the console');
+
+        console.log('Error: ', {...err})
+      })
+}
+
 
 // types
 

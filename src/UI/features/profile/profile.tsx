@@ -7,26 +7,20 @@ import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import {logoutTC} from '../login/auth-reducer';
-import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
 
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
-// let name = useAppSelector<string>((state) => state.data.name)
 
     const LogOutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
 
-    // const changeTodolistTitle = useCallback((title: string) => {
-    //     props.changeTodolistTitle(props.todolist.id, title)
-    // }, [props.todolist.id, props.changeTodolistTitle])
-
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-    // if (!isLoggedIn) {
-    //     return <Navigate to={'/login'}/>
-    // }
+    if (!isLoggedIn) {
+        return <Navigate to={'/login'}/>
+    }
 
     return (
         <div className={s.profileBlock}>
