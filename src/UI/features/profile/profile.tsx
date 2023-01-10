@@ -11,12 +11,14 @@ import {logoutTC} from '../login/auth-reducer';
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const Name = useAppSelector(store=> store.auth.name)
+    const Email = useAppSelector(store=> store.auth.email)
+
 
     const LogOutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
-
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -24,15 +26,14 @@ export const Profile = () => {
 
     return (
         <div className={s.profileBlock}>
-            Внимание! Проверка на залоггированность закоменчена для рабочего процесса!
             <span className={s.personalInfo}>Personal Information</span>
             <img src={avatar} alt="avatar" className={s.imgAvatar}/>
             <div>
                 {/*<EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>*/}
-                <span className={s.nameText}>Ivan</span>
+                <span className={s.nameText}>{Name}</span>
                 <DriveFileRenameOutlineIcon/>
             </div>
-            <span className={s.mailText}>j&johnson@gmail.com</span>
+            <span className={s.mailText}>{Email}</span>
             <Button variant="outlined" startIcon={<Logout/>} onClick={LogOutHandler}>
                 Log out
             </Button>
