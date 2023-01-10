@@ -61,11 +61,10 @@ export const LoginPage = () => {
                         </div>
                         <div className={classes.rememberMe}>
                             <SuperCheckbox/>
-                            <div className={classes.text}>Remember me</div>
+                            <div>Remember me</div>
                         </div>
                         <div className={classes.forgotPassword}>
-                            <NavLink to={"/"} className={classes.forgotPassword_link}> Forgot Password?</NavLink>
-
+                            Forgot Password?
                         </div>
                         <div className={classes.singIn_btn_container}>
                             <SuperButton className={classes.singIn_bnt}>Sing In</SuperButton>
