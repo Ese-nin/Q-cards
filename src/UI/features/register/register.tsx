@@ -11,7 +11,6 @@ export type FormikErrorsType = {
     email?: string
     password?: string
     confirmPassword?: string
-    rememberMe?: boolean
 }
 
 const validate = (values: FormikErrorsType) => {

@@ -18,9 +18,9 @@ export const Profile = () => {
 
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-    if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
-    }
+    // if (!isLoggedIn) {
+    //     return <Navigate to={'/login'}/>
+    // }
 
     return (
         <div className={s.profileBlock}>
