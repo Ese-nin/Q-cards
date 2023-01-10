@@ -3,13 +3,16 @@ import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, NavLink} from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import {FormikErrorsType} from '../register/register';
 import {useFormik} from 'formik';
-import {loginTC} from './auth-reducer';
+import {loginTC, setHaveAccountAC} from './auth-reducer';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
+type FormikErrorsType = {
+    email?: string
+    password?: string
+}
 
 const validate = (values: FormikErrorsType) => {
     const errors: FormikErrorsType = {}
@@ -52,6 +55,10 @@ export const LoginPage = () => {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
+
+    const haveAccountHandler = () => {
+        dispatch(setHaveAccountAC(false))
+    }
 
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
@@ -113,7 +120,7 @@ export const LoginPage = () => {
             <div>
                 <span>Already have an account?</span>
             </div>
-            <NavLink to={'/register'}>Sign Up</NavLink>
+            <NavLink onClick={haveAccountHandler} to={'/register'}>Sign Up</NavLink>
         </div>
     )
 };
