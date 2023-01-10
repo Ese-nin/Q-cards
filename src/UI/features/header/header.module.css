@@ -5,3 +5,9 @@
 .active {
     color: deeppink;
 }
+
+.tempDiv{
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+}
