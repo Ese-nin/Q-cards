@@ -1,12 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Header} from "./features/header/header";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {Profile} from "./features/profile/profile";
 import {LoginPage} from "./features/login/login";
 import {Register} from "./features/register/register";
+import {useAppDispatch} from '../bll/store';
+import {initializeProfileTC} from './features/login/auth-reducer';
 
 export const App = () => {
+    const dispatch = useAppDispatch()
+
+
+    useEffect(() => {
+        dispatch(initializeProfileTC())
+    }, [])
 
     return (
         <div className="App">
