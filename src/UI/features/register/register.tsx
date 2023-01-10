@@ -3,9 +3,9 @@ import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, Input
 import {useFormik} from "formik";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import s from "./register.module.css"
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import {registerTC} from "../login/auth-reducer";
-import {useAppDispatch} from "../../../bll/store";
+import {useAppDispatch, useAppSelector} from "../../../bll/store";
 
 type FormikErrorsType = {
   email?: string
@@ -37,6 +37,7 @@ const validate = (values: FormikErrorsType) => {
 
 export const Register = () => {
 
+  const isHaveAccount = useAppSelector(state => state.auth.isHaveAccount)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -60,6 +61,10 @@ export const Register = () => {
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
   };
+
+  if (isHaveAccount) {
+    return <Navigate to={'/login'}/>
+  }
 
   return (
     <div className={s.regContainer}>
@@ -93,8 +98,7 @@ export const Register = () => {
                       onMouseDown={handleMouseDownPassword}>
                       {showPassword ? <VisibilityOff/> : <Visibility/>}
                     </IconButton>
-                  </InputAdornment>
-                }
+                  </InputAdornment>}
               />
             </FormControl>
             {formik.errors.password && formik.touched.password &&
@@ -113,19 +117,19 @@ export const Register = () => {
                       onMouseDown={handleMouseDownPassword}>
                       {showPassword ? <VisibilityOff/> : <Visibility/>}
                     </IconButton>
-                  </InputAdornment>
-                }
+                  </InputAdornment>}
               />
             </FormControl>
-
             {formik.errors.confirmPassword && formik.touched.confirmPassword &&
                 <div style={{color: "crimson"}}>{formik.errors.confirmPassword}</div>}
+
             <Button style={{borderRadius: '30px'}}
                     type={'submit'}
                     variant={'contained'}
                     color={'primary'}>
               Sign Up
             </Button>
+
           </FormGroup>
         </form>
       </FormControl>
