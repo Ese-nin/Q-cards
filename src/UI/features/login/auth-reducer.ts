@@ -1,6 +1,7 @@
 import {authAPI} from '../../../dal/api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
+import {setAppStatusAC} from "../../app-reducer";
 
 const initialState = {
     isLoggedIn: false,
@@ -49,12 +50,12 @@ export const logoutTC = () => (dispatch: Dispatch<AuthActionsType>) => {
 
 
 export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
-    // dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     authAPI.register(email, password)
         .then((res) => {
             // console.log(res.data)
             dispatch(setHaveAccountAC(true))
-            // dispatch(setAppStatusAC('succeeded'))
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
@@ -68,10 +69,11 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
 
 // log in
 export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
-    // dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     authAPI.logIn(email, password, rememberMe)
         .then((res) => {
             dispatch(logInAC())
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
@@ -85,12 +87,12 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
 // me запрос
 
 export const initializeProfileTC = () => (dispatch: Dispatch) => {
-    // dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC('loading'))
     authAPI.me()
         .then(res =>{
             if (res.data.name) {
                 dispatch(logInAC())
-                // dispatch(setAppStatusAC('succeeded'))
+                    dispatch(setAppStatusAC('succeeded'))
 
 
             }
