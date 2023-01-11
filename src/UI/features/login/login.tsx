@@ -9,13 +9,13 @@ import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
-type FormikErrorsType = {
+type LoginFormikErrorsType = {
     email?: string
     password?: string
 }
 
-const validate = (values: FormikErrorsType) => {
-    const errors: FormikErrorsType = {}
+const validate = (values: LoginFormikErrorsType) => {
+    const errors: LoginFormikErrorsType = {}
     if (!values.email) {
         errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
