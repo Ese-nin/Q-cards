@@ -106,8 +106,8 @@ export const LoginPage = () => {
                                               {...formik.getFieldProps('rememberMe')}
                                           />}
                         />
-                        <NavLink to="/register">Forgot Password?</NavLink>
-                        <Button style={{borderRadius: '30px'}}
+                        <NavLink to="/register" style={{display:"flex",justifyContent:"end", margin:"10px"}} >Forgot Password?</NavLink>
+                        <Button style={{borderRadius: '30px', marginTop:"20px"}}
                                 type={'submit'}
                                 variant={'contained'}
                                 color={'primary'}>
