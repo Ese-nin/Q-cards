@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from '../bll/store';
 import {initializeProfileTC} from './features/login/auth-reducer';
 import {Preloader} from "./common/preloader/preloader";
 import {CircularProgress} from "@mui/material";
+import {Loading} from "./common/loading/loading";
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -30,7 +31,7 @@ export const App = () => {
     return (
         <div className="App">
             <Header/>
-            {status==='loading' && <Preloader/>}
+            {status==='loading' && <Loading/>}
             <Routes>
                 <Route path={'/profile'} element={<Profile/>}/>
                 <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
