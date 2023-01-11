@@ -15,10 +15,10 @@ export const Profile = () => {
     const Name = useAppSelector(store=> store.auth.name)
     const Email = useAppSelector(store=> store.auth.email)
 
-
     const LogOutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
+
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
