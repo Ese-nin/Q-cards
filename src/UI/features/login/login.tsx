@@ -1,87 +1,128 @@
 import React, {useState} from 'react';
-import {useAppSelector} from "../../../bll/store";
-import {Navigate, NavLink} from "react-router-dom";
-import SuperInputText from "../../common/c1-SuperInputText/SuperInputText";
-import SuperCheckbox from "../../common/c3-SuperCheckbox/SuperCheckbox";
-import SuperButton from "../../common/c2-SuperButton/SuperButton";
-import classes from "./login.module.css";
-import {FormControl, IconButton, Input, InputAdornment, InputLabel} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {useAppDispatch, useAppSelector} from '../../../bll/store';
+import {Navigate, NavLink} from 'react-router-dom';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import {useFormik} from 'formik';
+import {loginTC, setHaveAccountAC} from './auth-reducer';
+import s from '../register/register.module.css';
+import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
+
+type FormikErrorsType = {
+    email?: string
+    password?: string
+}
+
+const validate = (values: FormikErrorsType) => {
+    const errors: FormikErrorsType = {}
+    if (!values.email) {
+        errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    if (!values.password) {
+        errors.password = 'Required'
+    } else if (values.password.length < 8) {
+        errors.password = 'Must be 8 or more chars'
+    }
+    return errors
+}
+
 
 export const LoginPage = () => {
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const dispatch = useAppDispatch()
+
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            rememberMe: false,
+        },
+        validate,
+        onSubmit: values => {
+            const {email, password, rememberMe} = values
+            dispatch(loginTC(email, password, rememberMe))
+            formik.resetForm()
+        },
+    })
 
     const [showPassword, setShowPassword] = useState(false);
-
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-
-    if (isLoggedIn) {
-        return <Navigate to={'/'}/>
-    }
-
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
 
-    return (
-        <div className={classes.loginPage_renamed}>
-            <div className={classes.loginPage_container}>
-                <div className={classes.login_container}>
-                    <div className={classes.singIn}>
-                        <div className={classes.singIn_text}>
-                            Sing in
-                        </div>
-                        <div className={classes.mail_password_container}>
-                            <div className={classes.mail}>
-                                <div className={classes.email_password_text}>
-                                    Email
-                                </div>
-                                <div className={classes.input_container}>
-                                    <SuperInputText className={classes.input_login_password}/>
-                                    <div className={classes.rectangle}/>
-                                </div>
-                            </div>
-                            <div className={classes.password}>
-                                <div className={classes.email_password_text}>
-                                    Password
-                                </div>
-                                <div className={classes.input_container}>
-                                    <div className={classes.password_security}>
-                                        <SuperInputText className={classes.input_login_password} type={showPassword ? 'text' : 'password'}></SuperInputText>
-                                    <IconButton className={classes.visual_password}
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}>
-                                        {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                    </IconButton>
-                                    </div>
-                                    <div className={classes.rectangle}/>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={classes.rememberMe}>
-                            <SuperCheckbox/>
-                            <div className={classes.text}>Remember me</div>
-                        </div>
-                        <div className={classes.forgotPassword}>
-                            <NavLink to={"/"} className={classes.forgotPassword_link}> Forgot Password?</NavLink>
+    const haveAccountHandler = () => {
+        dispatch(setHaveAccountAC(false))
+    }
 
-                        </div>
-                        <div className={classes.singIn_btn_container}>
-                            <SuperButton className={classes.singIn_bnt}>Sing In</SuperButton>
-                        </div>
-                        <div className={classes.account_container}>
-                            <div className={classes.account_text}>
-                                Already have an account?
-                            </div>
-                        </div>
-                        <div className={classes.singUp_link}>
-                            <NavLink to={"/"} className={classes.singUp_link_style}>Sing Up</NavLink>
-                        </div>
-                    </div>
-                </div>
+    if (isLoggedIn) {
+        return <Navigate to={'/profile'}/>
+    }
 
+    return (<div className={s.regContainer}>
+
+            <FormControl sx={{m: 1, width: '35ch'}} variant="standard">
+
+                <h2 className={s.regFormTitle}>Sign in</h2>
+
+                <form onSubmit={formik.handleSubmit}>
+
+                    <FormGroup>
+                        <FormControl margin={'normal'}>
+                            <InputLabel>Email</InputLabel>
+                            <Input
+                                {...formik.getFieldProps('email')}
+                            />
+                        </FormControl>
+                        {formik.errors.email && formik.touched.email &&
+                            <div style={{color: 'crimson'}}>{formik.errors.email}</div>}
+
+                        <FormControl margin={'normal'}>
+                            <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+                            <Input
+                                type={showPassword ? 'text' : 'password'}
+                                {...formik.getFieldProps('password')}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}>
+                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
+                                        </IconButton>
+                                    </InputAdornment>}
+                            />
+                        </FormControl>
+                        {formik.errors.password && formik.touched.password &&
+                            <div style={{color: 'crimson'}}>{formik.errors.password}</div>}
+
+                        <FormControlLabel label={'rememberMe'}
+                                          control={<Checkbox
+                                              {...formik.getFieldProps('rememberMe')}
+                                          />}
+                        />
+                        <NavLink to="/register">Forgot Password?</NavLink>
+                        <Button style={{borderRadius: '30px'}}
+                                type={'submit'}
+                                variant={'contained'}
+                                color={'primary'}>
+                            Sign In
+                        </Button>
+
+                    </FormGroup>
+                </form>
+            </FormControl>
+            <div>
+                <span>Already have an account?</span>
             </div>
+            <NavLink onClick={haveAccountHandler} to={'/register'}>Sign Up</NavLink>
         </div>
-    );
+    )
 };
+
+

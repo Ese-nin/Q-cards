@@ -25,7 +25,7 @@ export const setAppStatusAC = (newStatus: AppStatusType) => ({
 
 // types
 
-export type AppStatusType = 'idle' | 'success' | 'failed' | 'loading'
+export type AppStatusType = 'idle' | 'succeeded' | 'failed' | 'loading'
 export type InitialStateType = {
     isInitialized: boolean
     appStatus: AppStatusType

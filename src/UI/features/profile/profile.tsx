@@ -9,12 +9,8 @@ import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutli
 import {logoutTC} from '../login/auth-reducer';
 
 
-
-
-
 export const Profile = () => {
     const dispatch = useAppDispatch()
-
 
     const LogOutHandler = useCallback(() => {
         dispatch(logoutTC())
@@ -32,6 +28,7 @@ export const Profile = () => {
             <span className={s.personalInfo}>Personal Information</span>
             <img src={avatar} alt="avatar" className={s.imgAvatar}/>
             <div>
+                {/*<EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>*/}
                 <span className={s.nameText}>Ivan</span>
                 <DriveFileRenameOutlineIcon/>
             </div>
