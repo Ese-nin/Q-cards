@@ -1,7 +1,7 @@
 import {authAPI} from '../../../dal/api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
-import {AppStatusType, setAppStatusAC, setInitializeAC} from "../../app-reducer";
+import {setAppStatusAC, setInitializeAC} from "../../app-reducer";
 import {ThunkAppDispatchType} from "../../../bll/store";
 
 const initialState = {
@@ -46,6 +46,7 @@ export const logoutTC = () => (dispatch:ThunkAppDispatchType) => {
                 ? err.response.data.error
                 : err.message
             console.log('error: ', error)
+            dispatch(setAppStatusAC('failed'))
         })
 }
 
@@ -64,7 +65,7 @@ export const registerTC = (email: string, password: string) => (dispatch: ThunkA
                 : err.message
             console.warn(error)
             // view snackbar with error
-            // dispatch(setAppStatusAC('failed'))
+            dispatch(setAppStatusAC('failed'))
         })
 }
 
@@ -82,6 +83,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
                 : (err.message + ', more details in the console');
 
             console.log('Error: ', {...err})
+            dispatch(setAppStatusAC('failed'))
         })
 }
 
@@ -102,7 +104,7 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             const error = err.response
                 ? err.response.data.error
                 : (err.message + ', more details in the console');
-                //какой-то текст
+            //какой-то текст
             console.log('Error: ', {...err})
             dispatch(setAppStatusAC('failed'))
         })
