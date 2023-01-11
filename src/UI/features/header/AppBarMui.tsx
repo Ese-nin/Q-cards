@@ -12,6 +12,7 @@ import {NavLink} from 'react-router-dom';
 export default function MenuAppBar() {
     // добавленный код
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const Name = useAppSelector(store=> store.auth.name)
     // const dispatch = useAppDispatch()
 
 
@@ -33,7 +34,7 @@ export default function MenuAppBar() {
                     </div>
 
                     {isLoggedIn && (
-                        <span>Ivan photo</span>
+                        <span>{Name} photo</span>
                     )}
                     {isLoggedIn || (<>
                             <NavLink to="/login">

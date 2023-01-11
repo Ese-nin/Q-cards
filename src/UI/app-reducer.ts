@@ -1,3 +1,5 @@
+import {logInAC} from './features/login/auth-reducer';
+
 const initialState = {
     isInitialized: false,
     appStatus: 'idle'

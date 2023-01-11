@@ -4,7 +4,7 @@ let startState: InitialAuthStateType;
 beforeEach(() => {
     startState = {
         isLoggedIn: false,
-        isHaveAccount: false
+        isHaveAccount: false,
     }
 })
 

@@ -1,22 +1,31 @@
 import {authAPI} from '../../../dal/api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
-import {setAppStatusAC, setInitializeAC} from "../../app-reducer";
-import {ThunkAppDispatchType} from "../../../bll/store";
+import {setAppStatusAC, setInitializeAC} from '../../app-reducer';
+import {ThunkAppDispatchType} from '../../../bll/store';
 
 const initialState = {
     isLoggedIn: false,
-    isHaveAccount: false
+    isHaveAccount: false,
+    name: '',
+    email: ''
 }
 
 export const authReducer = (state: InitialAuthStateType = initialState, action: AuthActionsType): InitialAuthStateType => {
     switch (action.type) {
         case 'AUTH/SET_LOG_IN':
-            return {...state, isLoggedIn: action.isLoggedIn}
+            return {
+                ...state,
+                isLoggedIn: action.isLoggedIn,
+                name: action.name,
+                email: action.email
+            }
         case 'AUTH/SET_LOG_OUT':
             return {...state, isLoggedIn: action.isLoggedIn}
         case 'AUTH/SET_HAVE_ACC':
             return {...state, isHaveAccount: action.isHaveAccount}
+        case 'AUTH/SET_NEW_NAME':
+            return {...state, name: action.name}
         default:
             return state
     }
@@ -25,15 +34,22 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
 
 // actions
 
-export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
+export const logInAC = (name: string, email: string) => ({
+    type: 'AUTH/SET_LOG_IN',
+    isLoggedIn: true,
+    name,
+    email
+} as const)
 export const logOutAC = () => ({type: 'AUTH/SET_LOG_OUT', isLoggedIn: false} as const)
 export const setHaveAccountAC = (isHaveAccount: boolean) => ({type: 'AUTH/SET_HAVE_ACC', isHaveAccount} as const)
+export const changeNameAC = (name: string) => ({type: 'AUTH/SET_NEW_NAME', name} as const)
+
 
 // export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
 
 // thank creators
 
-export const logoutTC = () => (dispatch:ThunkAppDispatchType) => {
+export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.logOut()
         .then(res => {
@@ -74,7 +90,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
     dispatch(setAppStatusAC('loading'))
     authAPI.logIn(email, password, rememberMe)
         .then((res) => {
-            dispatch(logInAC())
+            dispatch(logInAC(res.data.name, res.data.email))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -94,7 +110,7 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
     authAPI.me()
         .then(res => {
             if (res.data.name) {
-                dispatch(logInAC())
+                dispatch(logInAC(res.data.name, res.data.email))
                 dispatch(setAppStatusAC('succeeded'))
 
 
@@ -104,13 +120,39 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             const error = err.response
                 ? err.response.data.error
                 : (err.message + ', more details in the console');
-            //какой-то текст
+
             console.log('Error: ', {...err})
             dispatch(setAppStatusAC('failed'))
         })
-      .finally(()=>{
-          dispatch(setInitializeAC())
-      })
+        .finally(() => {
+            dispatch(setInitializeAC())
+        })
+}
+
+
+export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
+    dispatch(setAppStatusAC('loading'))
+    console.log('санка зпустилась')
+    authAPI.changeName(name)
+        .then(res => {
+            console.log('санка резолв')
+            if (res.data.name) {
+                dispatch(changeNameAC(res.data.name))
+                dispatch(setAppStatusAC('succeeded'))
+            }
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            console.log('санка хуй наны')
+            const error = err.response
+                ? err.response.data.error
+                : (err.message + ', more details in the console');
+
+            console.log('Error: ', {...err})
+            dispatch(setAppStatusAC('failed'))
+        })
+        .finally(() => {
+            dispatch(setInitializeAC())
+        })
 }
 
 
@@ -119,13 +161,17 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
 export type InitialAuthStateType = {
     isLoggedIn: boolean
     isHaveAccount: boolean
+    name: string
+    email: string
 }
 
 export type AuthActionsType = LogInActionType
     | LogOutActionType
     | SetHaveAccountActionType
+    | changeNameActionType
 
 
 type LogInActionType = ReturnType<typeof logInAC>
 type LogOutActionType = ReturnType<typeof logOutAC>
 type SetHaveAccountActionType = ReturnType<typeof setHaveAccountAC>
+type changeNameActionType = ReturnType<typeof changeNameAC>
