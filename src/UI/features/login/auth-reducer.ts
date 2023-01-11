@@ -1,7 +1,8 @@
 import {authAPI} from '../../../dal/api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
-import {setAppStatusAC} from "../../app-reducer";
+import {AppStatusType, setAppStatusAC} from "../../app-reducer";
+import {ThunkAppDispatchType} from "../../../bll/store";
 
 const initialState = {
     isLoggedIn: false,
@@ -32,13 +33,13 @@ export const setHaveAccountAC = (isHaveAccount: boolean) => ({type: 'AUTH/SET_HA
 
 // thank creators
 
-export const logoutTC = () => (dispatch: Dispatch<AuthActionsType>) => {
-    // dispatch(setAppStatusAC('loading'))                         /// прикрутить крутилочку ответа сервера
+export const logoutTC = () => (dispatch:ThunkAppDispatchType) => {
+    dispatch(setAppStatusAC('loading'))
     authAPI.logOut()
         .then(res => {
 
             dispatch(logOutAC())
-            // dispatch(setAppStatusAC('succeeded'))            /// прикрутить крутилочку ответа сервера
+            dispatch(setAppStatusAC('succeeded'))            /// прикрутить крутилочку ответа сервера
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
@@ -89,15 +90,15 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
 export const initializeProfileTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.me()
-        .then(res =>{
+        .then(res => {
             if (res.data.name) {
                 dispatch(logInAC())
-                    dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded'))
 
 
             }
         })
-        .catch ((err: AxiosError<{ error: string }>) => {
+        .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
                 ? err.response.data.error
                 : (err.message + ', more details in the console');
@@ -117,6 +118,7 @@ export type InitialAuthStateType = {
 export type AuthActionsType = LogInActionType
     | LogOutActionType
     | SetHaveAccountActionType
+
 
 type LogInActionType = ReturnType<typeof logInAC>
 type LogOutActionType = ReturnType<typeof logOutAC>
