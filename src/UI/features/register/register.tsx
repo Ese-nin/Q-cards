@@ -7,14 +7,14 @@ import {Navigate, NavLink} from 'react-router-dom';
 import {registerTC} from '../login/auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 
-export type FormikErrorsType = {
+type RegFormikErrorsType = {
     email?: string
     password?: string
     confirmPassword?: string
 }
 
-const validate = (values: FormikErrorsType) => {
-    const errors: FormikErrorsType = {}
+const validate = (values: RegFormikErrorsType) => {
+    const errors: RegFormikErrorsType = {}
     if (!values.email) {
         errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
