@@ -6,7 +6,8 @@ import s from './profile.module.css'
 import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import {logoutTC} from '../login/auth-reducer';
+import {logoutTC, setNewNameTC} from '../login/auth-reducer';
+import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
 
 
 export const Profile = () => {
@@ -19,6 +20,10 @@ export const Profile = () => {
         dispatch(logoutTC())
     }, [])
 
+    const changeName = useCallback((name: string) => {
+        dispatch(setNewNameTC(name))
+    }, [Name])
+
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
@@ -29,9 +34,9 @@ export const Profile = () => {
             <span className={s.personalInfo}>Personal Information</span>
             <img src={avatar} alt="avatar" className={s.imgAvatar}/>
             <div>
-                {/*<EditableSpan value={props.todolist.title} onChange={changeTodolistTitle}/>*/}
-                <span className={s.nameText}>{Name}</span>
-                <DriveFileRenameOutlineIcon/>
+                <EditableSpan value={Name} onChange={changeName}/>
+                {/*<span className={s.nameText}>{Name}</span>*/}
+                {/*<DriveFileRenameOutlineIcon/>*/}
             </div>
             <span className={s.mailText}>{Email}</span>
             <Button variant="outlined" startIcon={<Logout/>} onClick={LogOutHandler}>

@@ -21,5 +21,8 @@ export const authAPI = {
     },
     register(email: string, password: string) {
         return instance.post(`auth/register`, {email, password})
+    },
+    changeName(name: string){ // тут потом нужно будет допилить изменение аватара!!!!
+        return instance.put('/auth/me', {name})
     }
 }

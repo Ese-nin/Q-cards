@@ -1,5 +1,8 @@
 import React, { ChangeEvent, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
+import {Button} from '@mui/material';
+import s from './Span.module.css'
 
 type EditableSpanPropsType = {
     value: string
@@ -8,21 +11,21 @@ type EditableSpanPropsType = {
 
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     let [editMode, setEditMode] = useState(false);
-    let [title, setTitle] = useState(props.value);
+    let [name, setName] = useState(props.value);
 
     const activateEditMode = () => {
         setEditMode(true);
-        setTitle(props.value);
+        setName(props.value);
     }
     const activateViewMode = () => {
         setEditMode(false);
-        props.onChange(title);
+        props.onChange(name);
     }
-    const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+    const changeName = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value)
     }
 
     return editMode
-        ? <TextField value={title} onChange={changeTitle} autoFocus onBlur={activateViewMode}/>
-        : <span onDoubleClick={activateEditMode}>{props.value}</span>
+        ? <div className={s.span}><TextField value={name} onChange={changeName} autoFocus onBlur={activateViewMode}/> <Button variant="contained" onClick={activateViewMode}>SAVE</Button> </div>
+        : <div className={s.span}><span onDoubleClick={activateEditMode}>{props.value}</span><DriveFileRenameOutlineIcon onClick={activateEditMode}/></div>
 });
