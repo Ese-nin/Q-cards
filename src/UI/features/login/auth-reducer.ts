@@ -1,7 +1,7 @@
 import {authAPI} from '../../../dal/api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
-import {AppStatusType, setAppStatusAC} from "../../app-reducer";
+import {AppStatusType, setAppStatusAC, setInitializeAC} from "../../app-reducer";
 import {ThunkAppDispatchType} from "../../../bll/store";
 
 const initialState = {
@@ -50,7 +50,7 @@ export const logoutTC = () => (dispatch:ThunkAppDispatchType) => {
 }
 
 
-export const registerTC = (email: string, password: string) => (dispatch: Dispatch) => {
+export const registerTC = (email: string, password: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.register(email, password)
         .then((res) => {
@@ -69,7 +69,7 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
 }
 
 // log in
-export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.logIn(email, password, rememberMe)
         .then((res) => {
@@ -104,7 +104,11 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
                 : (err.message + ', more details in the console');
 
             console.log('Error: ', {...err})
+            dispatch(setAppStatusAC('failed'))
         })
+      .finally(()=>{
+          dispatch(setInitializeAC())
+      })
 }
 
 
