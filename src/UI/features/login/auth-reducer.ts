@@ -99,7 +99,7 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             const error = err.response
                 ? err.response.data.error
                 : (err.message + ', more details in the console');
-
+                //какой-то текст
             console.log('Error: ', {...err})
         })
 }
