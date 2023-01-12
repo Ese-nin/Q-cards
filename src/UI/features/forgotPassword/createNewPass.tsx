@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate, NavLink} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import {useFormik} from 'formik';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
@@ -26,6 +26,12 @@ export const CreateNewPass = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
+    const params = useParams<'token'>()
+    let token = ''
+    if (params.token) {
+        token = params.token
+    }
+
     const formik = useFormik({
         initialValues: {
             password: '',
@@ -33,10 +39,9 @@ export const CreateNewPass = () => {
         validate,
         onSubmit: values => {
             const {password} = values
-            dispatch(setNewPasswordTC(password))
+            dispatch(setNewPasswordTC(password, token))
             formik.resetForm()
         },
-
     })
 
     const [showPassword, setShowPassword] = useState(false);
@@ -82,14 +87,12 @@ export const CreateNewPass = () => {
                     <div>
                         <span>Create new password and we will send you further instructions to email</span>
                     </div>
-                    {/*<NavLink to="/login">*/}
-                        <Button style={{borderRadius: '30px', marginTop: '20px'}}
-                                type={'submit'}
-                                variant={'contained'}
-                                color={'primary'}>
-                            Create new password
-                        </Button>
-                    {/*</NavLink>*/}
+                    <Button style={{borderRadius: '30px', marginTop: '20px'}}
+                            type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}>
+                        Create new password
+                    </Button>
                 </form>
             </FormControl>
         </div>
