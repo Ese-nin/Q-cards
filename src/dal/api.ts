@@ -22,7 +22,7 @@ export const authAPI = {
     register(email: string, password: string) {
         return instance.post(`auth/register`, {email, password})
     },
-    changeName(name: string){ // тут потом нужно будет допилить изменение аватара!!!!
+    changeName(name: string) { // тут потом нужно будет допилить изменение аватара!!!!
         return instance.put('/auth/me', {name})
     },
     forgotPass(email: string) {
@@ -35,5 +35,14 @@ export const authAPI = {
                 </div>`
         }
         return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
+    },
+    setNewPass(password: string) {
+        console.log('попал в апи')
+        let url = window.location.href
+        const data = {
+            password,
+            token: url.slice(-36)
+        }
+        return instance.post('/auth/set-new-password', data)
     }
 }

@@ -49,6 +49,8 @@ export const changeNameAC = (name: string) => ({type: 'AUTH/SET_NEW_NAME', name}
 export const sentInstructionAC = (isSent: boolean) => ({type: 'AUTH/SENT_INSTRUCTION', isSent} as const)
 
 
+
+
 // export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
 
 // thank creators
@@ -167,6 +169,28 @@ export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchTy
             dispatch(setAppStatusAC('failed'))
         })
 }
+
+export const setNewPasswordTC = (password: string) => (dispatch: ThunkAppDispatchType) => {
+    dispatch(setAppStatusAC('loading'))
+    console.log('cанка пошла')
+    authAPI.setNewPass(password)
+        .then((res) => {
+            console.log('санка резолв')
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            console.log('санка реджект')
+            const error = err.response
+                ? err.response.data.error
+                : err.message
+            console.warn(error)
+            // view snackbar with error
+            dispatch(setAppStatusAC('failed'))
+        })
+}
+
+
+
 
 // types
 
