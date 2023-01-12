@@ -1,26 +1,17 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate, NavLink} from 'react-router-dom';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import {Navigate} from 'react-router-dom';
 import {useFormik} from 'formik';
-import {loginTC, setHaveAccountAC} from './auth-reducer';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
 
 type LoginFormikErrorsType = {
-    email?: string
     password?: string
 }
 
 const validate = (values: LoginFormikErrorsType) => {
     const errors: LoginFormikErrorsType = {}
-    if (!values.email) {
-        errors.email = 'Required'
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-    }
     if (!values.password) {
         errors.password = 'Required'
     } else if (values.password.length < 8) {
@@ -30,20 +21,18 @@ const validate = (values: LoginFormikErrorsType) => {
 }
 
 
-export const LoginPage = () => {
+export const CreateNewPass = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
         initialValues: {
-            email: '',
             password: '',
-            rememberMe: false,
         },
         validate,
         onSubmit: values => {
-            const {email, password, rememberMe} = values
-            dispatch(loginTC(email, password, rememberMe))
+            const {password} = values
+            // dispatch(loginTC(password))
             formik.resetForm()
         },
     })
@@ -57,7 +46,7 @@ export const LoginPage = () => {
     };
 
     const haveAccountHandler = () => {
-        dispatch(setHaveAccountAC(false))
+        // dispatch(setHaveAccountAC(false))
     }
 
     if (isLoggedIn) {
@@ -68,19 +57,11 @@ export const LoginPage = () => {
 
             <FormControl sx={{m: 1, width: '35ch'}} variant="standard">
 
-                <h2 className={s.regFormTitle}>Sign in</h2>
+                <h2 className={s.regFormTitle}>Create new password</h2>
 
                 <form onSubmit={formik.handleSubmit}>
 
                     <FormGroup>
-                        <FormControl margin={'normal'}>
-                            <InputLabel>Email</InputLabel>
-                            <Input
-                                {...formik.getFieldProps('email')}
-                            />
-                        </FormControl>
-                        {formik.errors.email && formik.touched.email &&
-                            <div style={{color: 'crimson'}}>{formik.errors.email}</div>}
 
                         <FormControl margin={'normal'}>
                             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -101,26 +82,23 @@ export const LoginPage = () => {
                         {formik.errors.password && formik.touched.password &&
                             <div style={{color: 'crimson'}}>{formik.errors.password}</div>}
 
-                        <FormControlLabel label={'rememberMe'}
-                                          control={<Checkbox
-                                              {...formik.getFieldProps('rememberMe')}
-                                          />}
-                        />
-                        <NavLink to="/forgot" style={{display:"flex",justifyContent:"end", margin:"10px"}} >Forgot Password?</NavLink>
-                        <Button style={{borderRadius: '30px', marginTop:"20px"}}
-                                type={'submit'}
-                                variant={'contained'}
-                                color={'primary'}>
-                            Sign In
-                        </Button>
-
                     </FormGroup>
+
+                    <div>
+                        <span>Create new password and we will send you further instructions to email</span>
+                    </div>
+
+
+                    <Button style={{borderRadius: '30px', marginTop: '20px'}}
+                            type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}>
+                        Create new password
+                    </Button>
+
+
                 </form>
             </FormControl>
-            <div>
-                <span>Already have an account?</span>
-            </div>
-            <NavLink onClick={haveAccountHandler} to={'/register'}>Sign Up</NavLink>
         </div>
     )
 };

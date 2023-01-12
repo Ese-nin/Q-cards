@@ -7,9 +7,11 @@ import {LoginPage} from "./features/login/login";
 import {Register} from "./features/register/register";
 import {useAppDispatch, useAppSelector} from '../bll/store';
 import {initializeProfileTC} from './features/login/auth-reducer';
-import {Preloader} from "./common/preloader/preloader";
 import {CircularProgress} from "@mui/material";
 import {Loading} from "./common/loading/loading";
+import {ForgotPassPage} from './features/forgotPassword/forgotPassword';
+import {CheckEmail} from './features/forgotPassword/checkEmail';
+import {CreateNewPass} from './features/forgotPassword/createNewPass';
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -38,6 +40,9 @@ export const App = () => {
                 <Route path={'/register'} element={<Register/>}/>
                 <Route path={'/login'} element={<LoginPage/>}/>
                 <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                <Route path={'/forgot'} element={<ForgotPassPage/>}/>
+                <Route path={'/checkMail'} element={<CheckEmail/>}/>
+                <Route path={'/createNewPass'} element={<CreateNewPass/>}/>
                 <Route path={'*'} element={<Navigate to='/404'/>}/>
             </Routes>
         </div>

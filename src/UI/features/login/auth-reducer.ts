@@ -132,17 +132,20 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
 
 export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
-    console.log('санка зпустилась')
     authAPI.changeName(name)
         .then(res => {
-            console.log('санка резолв')
-            if (res.data.name) {
-                dispatch(changeNameAC(res.data.name))
+            // было
+
+            // if (res.data.name) {
+            //     dispatch(changeNameAC(res.data.name))
+            //     dispatch(setAppStatusAC('succeeded'))
+            // }
+
+            // нужно
+                dispatch(changeNameAC(res.data.updatedUser.name))
                 dispatch(setAppStatusAC('succeeded'))
-            }
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            console.log('санка хуй наны')
             const error = err.response
                 ? err.response.data.error
                 : (err.message + ', more details in the console');
@@ -150,9 +153,10 @@ export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
             console.log('Error: ', {...err})
             dispatch(setAppStatusAC('failed'))
         })
-        .finally(() => {
-            dispatch(setInitializeAC())
-        })
+        // нет необходимости, приложение уже инициализировано
+        // .finally(() => {
+        //     dispatch(setInitializeAC())
+        // })
 }
 
 

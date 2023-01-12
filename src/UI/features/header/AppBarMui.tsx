@@ -7,12 +7,14 @@ import {useAppSelector} from '../../../bll/store';
 import SuperButton from '../../common/c2-SuperButton/SuperButton';
 import s from './header.module.css';
 import {NavLink} from 'react-router-dom';
+import {ForgotPassPage} from '../forgotPassword/forgotPassword';
+import {CreateNewPass} from '../forgotPassword/createNewPass';
 
 
 export default function MenuAppBar() {
     // добавленный код
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const Name = useAppSelector(store=> store.auth.name)
+    const Name = useAppSelector(store => store.auth.name)
     // const dispatch = useAppDispatch()
 
 
@@ -31,6 +33,13 @@ export default function MenuAppBar() {
                                  className={({isActive}) => (isActive ? s.active : '')}>Login</NavLink>
                         <NavLink to="/register"
                                  className={({isActive}) => (isActive ? s.active : '')}>Register</NavLink>
+                        <NavLink to="/forgot"
+                                 className={({isActive}) => (isActive ? s.active : '')}>ForgotPassPage
+                        </NavLink>
+                        <NavLink to="/checkMail"
+                                 className={({isActive}) => (isActive ? s.active : '')}>checkMail</NavLink>
+                        <NavLink to="/createNewPass"
+                                 className={({isActive}) => (isActive ? s.active : '')}>CreateNewPass</NavLink>
                     </div>
 
                     {isLoggedIn && (
