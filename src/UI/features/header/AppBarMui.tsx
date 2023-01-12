@@ -7,6 +7,7 @@ import {useAppSelector} from '../../../bll/store';
 import SuperButton from '../../common/c2-SuperButton/SuperButton';
 import s from './header.module.css';
 import {NavLink} from 'react-router-dom';
+import {ForgotPassPage} from '../forgotPassword/forgotPassword';
 
 
 export default function MenuAppBar() {
@@ -31,6 +32,10 @@ export default function MenuAppBar() {
                                  className={({isActive}) => (isActive ? s.active : '')}>Login</NavLink>
                         <NavLink to="/register"
                                  className={({isActive}) => (isActive ? s.active : '')}>Register</NavLink>
+                        <NavLink to="/forgot"
+                                 className={({isActive}) => (isActive ? s.active : '')}>ForgotPassPage
+                        </NavLink><NavLink to="/checkMail"
+                                 className={({isActive}) => (isActive ? s.active : '')}>checkMail</NavLink>
                     </div>
 
                     {isLoggedIn && (
