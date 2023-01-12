@@ -4,7 +4,7 @@ const instance = axios.create({
     baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
     withCredentials: true,
     headers: {
-        // API-KEY и прочее
+
     }
 })
 
@@ -36,13 +36,11 @@ export const authAPI = {
         }
         return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
     },
-    setNewPass(password: string) {
-        console.log('попал в апи')
-        let url = window.location.href
+    setNewPass(password: string, token: string) {
         const data = {
             password,
-            resetPasswordToken: url.slice(-36)
+            resetPasswordToken: token
         }
-        return instance.post('/auth/set-new-password', data)
+        return instance.post('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
     }
 }
