@@ -4,13 +4,14 @@ import {Navigate, NavLink} from 'react-router-dom';
 import {useFormik} from 'formik';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, Input, InputLabel} from '@mui/material';
+import {forgotPasswordTC} from "../login/auth-reducer";
 
-type LoginFormikErrorsType = {
+type ForgotFormikErrorsType = {
     email?: string
 }
 
-const validate = (values: LoginFormikErrorsType) => {
-    const errors: LoginFormikErrorsType = {}
+const validate = (values: ForgotFormikErrorsType) => {
+    const errors: ForgotFormikErrorsType = {}
     if (!values.email) {
         errors.email = 'Required'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -21,7 +22,7 @@ const validate = (values: LoginFormikErrorsType) => {
 
 
 export const ForgotPassPage = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const sentInstruction = useAppSelector(state => state.auth.isSentInstruction)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
@@ -31,17 +32,13 @@ export const ForgotPassPage = () => {
         validate,
         onSubmit: values => {
             const {email} = values
-            // dispatch(loginTC(email, password, rememberMe))
+            dispatch(forgotPasswordTC(email))
             formik.resetForm()
         },
     })
 
-    // const haveAccountHandler = () => {
-    //     dispatch(setHaveAccountAC(false))
-    // }
-
-    if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+    if (sentInstruction) {
+        return <Navigate to={'/checkMail'}/>
     }
 
     return (<div className={s.regContainer}>
@@ -65,20 +62,20 @@ export const ForgotPassPage = () => {
                             <span>Enter your email address and we will send you further instructions </span>
                         </div>
                     </FormGroup>
+                    <Button style={{borderRadius: '30px', marginTop: '20px'}}
+                            type={'submit'}
+                            variant={'contained'}
+                            color={'primary'}>
+                        Send Instructions
+                    </Button>
                 </form>
 
-                        <Button style={{borderRadius: '30px', marginTop: '20px'}}
-                                type={'submit'}
-                                variant={'contained'}
-                                color={'primary'}>
-                            Send Instructions
-                        </Button>
+                <div>
+                    <span>Did you remember your password?</span>
+                </div>
 
-                        <div>
-                            <span>Did you remember your password?</span>
-                        </div>
-
-                        <NavLink to="/login" style={{display: 'flex', justifyContent: 'end', margin: '10px'}}>Try logging in</NavLink>
+                <NavLink to="/login" style={{display: 'flex', justifyContent: 'end', margin: '10px'}}>Try logging
+                    in</NavLink>
             </FormControl>
         </div>
     )

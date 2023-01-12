@@ -7,6 +7,7 @@ import {ThunkAppDispatchType} from '../../../bll/store';
 const initialState = {
     isLoggedIn: false,
     isHaveAccount: false,
+    isSentInstruction: false,
     name: '',
     email: ''
 }
@@ -26,6 +27,8 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
             return {...state, isHaveAccount: action.isHaveAccount}
         case 'AUTH/SET_NEW_NAME':
             return {...state, name: action.name}
+        case 'AUTH/SENT_INSTRUCTION':
+            return {...state, isSentInstruction: action.isSent}
         default:
             return state
     }
@@ -43,6 +46,7 @@ export const logInAC = (name: string, email: string) => ({
 export const logOutAC = () => ({type: 'AUTH/SET_LOG_OUT', isLoggedIn: false} as const)
 export const setHaveAccountAC = (isHaveAccount: boolean) => ({type: 'AUTH/SET_HAVE_ACC', isHaveAccount} as const)
 export const changeNameAC = (name: string) => ({type: 'AUTH/SET_NEW_NAME', name} as const)
+export const sentInstructionAC = (isSent: boolean) => ({type: 'AUTH/SENT_INSTRUCTION', isSent} as const)
 
 
 // export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
@@ -134,16 +138,8 @@ export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.changeName(name)
         .then(res => {
-            // было
-
-            // if (res.data.name) {
-            //     dispatch(changeNameAC(res.data.name))
-            //     dispatch(setAppStatusAC('succeeded'))
-            // }
-
-            // нужно
-                dispatch(changeNameAC(res.data.updatedUser.name))
-                dispatch(setAppStatusAC('succeeded'))
+            dispatch(changeNameAC(res.data.updatedUser.name))
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
@@ -153,18 +149,31 @@ export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
             console.log('Error: ', {...err})
             dispatch(setAppStatusAC('failed'))
         })
-        // нет необходимости, приложение уже инициализировано
-        // .finally(() => {
-        //     dispatch(setInitializeAC())
-        // })
 }
 
+export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchType) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.forgotPass(email)
+        .then((res) => {
+            dispatch(sentInstructionAC(true))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            const error = err.response
+                ? err.response.data.error
+                : err.message
+            console.warn(error)
+            // view snackbar with error
+            dispatch(setAppStatusAC('failed'))
+        })
+}
 
 // types
 
 export type InitialAuthStateType = {
     isLoggedIn: boolean
     isHaveAccount: boolean
+    isSentInstruction: boolean
     name: string
     email: string
 }
@@ -173,9 +182,11 @@ export type AuthActionsType = LogInActionType
     | LogOutActionType
     | SetHaveAccountActionType
     | changeNameActionType
+    | SentInstructionActionType
 
 
 type LogInActionType = ReturnType<typeof logInAC>
 type LogOutActionType = ReturnType<typeof logOutAC>
 type SetHaveAccountActionType = ReturnType<typeof setHaveAccountAC>
 type changeNameActionType = ReturnType<typeof changeNameAC>
+type SentInstructionActionType = ReturnType<typeof sentInstructionAC>
