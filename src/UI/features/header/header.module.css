@@ -3,7 +3,7 @@
 }
 
 .tempDiv{
-    width: 300px;
+    width: 60%;
     display: flex;
     justify-content: space-around;
 }
