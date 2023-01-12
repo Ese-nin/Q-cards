@@ -49,10 +49,6 @@ export const changeNameAC = (name: string) => ({type: 'AUTH/SET_NEW_NAME', name}
 export const sentInstructionAC = (isSent: boolean) => ({type: 'AUTH/SENT_INSTRUCTION', isSent} as const)
 
 
-
-
-// export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
-
 // thank creators
 
 export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
@@ -61,7 +57,7 @@ export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
         .then(res => {
 
             dispatch(logOutAC())
-            dispatch(setAppStatusAC('succeeded'))            /// прикрутить крутилочку ответа сервера
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
@@ -170,16 +166,13 @@ export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchTy
         })
 }
 
-export const setNewPasswordTC = (password: string) => (dispatch: ThunkAppDispatchType) => {
+export const setNewPasswordTC = (password: string, token: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    console.log('cанка пошла')
-    authAPI.setNewPass(password)
+    authAPI.setNewPass(password, token)
         .then((res) => {
-            console.log('санка резолв')
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            console.log('санка реджект')
             const error = err.response
                 ? err.response.data.error
                 : err.message
