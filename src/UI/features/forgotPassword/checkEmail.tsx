@@ -1,9 +1,8 @@
 import React from 'react';
-import {useAppDispatch, useAppSelector} from '../../../bll/store';
+import {useAppSelector} from '../../../bll/store';
 import {Navigate, NavLink} from 'react-router-dom';
-import {useFormik} from 'formik';
 import s from '../register/register.module.css';
-import {Button, FormControl, FormGroup, Input, InputLabel} from '@mui/material';
+import {Button, FormControl} from '@mui/material';
 import mail from './Group 281.png'
 
 export const CheckEmail = () => {
@@ -20,7 +19,7 @@ export const CheckEmail = () => {
 
                 <h2 className={s.regFormTitle}>Check Email</h2>
 
-                <img src={mail} alt="mail"/>
+                <img className={s.iconMail} src={mail} alt="mail"/>
 
 
                 <div>
