@@ -36,7 +36,7 @@ const validate = (values: RegFormikErrorsType) => {
 }
 
 export const Register = () => {
-
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isHaveAccount = useAppSelector(state => state.auth.isHaveAccount)
     const dispatch = useAppDispatch()
 
@@ -60,6 +60,10 @@ export const Register = () => {
 
     if (isHaveAccount) {
         return <Navigate to={'/login'}/>
+    }
+
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
     }
 
     return (

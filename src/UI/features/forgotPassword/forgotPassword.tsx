@@ -23,6 +23,7 @@ const validate = (values: ForgotFormikErrorsType) => {
 
 export const ForgotPassPage = () => {
     const sentInstruction = useAppSelector(state => state.auth.isSentInstruction)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({
@@ -39,6 +40,10 @@ export const ForgotPassPage = () => {
 
     if (sentInstruction) {
         return <Navigate to={'/checkMail'}/>
+    }
+
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
     }
 
     return (<div className={s.regContainer}>
