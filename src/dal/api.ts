@@ -41,7 +41,7 @@ export const authAPI = {
         let url = window.location.href
         const data = {
             password,
-            token: url.slice(-36)
+            resetPasswordToken: url.slice(-36)
         }
         return instance.post('/auth/set-new-password', data)
     }
