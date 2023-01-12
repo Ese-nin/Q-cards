@@ -7,7 +7,6 @@ import {LoginPage} from "./features/login/login";
 import {Register} from "./features/register/register";
 import {useAppDispatch, useAppSelector} from '../bll/store';
 import {initializeProfileTC} from './features/login/auth-reducer';
-import {Preloader} from "./common/preloader/preloader";
 import {CircularProgress} from "@mui/material";
 import {Loading} from "./common/loading/loading";
 import {ForgotPassPage} from './features/forgotPassword/forgotPassword';
