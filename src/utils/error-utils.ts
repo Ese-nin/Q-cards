@@ -3,6 +3,17 @@
 // пока не знаю зачем, но думаю пригодится
 
 
+
+
+import {AppActionsType, changeAppErrorAC, setAppStatusAC} from "../UI/app-reducer";
+import {Dispatch} from "redux";
+
+export const handleServerNetworkError = (error: {message: string}, dispatch: ErrorUtilsDispatchType) => {
+    dispatch(changeAppErrorAC(error.message))
+    dispatch(setAppStatusAC('failed'))
+}
+
+type ErrorUtilsDispatchType = Dispatch<AppActionsType>
 // //
 // import { setAppErrorAC, SetAppErrorActionType } from '../../app/app-reducer';
 // import { Dispatch } from 'redux';
