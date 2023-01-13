@@ -3,6 +3,7 @@ import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
 import {setAppStatusAC, setInitializeAC} from '../../app-reducer';
 import {ThunkAppDispatchType} from '../../../bll/store';
+import {handleServerNetworkError} from "../../../utils/error-utils";
 
 const initialState = {
     isLoggedIn: false,
@@ -55,7 +56,6 @@ export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.logOut()
         .then(res => {
-
             dispatch(logOutAC())
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -63,8 +63,7 @@ export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
             const error = err.response
                 ? err.response.data.error
                 : err.message
-            console.log('error: ', error)
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
@@ -81,9 +80,7 @@ export const registerTC = (email: string, password: string) => (dispatch: ThunkA
             const error = err.response
                 ? err.response.data.error
                 : err.message
-            console.warn(error)
-            // view snackbar with error
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
@@ -98,10 +95,8 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
                 ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
-            dispatch(setAppStatusAC('failed'))
+                : err.message;
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
@@ -114,17 +109,13 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             if (res.data.name) {
                 dispatch(logInAC(res.data.name, res.data.email))
                 dispatch(setAppStatusAC('succeeded'))
-
-
             }
         })
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
                 ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
-            dispatch(setAppStatusAC('failed'))
+                : err.message;
+            handleServerNetworkError({message: error}, dispatch)
         })
         .finally(() => {
             dispatch(setInitializeAC())
@@ -142,10 +133,8 @@ export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
                 ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
-            dispatch(setAppStatusAC('failed'))
+                : err.message;
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
@@ -159,10 +148,8 @@ export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchTy
         .catch((err: AxiosError<{ error: string }>) => {
             const error = err.response
                 ? err.response.data.error
-                : err.message
-            console.warn(error)
-            // view snackbar with error
-            dispatch(setAppStatusAC('failed'))
+                : err.message;
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
@@ -176,9 +163,7 @@ export const setNewPasswordTC = (password: string, token: string) => (dispatch: 
             const error = err.response
                 ? err.response.data.error
                 : err.message
-            console.warn(error)
-            // view snackbar with error
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError({message: error}, dispatch)
         })
 }
 
