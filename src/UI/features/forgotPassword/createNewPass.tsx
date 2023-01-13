@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate, useParams} from 'react-router-dom';
+import {Navigate, NavLink, useParams} from 'react-router-dom';
 import {useFormik} from 'formik';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
@@ -87,12 +87,14 @@ export const CreateNewPass = () => {
                     <div>
                         <span>Create new password and we will send you further instructions to email</span>
                     </div>
-                    <Button style={{borderRadius: '30px', marginTop: '20px'}}
-                            type={'submit'}
-                            variant={'contained'}
-                            color={'primary'}>
-                        Create new password
-                    </Button>
+                    <NavLink to={'/login'}>
+                        <Button style={{borderRadius: '30px', marginTop: '20px'}}
+                                type={'submit'}
+                                variant={'contained'}
+                                color={'primary'}>
+                            Create new password
+                        </Button>
+                    </NavLink>
                 </form>
             </FormControl>
         </div>
