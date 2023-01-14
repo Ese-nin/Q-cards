@@ -7,9 +7,13 @@
 
 import {AppActionsType, changeAppErrorAC, setAppStatusAC} from "../UI/app-reducer";
 import {Dispatch} from "redux";
+import {AxiosError} from "axios";
 
-export const handleServerNetworkError = (error: {message: string}, dispatch: ErrorUtilsDispatchType) => {
-    dispatch(changeAppErrorAC(error.message))
+export const handleServerNetworkError = (err: AxiosError<{error: string}>, dispatch: ErrorUtilsDispatchType) => {
+    const error = err.response
+        ? err.response.data.error
+        : err.message
+    dispatch(changeAppErrorAC(error))
     dispatch(setAppStatusAC('failed'))
 }
 

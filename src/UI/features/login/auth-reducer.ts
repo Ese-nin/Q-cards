@@ -13,6 +13,8 @@ const initialState = {
     email: ''
 }
 
+export type InitialAuthStateType = typeof initialState
+
 export const authReducer = (state: InitialAuthStateType = initialState, action: AuthActionsType): InitialAuthStateType => {
     switch (action.type) {
         case 'AUTH/SET_LOG_IN':
@@ -60,10 +62,7 @@ export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -72,15 +71,11 @@ export const registerTC = (email: string, password: string) => (dispatch: ThunkA
     dispatch(setAppStatusAC('loading'))
     authAPI.register(email, password)
         .then((res) => {
-            // console.log(res.data)
             dispatch(setHaveAccountAC(true))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -93,10 +88,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message;
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -112,16 +104,13 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             }
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message;
-            handleServerNetworkError({message: error}, dispatch)
+            console.log(err.message)
+            dispatch(setAppStatusAC('failed'))
         })
         .finally(() => {
             dispatch(setInitializeAC())
         })
 }
-
 
 export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -131,10 +120,7 @@ export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message;
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -146,10 +132,7 @@ export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchTy
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message;
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -160,10 +143,7 @@ export const setNewPasswordTC = (password: string, token: string) => (dispatch: 
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message
-            handleServerNetworkError({message: error}, dispatch)
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -171,14 +151,6 @@ export const setNewPasswordTC = (password: string, token: string) => (dispatch: 
 
 
 // types
-
-export type InitialAuthStateType = {
-    isLoggedIn: boolean
-    isHaveAccount: boolean
-    isSentInstruction: boolean
-    name: string
-    email: string
-}
 
 export type AuthActionsType = LogInActionType
     | LogOutActionType
