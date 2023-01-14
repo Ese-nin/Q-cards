@@ -2,12 +2,22 @@ import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, NavLink} from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+
 import {useFormik} from 'formik';
 import {loginTC, setHaveAccountAC} from './auth-reducer';
 import s from '../register/register.module.css';
-import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 type LoginFormikErrorsType = {
     email?: string
@@ -44,7 +54,6 @@ export const LoginPage = () => {
         onSubmit: values => {
             const {email, password, rememberMe} = values
             dispatch(loginTC(email, password, rememberMe))
-            formik.resetForm()
         },
     })
 
@@ -118,7 +127,7 @@ export const LoginPage = () => {
                 </form>
             </FormControl>
             <div>
-                <span>Already have an account?</span>
+                <span>Don't have an account?</span>
             </div>
             <NavLink onClick={haveAccountHandler} to={'/register'}>Sign Up</NavLink>
         </div>

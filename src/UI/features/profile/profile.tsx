@@ -5,7 +5,6 @@ import avatar from './Ellipse 45.png'
 import s from './profile.module.css'
 import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
-import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import {logoutTC, setNewNameTC} from '../login/auth-reducer';
 import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
 
@@ -35,8 +34,6 @@ export const Profile = () => {
             <img src={avatar} alt="avatar" className={s.imgAvatar}/>
             <div>
                 <EditableSpan value={Name} onChange={changeName}/>
-                {/*<span className={s.nameText}>{Name}</span>*/}
-                {/*<DriveFileRenameOutlineIcon/>*/}
             </div>
             <span className={s.mailText}>{Email}</span>
             <Button variant="outlined" startIcon={<Logout/>} onClick={LogOutHandler}>

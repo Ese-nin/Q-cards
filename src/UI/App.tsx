@@ -12,6 +12,7 @@ import {Loading} from "./common/loading/loading";
 import {ForgotPassPage} from './features/forgotPassword/forgotPassword';
 import {CheckEmail} from './features/forgotPassword/checkEmail';
 import {CreateNewPass} from './features/forgotPassword/createNewPass';
+import {ErrorAlert} from "./common/ErrorAlert/ErrorAlert";
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -32,6 +33,7 @@ export const App = () => {
 
     return (
         <div className="App">
+            <ErrorAlert/>
             <Header/>
             {status==='loading' && <Loading/>}
             <Routes>
