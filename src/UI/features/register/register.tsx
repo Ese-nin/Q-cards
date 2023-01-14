@@ -1,7 +1,17 @@
 import React, {useState} from 'react';
-import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
+
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import InputAdornment from '@mui/material/InputAdornment';
+import InputLabel from '@mui/material/InputLabel';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 import {useFormik} from 'formik';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
 import s from './register.module.css'
 import {Navigate, NavLink} from 'react-router-dom';
 import {registerTC} from '../login/auth-reducer';
@@ -36,7 +46,7 @@ const validate = (values: RegFormikErrorsType) => {
 }
 
 export const Register = () => {
-
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const isHaveAccount = useAppSelector(state => state.auth.isHaveAccount)
     const dispatch = useAppDispatch()
 
@@ -50,7 +60,6 @@ export const Register = () => {
         onSubmit: values => {
             const {email, password} = values
             dispatch(registerTC(email, password))
-            formik.resetForm()
         },
     })
 
@@ -60,6 +69,10 @@ export const Register = () => {
 
     if (isHaveAccount) {
         return <Navigate to={'/login'}/>
+    }
+
+    if (isLoggedIn) {
+        return <Navigate to={'/'}/>
     }
 
     return (

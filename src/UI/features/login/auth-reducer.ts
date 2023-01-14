@@ -3,13 +3,17 @@ import {AxiosError} from 'axios';
 import {Dispatch} from 'redux'
 import {setAppStatusAC, setInitializeAC} from '../../app-reducer';
 import {ThunkAppDispatchType} from '../../../bll/store';
+import {handleServerNetworkError} from "../../../utils/error-utils";
 
 const initialState = {
     isLoggedIn: false,
     isHaveAccount: false,
+    isSentInstruction: false,
     name: '',
     email: ''
 }
+
+export type InitialAuthStateType = typeof initialState
 
 export const authReducer = (state: InitialAuthStateType = initialState, action: AuthActionsType): InitialAuthStateType => {
     switch (action.type) {
@@ -26,6 +30,8 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
             return {...state, isHaveAccount: action.isHaveAccount}
         case 'AUTH/SET_NEW_NAME':
             return {...state, name: action.name}
+        case 'AUTH/SENT_INSTRUCTION':
+            return {...state, isSentInstruction: action.isSent}
         default:
             return state
     }
@@ -43,9 +49,8 @@ export const logInAC = (name: string, email: string) => ({
 export const logOutAC = () => ({type: 'AUTH/SET_LOG_OUT', isLoggedIn: false} as const)
 export const setHaveAccountAC = (isHaveAccount: boolean) => ({type: 'AUTH/SET_HAVE_ACC', isHaveAccount} as const)
 export const changeNameAC = (name: string) => ({type: 'AUTH/SET_NEW_NAME', name} as const)
+export const sentInstructionAC = (isSent: boolean) => ({type: 'AUTH/SENT_INSTRUCTION', isSent} as const)
 
-
-// export const logInAC = () => ({type: 'AUTH/SET_LOG_IN', isLoggedIn: true} as const)
 
 // thank creators
 
@@ -53,16 +58,11 @@ export const logoutTC = () => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.logOut()
         .then(res => {
-
             dispatch(logOutAC())
-            dispatch(setAppStatusAC('succeeded'))            /// прикрутить крутилочку ответа сервера
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message
-            console.log('error: ', error)
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -71,17 +71,11 @@ export const registerTC = (email: string, password: string) => (dispatch: ThunkA
     dispatch(setAppStatusAC('loading'))
     authAPI.register(email, password)
         .then((res) => {
-            // console.log(res.data)
             dispatch(setHaveAccountAC(true))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : err.message
-            console.warn(error)
-            // view snackbar with error
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -94,12 +88,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(err, dispatch)
         })
 }
 
@@ -112,16 +101,10 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
             if (res.data.name) {
                 dispatch(logInAC(res.data.name, res.data.email))
                 dispatch(setAppStatusAC('succeeded'))
-
-
             }
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
+            console.log(err.message)
             dispatch(setAppStatusAC('failed'))
         })
         .finally(() => {
@@ -129,53 +112,55 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
         })
 }
 
-
 export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.changeName(name)
         .then(res => {
-            // было
-
-            // if (res.data.name) {
-            //     dispatch(changeNameAC(res.data.name))
-            //     dispatch(setAppStatusAC('succeeded'))
-            // }
-
-            // нужно
-                dispatch(changeNameAC(res.data.updatedUser.name))
-                dispatch(setAppStatusAC('succeeded'))
+            dispatch(changeNameAC(res.data.updatedUser.name))
+            dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
-            const error = err.response
-                ? err.response.data.error
-                : (err.message + ', more details in the console');
-
-            console.log('Error: ', {...err})
-            dispatch(setAppStatusAC('failed'))
+            handleServerNetworkError(err, dispatch)
         })
-        // нет необходимости, приложение уже инициализировано
-        // .finally(() => {
-        //     dispatch(setInitializeAC())
-        // })
 }
+
+export const forgotPasswordTC = (email: string) => (dispatch: ThunkAppDispatchType) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.forgotPass(email)
+        .then((res) => {
+            dispatch(sentInstructionAC(true))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const setNewPasswordTC = (password: string, token: string) => (dispatch: ThunkAppDispatchType) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.setNewPass(password, token)
+        .then((res) => {
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+
 
 
 // types
-
-export type InitialAuthStateType = {
-    isLoggedIn: boolean
-    isHaveAccount: boolean
-    name: string
-    email: string
-}
 
 export type AuthActionsType = LogInActionType
     | LogOutActionType
     | SetHaveAccountActionType
     | changeNameActionType
+    | SentInstructionActionType
 
 
 type LogInActionType = ReturnType<typeof logInAC>
 type LogOutActionType = ReturnType<typeof logOutAC>
 type SetHaveAccountActionType = ReturnType<typeof setHaveAccountAC>
 type changeNameActionType = ReturnType<typeof changeNameAC>
+type SentInstructionActionType = ReturnType<typeof sentInstructionAC>

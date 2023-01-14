@@ -38,7 +38,7 @@ export default function MenuAppBar() {
                         </NavLink>
                         <NavLink to="/checkMail"
                                  className={({isActive}) => (isActive ? s.active : '')}>checkMail</NavLink>
-                        <NavLink to="/createNewPass"
+                        <NavLink to="/createNewPass/*"
                                  className={({isActive}) => (isActive ? s.active : '')}>CreateNewPass</NavLink>
                     </div>
 

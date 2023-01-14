@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 import {useFormik} from 'formik';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
 import {Visibility, VisibilityOff} from '@mui/icons-material';
+import {setNewPasswordTC} from '../login/auth-reducer';
 
 type LoginFormikErrorsType = {
     password?: string
@@ -25,6 +26,12 @@ export const CreateNewPass = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const dispatch = useAppDispatch()
 
+    const params = useParams<'token'>()
+    let token = ''
+    if (params.token) {
+        token = params.token
+    }
+
     const formik = useFormik({
         initialValues: {
             password: '',
@@ -32,7 +39,7 @@ export const CreateNewPass = () => {
         validate,
         onSubmit: values => {
             const {password} = values
-            // dispatch(loginTC(password))
+            dispatch(setNewPasswordTC(password, token))
             formik.resetForm()
         },
     })
@@ -45,9 +52,6 @@ export const CreateNewPass = () => {
         event.preventDefault();
     };
 
-    const haveAccountHandler = () => {
-        // dispatch(setHaveAccountAC(false))
-    }
 
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
@@ -60,9 +64,7 @@ export const CreateNewPass = () => {
                 <h2 className={s.regFormTitle}>Create new password</h2>
 
                 <form onSubmit={formik.handleSubmit}>
-
                     <FormGroup>
-
                         <FormControl margin={'normal'}>
                             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                             <Input
@@ -81,22 +83,16 @@ export const CreateNewPass = () => {
                         </FormControl>
                         {formik.errors.password && formik.touched.password &&
                             <div style={{color: 'crimson'}}>{formik.errors.password}</div>}
-
                     </FormGroup>
-
                     <div>
                         <span>Create new password and we will send you further instructions to email</span>
                     </div>
-
-
                     <Button style={{borderRadius: '30px', marginTop: '20px'}}
                             type={'submit'}
                             variant={'contained'}
                             color={'primary'}>
                         Create new password
                     </Button>
-
-
                 </form>
             </FormControl>
         </div>
