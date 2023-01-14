@@ -3,16 +3,18 @@ import {useAppDispatch, useAppSelector} from "../../../../bll/store";
 import {getCardsPackTC} from "../cards-reducer";
 
 export const CardsPack = () => {
-    const dispatch=useAppDispatch()
-    const name=useAppSelector(state => state.cards.cardPacks)
-
     useEffect(()=>{
         dispatch(getCardsPackTC())
     },[])
+    const dispatch=useAppDispatch()
+    const value=useAppSelector(state => state.cards.cardPacks)
+
+
+    console.log(value)
 
     return (
         <div>
-            <h1>name1</h1>
+
         </div>
     );
 };
