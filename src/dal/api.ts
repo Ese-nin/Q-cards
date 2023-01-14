@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 const instance = axios.create({
     baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
     withCredentials: true,
@@ -39,8 +40,26 @@ export const authAPI = {
             resetPasswordToken: token
         }
         return instance.post<NewPassResponseType>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
+    },
+
+}
+
+export const cardsAPI={
+    getCardsPack(packName?:string,min?:number,max?:number,sortPacks?:string,page?:number,pageCount?:number,user_id?:string,block?:boolean){
+        /*   const data={
+               packName,
+               min,
+               max,
+               sortPacks,
+               page,
+               pageCount,
+               user_id,
+               block
+           }*/
+        return instance.get<GetCardsPackResponseType>('cards/pack'/*,data*/)
     }
 }
+
 
 
 // types
@@ -92,4 +111,23 @@ export type ForgotResponseType = {
   success: boolean;
   answer: boolean;
   html: boolean;
+}
+
+export type GetCardsPackResponseType ={
+    cardPacks:Array<CardPacksType>,
+    cardPacksTotalCount:number, // количество колод
+    maxCardsCount:number,
+    minCardsCount:number,
+    page:number, // выбранная страница
+    pageCount:number  // количество элементов на странице
+
+}
+
+export type CardPacksType={
+    id:string,
+    user_id:string,
+    name:string,
+    cardsCount:number,
+    created:string,
+    updated:string
 }
