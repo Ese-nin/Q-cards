@@ -1,13 +1,16 @@
 {
   "files": {
-    "main.css": "/Q-cards/static/css/main.7b5a1391.css",
-    "main.js": "/Q-cards/static/js/main.f2a6b052.js",
-    "static/js/27.8414bf88.chunk.js": "/Q-cards/static/js/27.8414bf88.chunk.js",
+    "main.css": "/Q-cards/static/css/main.278e0044.css",
+    "main.js": "/Q-cards/static/js/main.52c7996d.js",
+    "static/js/787.8517b185.chunk.js": "/Q-cards/static/js/787.8517b185.chunk.js",
     "static/media/Ellipse 45.png": "/Q-cards/static/media/Ellipse 45.5974632cbf5d7edfaf82.png",
-    "index.html": "/Q-cards/index.html"
+    "index.html": "/Q-cards/index.html",
+    "main.278e0044.css.map": "/Q-cards/static/css/main.278e0044.css.map",
+    "main.52c7996d.js.map": "/Q-cards/static/js/main.52c7996d.js.map",
+    "787.8517b185.chunk.js.map": "/Q-cards/static/js/787.8517b185.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7b5a1391.css",
-    "static/js/main.f2a6b052.js"
+    "static/css/main.278e0044.css",
+    "static/js/main.52c7996d.js"
   ]
 }
