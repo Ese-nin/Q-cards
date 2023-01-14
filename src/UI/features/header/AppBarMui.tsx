@@ -40,6 +40,8 @@ export default function MenuAppBar() {
                                  className={({isActive}) => (isActive ? s.active : '')}>checkMail</NavLink>
                         <NavLink to="/createNewPass/*"
                                  className={({isActive}) => (isActive ? s.active : '')}>CreateNewPass</NavLink>
+                        <NavLink to="/CardsPack"
+                                 className={({isActive}) => (isActive ? s.active : '')}>CardsPack</NavLink>
                     </div>
 
                     {isLoggedIn && (
