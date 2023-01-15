@@ -3,9 +3,15 @@ import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, NavLink, useParams} from 'react-router-dom';
 import {useFormik} from 'formik';
 import s from '../register/register.module.css';
-import {Button, FormControl, FormGroup, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
-import {Visibility, VisibilityOff} from '@mui/icons-material';
+
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+
 import {setNewPasswordTC} from '../login/auth-reducer';
+import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
 
 type LoginFormikErrorsType = {
     password?: string
@@ -48,11 +54,6 @@ export const CreateNewPass = () => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
-
-
     if (isLoggedIn) {
         return <Navigate to={'/profile'}/>
     }
@@ -71,14 +72,9 @@ export const CreateNewPass = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 {...formik.getFieldProps('password')}
                                 endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}>
-                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                        </IconButton>
-                                    </InputAdornment>}
+                                    <InputWithEyeIcon showPassword={showPassword}
+                                                      handleClickShowPassword={handleClickShowPassword}/>
+                                }
                             />
                         </FormControl>
                         {formik.errors.password && formik.touched.password &&

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, NavLink} from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
@@ -10,14 +10,10 @@ import s from '../register/register.module.css';
 import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
-import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
-import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
 
 type LoginFormikErrorsType = {
     email?: string
@@ -58,12 +54,7 @@ export const LoginPage = () => {
     })
 
     const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
+    const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
     const haveAccountHandler = () => {
         dispatch(setHaveAccountAC(false))
@@ -97,14 +88,9 @@ export const LoginPage = () => {
                                 type={showPassword ? 'text' : 'password'}
                                 {...formik.getFieldProps('password')}
                                 endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}>
-                                            {showPassword ? <VisibilityOff/> : <Visibility/>}
-                                        </IconButton>
-                                    </InputAdornment>}
+                                    <InputWithEyeIcon showPassword={showPassword}
+                                                      handleClickShowPassword={handleClickShowPassword}/>
+                                }
                             />
                         </FormControl>
                         {formik.errors.password && formik.touched.password &&
@@ -115,8 +101,9 @@ export const LoginPage = () => {
                                               {...formik.getFieldProps('rememberMe')}
                                           />}
                         />
-                        <NavLink to="/forgot" style={{display:"flex",justifyContent:"end", margin:"10px"}} >Forgot Password?</NavLink>
-                        <Button style={{borderRadius: '30px', marginTop:"20px"}}
+                        <NavLink to="/forgot" style={{display: "flex", justifyContent: "end", margin: "10px"}}>Forgot
+                            Password?</NavLink>
+                        <Button style={{borderRadius: '30px', marginTop: "20px"}}
                                 type={'submit'}
                                 variant={'contained'}
                                 color={'primary'}>
