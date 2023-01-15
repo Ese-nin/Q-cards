@@ -41,16 +41,12 @@ export const cardsReducer = (state: initialCardsStateType = initialState, action
         case "GET_CARDS_PACK":
             return {
                 ...state,
-
-              //  cardPacks:[...state.cardPacks,action.cardPacks.map((el:CardPacksType,id)=>{...state.cardPacks[id],el}: el)], надо скопировать пришедший массив
-
+                cardPacks: [...state.cardPacks, ...action.cardPacks],
                 cardPacksTotalCount: action.cardPacksTotalCount,
                 maxCardsCount: action.maxCardsCount,
                 minCardsCount: action.minCardsCount,
                 page: action.page,
                 pageCount: action.pageCount
-
-
             }
         default:
             return state

@@ -45,8 +45,8 @@ export const authAPI = {
 }
 
 export const cardsAPI={
-    getCardsPack(packName?:string,min?:number,max?:number,sortPacks?:string,page?:number,pageCount?:number,user_id?:string,block?:boolean){
-        /*   const data={
+    getCardsPack(packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=10,user_id:string="",block:boolean=false){
+           const data={
                packName,
                min,
                max,
@@ -55,12 +55,23 @@ export const cardsAPI={
                pageCount,
                user_id,
                block
-           }*/
-        return instance.get<GetCardsPackResponseType>('cards/pack'/*,data*/)
+           }as DefaultRequestCardsPack
+
+        return instance.get<GetCardsPackResponseType>('cards/pack',{data} )
     }
 }
 
 
+export type DefaultRequestCardsPack={
+    packName:string,
+    min:number,
+    max:number,
+    sortPacks:string,
+    page:number,
+    pageCount:number,
+    user_id:string,
+    block:boolean
+}
 
 // types
 

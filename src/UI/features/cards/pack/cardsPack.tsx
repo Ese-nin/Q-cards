@@ -7,7 +7,7 @@ export const CardsPack = () => {
         dispatch(getCardsPackTC())
     },[])
     const dispatch=useAppDispatch()
-    const value=useAppSelector(state => state.cards.cardPacks)
+    const value=useAppSelector(state => state.cards)
 
 
     console.log(value)
