@@ -3,6 +3,7 @@ import {Button} from '@mui/material';
 import {useAppSelector} from '../../../bll/store';
 import {Navigate} from 'react-router-dom';
 import s from './packList.module.css'
+import Tables from './tables/Tables';
 
 export const PackList = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -25,8 +26,8 @@ export const PackList = () => {
                 <div>кнопка сброса фильтров</div>
             </div>
 
-            <div>
-                таблица
+            <div className={s.tableBlock}>
+                <Tables/>
             </div>
 
             <div>
