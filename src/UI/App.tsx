@@ -1,23 +1,24 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {Header} from "./features/header/header";
-import {Navigate, Route, Routes} from "react-router-dom";
-import {Profile} from "./features/profile/profile";
-import {LoginPage} from "./features/login/login";
-import {Register} from "./features/register/register";
+import {Header} from './features/header/header';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {Profile} from './features/profile/profile';
+import {LoginPage} from './features/login/login';
+import {Register} from './features/register/register';
 import {useAppDispatch, useAppSelector} from '../bll/store';
 import {initializeProfileTC} from './features/login/auth-reducer';
-import {CircularProgress} from "@mui/material";
-import {Loading} from "./common/loading/loading";
+import {CircularProgress} from '@mui/material';
+import {Loading} from './common/loading/loading';
 import {ForgotPassPage} from './features/forgotPassword/forgotPassword';
 import {CheckEmail} from './features/forgotPassword/checkEmail';
 import {CreateNewPass} from './features/forgotPassword/createNewPass';
-import {ErrorAlert} from "./common/ErrorAlert/ErrorAlert";
+import {ErrorAlert} from './common/ErrorAlert/ErrorAlert';
+import {PackList} from './features/cards/PacksList';
 
 export const App = () => {
     const dispatch = useAppDispatch()
     const isInitialized = useAppSelector(state => state.app.isInitialized)
-    const status = useAppSelector((state)=>state.app.appStatus)
+    const status = useAppSelector((state) => state.app.appStatus)
 
 
     useEffect(() => {
@@ -26,7 +27,7 @@ export const App = () => {
 
     if (!isInitialized) {
         return <div
-          style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
@@ -35,7 +36,7 @@ export const App = () => {
         <div className="App">
             <ErrorAlert/>
             <Header/>
-            {status==='loading' && <Loading/>}
+            {status === 'loading' && <Loading/>}
             <Routes>
                 <Route path={'/profile'} element={<Profile/>}/>
                 <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
@@ -45,7 +46,8 @@ export const App = () => {
                 <Route path={'/forgot'} element={<ForgotPassPage/>}/>
                 <Route path={'/checkMail'} element={<CheckEmail/>}/>
                 <Route path={'/createNewPass/:token'} element={<CreateNewPass/>}/>
-                <Route path={'*'} element={<Navigate to='/404'/>}/>
+                <Route path={'/packlist'} element={<PackList/>}/>
+                <Route path={'*'} element={<Navigate to="/404"/>}/>
             </Routes>
         </div>
     )
