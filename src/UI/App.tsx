@@ -12,7 +12,8 @@ import {Loading} from './common/loading/loading';
 import {ForgotPassPage} from './features/forgotPassword/forgotPassword';
 import {CheckEmail} from './features/forgotPassword/checkEmail';
 import {CreateNewPass} from './features/forgotPassword/createNewPass';
-import {ErrorAlert} from './common/ErrorAlert/ErrorAlert';
+import {ErrorAlert} from "./common/ErrorAlert/ErrorAlert";
+import {CardsPack} from "./features/cards/pack/cardsPack";
 import {PackList} from './features/cards/PacksList';
 
 export const App = () => {
@@ -45,6 +46,7 @@ export const App = () => {
                 <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
                 <Route path={'/forgot'} element={<ForgotPassPage/>}/>
                 <Route path={'/checkMail'} element={<CheckEmail/>}/>
+                <Route path={'/CardsPack'} element={<CardsPack/>}/>
                 <Route path={'/createNewPass/:token'} element={<CreateNewPass/>}/>
                 <Route path={'/packlist'} element={<PackList/>}/>
                 <Route path={'*'} element={<Navigate to="/404"/>}/>
