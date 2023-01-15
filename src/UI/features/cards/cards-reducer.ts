@@ -39,14 +39,10 @@ export type CardsActionType = GetCardsPackACType
 export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
+            console.log(action)
             return {
                 ...state,
-                cardPacks: [...state.cardPacks, ...action.cardPacks],
-                cardPacksTotalCount: action.cardPacksTotalCount,
-                maxCardsCount: action.maxCardsCount,
-                minCardsCount: action.minCardsCount,
-                page: action.page,
-                pageCount: action.pageCount
+               ...action
             }
         default:
             return state
@@ -64,7 +60,7 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 
-export const getCardsPackTC = (packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=10,user_id:string="",block:boolean=false) => (dispatch: ThunkAppDispatchType) => {
+export const getCardsPackTC = (packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=20,user_id:string="",block:boolean=false) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCardsPack(packName,min,max,sortPacks,page,pageCount,user_id,block)
         .then((res) => {

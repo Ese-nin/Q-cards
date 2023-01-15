@@ -4,7 +4,7 @@ import {getCardsPackTC} from "../cards-reducer";
 
 export const CardsPack = () => {
     useEffect(()=>{
-        dispatch(getCardsPackTC())
+        dispatch(getCardsPackTC('',1,6,"",1,6,"",false))
     },[])
     const dispatch=useAppDispatch()
     const value=useAppSelector(state => state.cards)

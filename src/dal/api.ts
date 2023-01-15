@@ -46,18 +46,17 @@ export const authAPI = {
 
 export const cardsAPI={
     getCardsPack(packName:string,min:number,max:number,sortPacks:string,page:number,pageCount:number,user_id:string,block:boolean){
-           const data={
-               packName,
-               min,
-               max,
-               sortPacks,
-               page,
-               pageCount,
-               user_id,
-               block
-           }as DefaultRequestCardsPack
 
-        return instance.get<GetCardsPackResponseType>('cards/pack',{data} )
+        return instance.get<GetCardsPackResponseType>('cards/pack',{params:{
+                packName,
+                min,
+                max,
+                sortPacks,
+                page,
+                pageCount,
+                user_id,
+                block
+            }} )
     }
 }
 
