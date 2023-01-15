@@ -42,7 +42,7 @@ export const cardsReducer = (state: initialCardsStateType = initialState, action
             console.log(action)
             return {
                 ...state,
-               ...action
+                ...action
             }
         default:
             return state
@@ -60,12 +60,20 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 
-export const getCardsPackTC = (packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=20,user_id:string="",block:boolean=false) => (dispatch: ThunkAppDispatchType) => {
+export const getCardsPackTC = (packName: string = "", // для поиковой строки
+                               min: number = 1,  // для кол-ва отображаемых паков
+                               max: number = 4, // для кол-ва отображаемых паков
+                               sortPacks: string = "", // для сортировки по возрастанию или убыванию
+                               page: number = 1, // какая страница открыта
+                               pageCount: number = 4, //кол-во паков на страницу
+                               user_id: string = "", //чьи колоды, если пусто то, всех
+                               block: boolean = false //для блока
+) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack(packName,min,max,sortPacks,page,pageCount,user_id,block)
+    cardsAPI.getCardsPack(packName, min, max, sortPacks, page, pageCount, user_id, block)
         .then((res) => {
-            dispatch(getCardsPackAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount, res.data.minCardsCount, res.data.page, res.data.pageCount))
-
+            const data= res.data
+            dispatch(getCardsPackAC(data.cardPacks, data.cardPacksTotalCount, data.maxCardsCount, data.minCardsCount, data.page, data.pageCount))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
