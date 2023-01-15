@@ -64,9 +64,9 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 
-export const getCardsPackTC = (packName?: string, min?: number, max?: number, sortPacks?: string, page?: number, pageCount?: number, user_id?: string, block?: boolean) => (dispatch: ThunkAppDispatchType) => {
+export const getCardsPackTC = (packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=10,user_id:string="",block:boolean=false) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack()
+    cardsAPI.getCardsPack(packName,min,max,sortPacks,page,pageCount,user_id,block)
         .then((res) => {
             dispatch(getCardsPackAC(res.data.cardPacks, res.data.cardPacksTotalCount, res.data.maxCardsCount, res.data.minCardsCount, res.data.page, res.data.pageCount))
 

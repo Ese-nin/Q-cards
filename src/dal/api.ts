@@ -45,7 +45,7 @@ export const authAPI = {
 }
 
 export const cardsAPI={
-    getCardsPack(packName:string="",min:number=1,max:number=9,sortPacks:string="",page:number=1,pageCount:number=10,user_id:string="",block:boolean=false){
+    getCardsPack(packName:string,min:number,max:number,sortPacks:string,page:number,pageCount:number,user_id:string,block:boolean){
            const data={
                packName,
                min,
