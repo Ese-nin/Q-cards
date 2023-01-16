@@ -39,7 +39,6 @@ export type CardsActionType = GetCardsPackACType
 export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
-            console.log(action)
             return {
                 ...state,
                 ...action

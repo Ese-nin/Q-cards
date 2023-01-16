@@ -139,5 +139,6 @@ export type CardPacksType={
     name:string,
     cardsCount:number,
     created:string,
-    updated:string
+    updated:string,
+    user_name: string
 }
