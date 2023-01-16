@@ -44,10 +44,11 @@ export const authAPI = {
 
 }
 
-export const cardsAPI={
-    getCardsPack(packName:string,min:number,max:number,sortPacks:string,page:number,pageCount:number,user_id:string,block:boolean){
+export const cardsAPI = {
+    getCardsPack(packName: string, min: number, max: number, sortPacks: string, page: number, pageCount: number, user_id: string, block: boolean) {
 
-        return instance.get<GetCardsPackResponseType>('cards/pack',{params:{
+        return instance.get<GetCardsPackResponseType>('cards/pack', {
+            params: {
                 packName,
                 min,
                 max,
@@ -56,20 +57,32 @@ export const cardsAPI={
                 pageCount,
                 user_id,
                 block
-            }} )
+            }
+        })
+    },
+
+    addNewCardPack(name: string, deckCover: string, privatePack: boolean) {
+        const data = {
+            cardsPack: {
+                name: name,
+                deckCover: deckCover,
+                privatePack: privatePack
+            }
+        }
+        return instance.post<GetCardsPackResponseType>('cards/pack', data)
     }
 }
 
 
-export type DefaultRequestCardsPack={
-    packName:string,
-    min:number,
-    max:number,
-    sortPacks:string,
-    page:number,
-    pageCount:number,
-    user_id:string,
-    block:boolean
+export type DefaultRequestCardsPack = {
+    packName: string,
+    min: number,
+    max: number,
+    sortPacks: string,
+    page: number,
+    pageCount: number,
+    user_id: string,
+    block: boolean
 }
 
 // types
@@ -90,25 +103,25 @@ type RegisterResponseType = {
 }
 
 export type UserDataResponseType = {
-  _id: string;
-  email: string;
-  rememberMe: boolean;
-  isAdmin: boolean;
-  name: string;
-  verified: boolean;
-  publicCardPacksCount: number;
-  created: string;
-  updated: string;
-  __v: number;
-  token: string;
-  tokenDeathTime: number;
-  avatar?: any;
+    _id: string;
+    email: string;
+    rememberMe: boolean;
+    isAdmin: boolean;
+    name: string;
+    verified: boolean;
+    publicCardPacksCount: number;
+    created: string;
+    updated: string;
+    __v: number;
+    token: string;
+    tokenDeathTime: number;
+    avatar?: any;
 }
 
 export type ChangeNameResponseType = {
-  updatedUser: UserDataResponseType;
-  token: string;
-  tokenDeathTime: number;
+    updatedUser: UserDataResponseType;
+    token: string;
+    tokenDeathTime: number;
 }
 
 type NewPassResponseType = LogOutResponseType
@@ -117,28 +130,29 @@ export type LogOutResponseType = {
 }
 
 export type ForgotResponseType = {
-  info: string;
-  success: boolean;
-  answer: boolean;
-  html: boolean;
+    info: string;
+    success: boolean;
+    answer: boolean;
+    html: boolean;
 }
 
-export type GetCardsPackResponseType ={
-    cardPacks:Array<CardPacksType>,
-    cardPacksTotalCount:number, // количество колод
-    maxCardsCount:number,
-    minCardsCount:number,
-    page:number, // выбранная страница
-    pageCount:number  // количество элементов на странице
+export type GetCardsPackResponseType = {
+    cardPacks: Array<CardPacksType>,
+    cardPacksTotalCount: number, // количество колод
+    maxCardsCount: number,
+    minCardsCount: number,
+    page: number, // выбранная страница
+    pageCount: number  // количество элементов на странице
 
 }
 
-export type CardPacksType={
-    id:string,
-    user_id:string,
-    name:string,
-    cardsCount:number,
-    created:string,
-    updated:string,
+export type CardPacksType = {
+    id: string,
+    user_id: string,
+    name: string,
+    cardsCount: number,
+    created: string,
+    updated: string,
     user_name: string
 }
+

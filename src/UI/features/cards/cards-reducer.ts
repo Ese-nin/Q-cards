@@ -13,7 +13,7 @@ const initialState = {
         cardsCount: 0,
         created: "",
         updated: "",
-        user_name:""
+        user_name: ""
     }],
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
@@ -34,12 +34,18 @@ export type initialCardsStateType = {
 }
 
 
-export type CardsActionType = GetCardsPackACType
+export type CardsActionType = GetCardsPackACType|AddNewCardPackACType
 
 
 export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
+            return {
+                ...state,
+                ...action
+            }
+        case "ADD_NEW_CARD_PACK":
+            console.log(action)
             return {
                 ...state,
                 ...action
@@ -58,8 +64,18 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
     {type: "GET_CARDS_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
 
-export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
+export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
+                                 cardPacksTotalCount: number, // количество колод
+                                 maxCardsCount: number,
+                                 minCardsCount: number,
+                                 page: number, // выбранная страница
+                                 pageCount: number) => ({
+        type: "ADD_NEW_CARD_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+)
 
+
+export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
+export type AddNewCardPackACType=ReturnType<typeof addNewCardPackAC>
 export const getCardsPackTC = (packName: string = "", // для поиковой строки
                                min: number = 1,  // для кол-ва отображаемых паков
                                max: number = 4, // для кол-ва отображаемых паков
@@ -72,8 +88,20 @@ export const getCardsPackTC = (packName: string = "", // для поиковой
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCardsPack(packName, min, max, sortPacks, page, pageCount, user_id, block)
         .then((res) => {
-            const data= res.data
+            const data = res.data
             dispatch(getCardsPackAC(data.cardPacks, data.cardPacksTotalCount, data.maxCardsCount, data.minCardsCount, data.page, data.pageCount))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const addNewCardPackTC=(name:string="New Card Pack",deckCover:string="",privatePack:boolean=false)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.addNewCardPack(name,deckCover,privatePack)
+        .then((res)=>{
+            dispatch(getCardsPackTC())
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
