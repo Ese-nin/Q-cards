@@ -10,7 +10,8 @@ const initialState = {
     isHaveAccount: false,
     isSentInstruction: false,
     name: '',
-    email: ''
+    email: '',
+    user_id: '',
 }
 
 export type InitialAuthStateType = typeof initialState
@@ -22,7 +23,8 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
                 ...state,
                 isLoggedIn: action.isLoggedIn,
                 name: action.name,
-                email: action.email
+                email: action.email,
+                user_id: action.user_id
             }
         case 'AUTH/SET_LOG_OUT':
             return {...state, isLoggedIn: action.isLoggedIn}
@@ -40,11 +42,12 @@ export const authReducer = (state: InitialAuthStateType = initialState, action: 
 
 // actions
 
-export const logInAC = (name: string, email: string) => ({
+export const logInAC = (name: string, email: string, user_id: string) => ({
     type: 'AUTH/SET_LOG_IN',
     isLoggedIn: true,
     name,
-    email
+    email,
+    user_id
 } as const)
 export const logOutAC = () => ({type: 'AUTH/SET_LOG_OUT', isLoggedIn: false} as const)
 export const setHaveAccountAC = (isHaveAccount: boolean) => ({type: 'AUTH/SET_HAVE_ACC', isHaveAccount} as const)
@@ -84,7 +87,8 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
     dispatch(setAppStatusAC('loading'))
     authAPI.logIn(email, password, rememberMe)
         .then((res) => {
-            dispatch(logInAC(res.data.name, res.data.email))
+            const {name, email, _id} = res.data
+            dispatch(logInAC(name, email, _id))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -99,7 +103,8 @@ export const initializeProfileTC = () => (dispatch: Dispatch) => {
     authAPI.me()
         .then(res => {
             if (res.data.name) {
-                dispatch(logInAC(res.data.name, res.data.email))
+                const {name, email, _id} = res.data
+                dispatch(logInAC(name, email, _id))
                 dispatch(setAppStatusAC('succeeded'))
             }
         })
