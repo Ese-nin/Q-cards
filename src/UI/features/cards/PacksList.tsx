@@ -7,11 +7,14 @@ import Tables from './tables/Tables';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC} from "./cards-reducer";
+import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
+import {RangeSlider} from "./RangeSlider/RangeSlider";
 
 
 export const PackList = () => {
    const dispatch=useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    let userID = useAppSelector(state => state.auth.user_id)
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
@@ -30,8 +33,8 @@ export const PackList = () => {
             </div>
             <div className={s.formLine}>
                 <div>строка поиска</div>
-                <div>мои чужие карты</div>
-                <div>для слайдера</div>
+                <div><ChoiceCards userID={userID}/></div>
+                <div><RangeSlider/></div>
                 <div><FilterAltOffIcon/></div>
             </div>
 
