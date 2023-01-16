@@ -1,4 +1,4 @@
-.page{
+.page {
     display: flex;
     max-width: 1010px;
     margin: 0 auto;
@@ -6,17 +6,19 @@
     flex-direction: column;
 }
 
-.addNewPackLine{
+.addNewPackLine {
     margin: 30px 0px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
-.formLine{
+.formLine {
+    display: flex;
+    justify-content: space-between;
 
 }
 
-.tableBlock{
+.tableBlock {
     max-height: 440px;
 }

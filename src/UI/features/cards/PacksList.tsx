@@ -5,6 +5,8 @@ import {Navigate} from 'react-router-dom';
 import s from './packList.module.css'
 import Tables from './tables/Tables';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+
 
 export const PackList = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -20,11 +22,11 @@ export const PackList = () => {
                     Add new pack
                 </Button>
             </div>
-            <div>
+            <div className={s.formLine}>
                 <div>строка поиска</div>
                 <div>мои чужие карты</div>
                 <div>для слайдера</div>
-                <div>кнопка сброса фильтров</div>
+                <div><FilterAltOffIcon/></div>
             </div>
 
             <div className={s.tableBlock}>
