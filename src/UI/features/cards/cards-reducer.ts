@@ -12,7 +12,8 @@ const initialState = {
         name: "",
         cardsCount: 0,
         created: "",
-        updated: ""
+        updated: "",
+        user_name: '',
     }],
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
@@ -60,7 +61,7 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 
-export const getCardsPackTC = (packName: string = "", // для поиковой строки
+export const getCardsPackTC = (packName: string = "", // для поисковой строки
                                min: number = 1,  // для кол-ва отображаемых паков
                                max: number = 4, // для кол-ва отображаемых паков
                                sortPacks: string = "", // для сортировки по возрастанию или убыванию
