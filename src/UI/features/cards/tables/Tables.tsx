@@ -14,17 +14,15 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
-
 export default function Tables() {
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(getCardsPackTC())
-    },[])
-    const dispatch=useAppDispatch()
-    const value=useAppSelector(state => state.cards)
+    }, [])
+    const dispatch = useAppDispatch()
+    const value = useAppSelector(state => state.cards)
     console.log(value)
-const cards = value.cardPacks
-
+    const cards = value.cardPacks
 
 
     return (
@@ -47,7 +45,12 @@ const cards = value.cardPacks
                         >
                             <TableCell component="th" scope="row">{row.name} </TableCell>
                             <TableCell align="left">{row.cardsCount}</TableCell>
-                            <TableCell align="left">{row.updated}</TableCell>
+                            <TableCell
+                                align="left">{(new Date(row.updated)).getDate()}
+                                .{(new Date(row.updated)).getMonth() < 10
+                                    ? ((new Date(row.updated)).getMonth() + '1')
+                                    : (new Date(row.updated)).getMonth() + 1}
+                                .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
                             <SchoolIcon/>
                             <BorderColorIcon/>
