@@ -47,11 +47,11 @@ const cards = value.cardPacks
                         >
                             <TableCell component="th" scope="row">{row.name} </TableCell>
                             <TableCell align="left">{row.cardsCount}</TableCell>
-                            <TableCell align="left">{row.updated}</TableCell> // привести в нормальный вид дату
+                            <TableCell align="left">{row.updated}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
                             <SchoolIcon/>
                             <BorderColorIcon/>
-                            <DeleteOutlineIcon/> // как убрать прорисовку с первой строки???
+                            <DeleteOutlineIcon/>
                         </TableRow>
                     ))}
                 </TableBody>

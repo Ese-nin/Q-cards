@@ -14,22 +14,24 @@ beforeEach(() => {
         isHaveAccount: false,
         isSentInstruction: false,
         name: '',
-        email: ''
+        email: '',
+        user_id: '',
     }
 })
 
 test('isLoggedIn should be "true"', () => {
     const email = 'blabla@dhdh.com';
     const name = 'Name'
+    const id = '123';
 
-    const endState = authReducer(startState, logInAC(name, email))
+    const endState = authReducer(startState, logInAC(name, email, id))
 
     expect(endState.isLoggedIn).toBe(true)
 })
 
 
 test('isLoggedIn should be "false"', () => {
-    startState = {isLoggedIn: true, isHaveAccount: false, isSentInstruction: false, name: '', email: ''}
+    startState = {isLoggedIn: true, isHaveAccount: false, isSentInstruction: false, name: '', email: '', user_id: ''}
 
     const endState = authReducer(startState, logOutAC())
 
