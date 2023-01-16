@@ -7,6 +7,7 @@ import Tables from './tables/Tables';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
+import {RangeSlider} from "./RangeSlider/RangeSlider";
 
 
 export const PackList = () => {
@@ -27,7 +28,7 @@ export const PackList = () => {
             <div className={s.formLine}>
                 <div>строка поиска</div>
                 <div><ChoiceCards userID={userID}/></div>
-                <div>для слайдера</div>
+                <div><RangeSlider/></div>
                 <div><FilterAltOffIcon/></div>
             </div>
 
