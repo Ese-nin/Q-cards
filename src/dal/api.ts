@@ -70,6 +70,24 @@ export const cardsAPI = {
             }
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
+    },
+
+    deleteCardPack(cardPackID:string){
+        return instance.delete('cards/pack', {
+            params:{
+                cardPackID
+            }
+        })
+    },
+
+    renameCardPack(cardPackID:string, newNameCardPack:string){
+        const data = {
+            cardsPack: {
+                cardPackID: cardPackID,
+                newNameCardPack: newNameCardPack
+            }
+        }
+        return instance.put('cards/pack',data)
     }
 }
 

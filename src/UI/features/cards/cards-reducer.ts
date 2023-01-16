@@ -34,7 +34,9 @@ export type initialCardsStateType = {
 }
 
 
-export type CardsActionType = GetCardsPackACType|AddNewCardPackACType
+export type CardsActionType = GetCardsPackACType
+    | AddNewCardPackACType
+    | DeleteCardPackACType
 
 
 export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
@@ -44,8 +46,7 @@ export const cardsReducer = (state: initialCardsStateType = initialState, action
                 ...state,
                 ...action
             }
-        case "ADD_NEW_CARD_PACK":
-            console.log(action)
+        case "ADD_NEW_CARD_PACK":        //по сути это не нужно, но мб когда-то понадобится
             return {
                 ...state,
                 ...action
@@ -70,12 +71,24 @@ export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
                                  minCardsCount: number,
                                  page: number, // выбранная страница
                                  pageCount: number) => ({
-        type: "ADD_NEW_CARD_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+        type: "ADD_NEW_CARD_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount
+    } as const
+)
+
+export const deleteCardPackAC=(cardPackID:string)=>({
+    type:"DELETE_CARS_PACK", cardPackID}as const
+)
+
+export const renameCardPackAC=(cardPackID:string, newNameCardPack:string)=>({
+        type:"RENAME_CARD_PACK", cardPackID,newNameCardPack }as const
 )
 
 
+
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
-export type AddNewCardPackACType=ReturnType<typeof addNewCardPackAC>
+export type AddNewCardPackACType = ReturnType<typeof addNewCardPackAC>
+export type DeleteCardPackACType= ReturnType<typeof deleteCardPackAC>
+export type RenameCardPackACType = ReturnType<typeof renameCardPackAC>
 export const getCardsPackTC = (packName: string = "", // для поиковой строки
                                min: number = 1,  // для кол-ва отображаемых паков
                                max: number = 4, // для кол-ва отображаемых паков
@@ -97,9 +110,33 @@ export const getCardsPackTC = (packName: string = "", // для поиковой
         })
 }
 
-export const addNewCardPackTC=(name:string="New Card Pack",deckCover:string="",privatePack:boolean=false)=>(dispatch: ThunkAppDispatchType)=>{
+export const addNewCardPackTC = (name: string = "New Card Pack", deckCover: string = "", privatePack: boolean = false) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.addNewCardPack(name,deckCover,privatePack)
+    cardsAPI.addNewCardPack(name, deckCover, privatePack)
+        .then((res) => {
+            dispatch(getCardsPackTC())
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.deleteCardPack(cardPackID)
+        .then((res)=>{
+            dispatch(getCardsPackTC())
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const renameCardPackTC=(cardPackID:string,newNameCardPack:string="Updated Card Pack")=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.renameCardPack(cardPackID,newNameCardPack)
         .then((res)=>{
             dispatch(getCardsPackTC())
             dispatch(setAppStatusAC('succeeded'))
