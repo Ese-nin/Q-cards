@@ -42,6 +42,8 @@ export default function MenuAppBar() {
                                  className={({isActive}) => (isActive ? s.active : '')}>CreateNewPass</NavLink>
                         <NavLink to="/packlist"
                                  className={({isActive}) => (isActive ? s.active : '')}>packlist</NavLink>
+                        <NavLink to="/packPage"
+                                 className={({isActive}) => (isActive ? s.active : '')}>packPage</NavLink>
                     </div>
 
                     {isLoggedIn && (

@@ -9,9 +9,10 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC} from "./cards-reducer";
 import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
 import {RangeSlider} from "./RangeSlider/RangeSlider";
+import TablesPackPage from './tables/TablesPackPage';
 
 
-export const PackList = () => {
+export const PackPage = () => {
    const dispatch=useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     let userID = useAppSelector(state => state.auth.user_id)
@@ -26,20 +27,17 @@ export const PackList = () => {
 
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Packs list</div>
+                <div>Friend’s Pack</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
-                    Add new pack
+                    Learn to pack
                 </Button>
             </div>
             <div className={s.formLine}>
                 <div>строка поиска</div>
-                <div><ChoiceCards userID={userID}/></div>
-                <div><RangeSlider/></div>
-                <div><FilterAltOffIcon/></div>
             </div>
 
             <div className={s.tableBlock}>
-                <TablesPackList/>
+                <TablesPackPage/>
             </div>
 
             <div>

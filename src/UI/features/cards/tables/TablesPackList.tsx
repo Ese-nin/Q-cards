@@ -14,7 +14,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 
-export default function Tables() {
+export default function TablesPackList() {
 
     useEffect(() => {
         dispatch(getCardsPackTC())
