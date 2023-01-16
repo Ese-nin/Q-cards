@@ -12,7 +12,8 @@ const initialState = {
         name: "",
         cardsCount: 0,
         created: "",
-        updated: ""
+        updated: "",
+        user_name:""
     }],
     cardPacksTotalCount: 0,
     maxCardsCount: 0,
