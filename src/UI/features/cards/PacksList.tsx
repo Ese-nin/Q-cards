@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button} from '@mui/material';
-import {useAppSelector} from '../../../bll/store';
+import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate} from 'react-router-dom';
 import s from './packList.module.css'
 import Tables from './tables/Tables';
