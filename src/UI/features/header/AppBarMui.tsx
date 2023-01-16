@@ -43,7 +43,7 @@ export default function MenuAppBar() {
                         <NavLink to="/packlist"
                                  className={({isActive}) => (isActive ? s.active : '')}>packlist</NavLink>
                         <NavLink to="/CardsPack"
-                                 className={({isActive}) => (isActive ? s.active : '')}>CardsPack</NavLink>
+                                 className={({isActive}) => (isActive ? s.active : '')}>CardsPack</NavLink> // работаем в packlist, эту ссылку удалим похже!!!!!
                     </div>
 
                     {isLoggedIn && (

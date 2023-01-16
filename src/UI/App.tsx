@@ -46,7 +46,7 @@ export const App = () => {
                 <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
                 <Route path={'/forgot'} element={<ForgotPassPage/>}/>
                 <Route path={'/checkMail'} element={<CheckEmail/>}/>
-                <Route path={'/CardsPack'} element={<CardsPack/>}/>
+                <Route path={'/CardsPack'} element={<CardsPack/>}/> // работаем в packlist, эту ссылку удалим!!!!
                 <Route path={'/createNewPass/:token'} element={<CreateNewPass/>}/>
                 <Route path={'/packlist'} element={<PackList/>}/>
                 <Route path={'*'} element={<Navigate to="/404"/>}/>
