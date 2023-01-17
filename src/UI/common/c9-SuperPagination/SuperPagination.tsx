@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react'
+import React, {ChangeEvent, useState} from 'react'
 import {Pagination} from '@mui/material'
 import s from './SuperPagination.module.css'
 import SuperSelect from '../c5-SuperSelect/SuperSelect';
@@ -8,34 +8,33 @@ export type SuperPaginationPropsType = {
     page: number
     itemsCountForPage: number
     totalCount: number
-    // onChange: (page: number, count: number) => void
+    onChange: (page: number, count: number) => void
 }
 
 const SuperPagination: React.FC<SuperPaginationPropsType> = (
     {
-        page, itemsCountForPage, totalCount, id = 'hw15',
+        page, itemsCountForPage, totalCount, id = 'hw15', onChange
     }
 ) => {
-    const lastPage = Math.ceil(totalCount / itemsCountForPage) // пишет студент // вычислить количество страниц
+    const lastPage = Math.ceil(totalCount / itemsCountForPage)
 
-    const onChangeCallback = (event:  React.ChangeEvent<unknown>, page: number) => {
-        // onChange(page, itemsCountForPage)
-        // пишет студент
+    const [localPage, setLocalPage] = useState(page)
+    const [localCount, setLocalCount] = useState(itemsCountForPage)
+
+    const onChangeCallback = (event:  ChangeEvent<unknown>, page: number) => {
+        onChange(page, itemsCountForPage)
+        setLocalPage(page)
     }
 
     const onChangeSelect = (event: ChangeEvent<HTMLSelectElement>) => {
-        // onChange(1, +event.currentTarget.value)
-        // пишет студент
+        onChange(1, +event.currentTarget.value)
     }
 
     return (
         <div className={s.pagination}>
             <Pagination
                 id={id + '-pagination'}
-                sx={{
-                    // стили для Pagination // пишет студент
-                }}
-                page={page}
+                page={localPage}
                 count={lastPage}
                 onChange={onChangeCallback}
                 hideNextButton

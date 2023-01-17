@@ -1,27 +1,37 @@
 import React from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate} from 'react-router-dom';
+import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
-import TablesPackList from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
-import {addNewCardPackTC} from "./cardsPackList-reducer";
-import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
-import {RangeSlider} from "./RangeSlider/RangeSlider";
+import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
 import TablesPackPage from './tables/TablesPackPage';
 
 
 export const PackPage = () => {
-   const dispatch=useAppDispatch()
+    const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const page = useAppSelector(state => state.cards.page)
+    const pageCount = useAppSelector(state => state.cards.pageCount)
+    const cardPacksTotalCount = useAppSelector(state => state.cards.cardPacksTotalCount)
+
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
+
+
+    const onChangePagination = (page: number, pageCount: number) => {
+        const params = Object.fromEntries(searchParams)
+
+        dispatch(getCardsPackTC({...params, page, pageCount}))
+        setSearchParams({...params, page, pageCount})
+    }
+
+    const buttonClickHandler = () => {
+        dispatch(addNewCardPackTC())
+    }
+
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
-
- const buttonClickHandler=()=>{
-     dispatch(addNewCardPackTC())
- }
 
 
     return (<div className={s.page}>
@@ -40,12 +50,12 @@ export const PackPage = () => {
             </div>
 
             <div>
-               <SuperPagination
-                   page={1}
-                   itemsCountForPage={4}
-                   totalCount={4}
-                   // onChange={()=}
-               />
+                <SuperPagination
+                    page={page}
+                    itemsCountForPage={pageCount}
+                    totalCount={cardPacksTotalCount}
+                    onChange={onChangePagination}
+                />
             </div>
         </div>
 
