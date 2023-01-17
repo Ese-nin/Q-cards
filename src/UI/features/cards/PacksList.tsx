@@ -38,7 +38,7 @@ export const PackList = () => {
     }
 
     const buttonClickHandler = () => {
-        dispatch(addNewCardPackTC())
+        dispatch(addNewCardPackTC({}))
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {

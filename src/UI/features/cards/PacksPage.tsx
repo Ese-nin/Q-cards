@@ -26,7 +26,7 @@ export const PackPage = () => {
     }
 
     const buttonClickHandler = () => {
-        dispatch(addNewCardPackTC())
+        dispatch(addNewCardPackTC({}))
     }
 
     if (!isLoggedIn) {
