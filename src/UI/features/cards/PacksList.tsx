@@ -6,7 +6,7 @@ import s from './packList.module.css'
 import TablesPackList from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
-import {addNewCardPackTC} from "./cards-reducer";
+import {addNewCardPackTC} from "./cardsPackList-reducer";
 import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
 import {RangeSlider} from "./RangeSlider/RangeSlider";
 

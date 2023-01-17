@@ -3,12 +3,12 @@ import {AuthActionsType, authReducer} from "../UI/features/login/auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from 'redux-thunk'
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {AppActionsType, appReducer} from "../UI/app-reducer";
-import {CardsActionType, cardsReducer} from "../UI/features/cards/cards-reducer";
+import {CardsActionType, cardsPackListReducer} from "../UI/features/cards/cardsPackList-reducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
     app: appReducer,
-    cards: cardsReducer
+    cards: cardsPackListReducer
 })
 
 type AppRootStateType = ReturnType<typeof rootReducer>

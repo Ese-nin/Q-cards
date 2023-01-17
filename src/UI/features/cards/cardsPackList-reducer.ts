@@ -37,7 +37,7 @@ export type initialCardsStateType = {
 export type CardsActionType = GetCardsPackACType|AddNewCardPackACType
 
 
-export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
+export const cardsPackListReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
             return {
@@ -45,7 +45,6 @@ export const cardsReducer = (state: initialCardsStateType = initialState, action
                 ...action
             }
         case "ADD_NEW_CARD_PACK":
-            console.log(action)
             return {
                 ...state,
                 ...action
@@ -61,7 +60,7 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
                                minCardsCount: number,
                                page: number, // выбранная страница
                                pageCount: number) => (
-    {type: "GET_CARDS_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+    {type: "GET_CARDS_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
 
 export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
@@ -70,7 +69,7 @@ export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
                                  minCardsCount: number,
                                  page: number, // выбранная страница
                                  pageCount: number) => ({
-        type: "ADD_NEW_CARD_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+        type: "ADD_NEW_CARD_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
 
 

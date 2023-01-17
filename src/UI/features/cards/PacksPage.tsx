@@ -6,7 +6,7 @@ import s from './packList.module.css'
 import TablesPackList from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
-import {addNewCardPackTC} from "./cards-reducer";
+import {addNewCardPackTC} from "./cardsPackList-reducer";
 import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
 import {RangeSlider} from "./RangeSlider/RangeSlider";
 import TablesPackPage from './tables/TablesPackPage';
@@ -15,7 +15,6 @@ import TablesPackPage from './tables/TablesPackPage';
 export const PackPage = () => {
    const dispatch=useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    let userID = useAppSelector(state => state.auth.user_id)
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }

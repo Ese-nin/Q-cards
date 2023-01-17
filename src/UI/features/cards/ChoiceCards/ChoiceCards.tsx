@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import {useAppDispatch} from "../../../../bll/store";
-import {getCardsPackTC} from "../cards-reducer";
+import {getCardsPackTC} from "../cardsPackList-reducer";
 
 type ChoiceCardsPropsType = {
     userID: string
