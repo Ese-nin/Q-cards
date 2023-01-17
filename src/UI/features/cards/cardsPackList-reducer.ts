@@ -1,4 +1,4 @@
-import {CardPacksType, cardsAPI} from "../../../dal/api";
+import {CardPacksType, cardsAPI, GetPacksParamsType} from "../../../dal/api";
 import {ThunkAppDispatchType} from "../../../bll/store";
 import {setAppStatusAC} from "../../app-reducer";
 import {AxiosError} from "axios";
@@ -37,7 +37,7 @@ export type initialCardsStateType = {
 export type CardsActionType = GetCardsPackACType
 
 
-export const cardsReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
+export const cardsPackListReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
             return {
@@ -45,7 +45,6 @@ export const cardsReducer = (state: initialCardsStateType = initialState, action
                 ...action
             }
         case "ADD_NEW_CARD_PACK":
-            console.log(action)
             return {
                 ...state,
                 ...action
@@ -61,7 +60,7 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
                                minCardsCount: number,
                                page: number, // выбранная страница
                                pageCount: number) => (
-    {type: "GET_CARDS_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+    {type: "GET_CARDS_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
 
 export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
@@ -70,23 +69,15 @@ export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
                                  minCardsCount: number,
                                  page: number, // выбранная страница
                                  pageCount: number) => ({
-        type: "ADD_NEW_CARD_PACK", cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+        type: "ADD_NEW_CARD_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
 
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 export type AddNewCardPackACType=ReturnType<typeof addNewCardPackAC>
-export const getCardsPackTC = (packName: string = "", // для поиковой строки
-                               min: number = 1,  // для кол-ва отображаемых паков
-                               max: number = 4, // для кол-ва отображаемых паков
-                               sortPacks: string = "", // для сортировки по возрастанию или убыванию
-                               page: number = 1, // какая страница открыта
-                               pageCount: number = 4, //кол-во паков на страницу
-                               user_id: string = "", //чьи колоды, если пусто то, всех
-                               block: boolean = false //для блока
-) => (dispatch: ThunkAppDispatchType) => {
+export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack(packName, min, max, sortPacks, page, pageCount, user_id, block)
+    cardsAPI.getCardsPack(params)
         .then((res) => {
             const data = res.data
             dispatch(getCardsPackAC(data.cardPacks, data.cardPacksTotalCount, data.maxCardsCount, data.minCardsCount, data.page, data.pageCount))
@@ -101,7 +92,7 @@ export const addNewCardPackTC=(name:string="New Card Pack",deckCover:string="",p
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addNewCardPack(name,deckCover,privatePack)
         .then((res)=>{
-            dispatch(getCardsPackTC())
+            dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {

@@ -45,19 +45,9 @@ export const authAPI = {
 }
 
 export const cardsAPI = {
-    getCardsPack(packName: string, min: number, max: number, sortPacks: string, page: number, pageCount: number, user_id: string, block: boolean) {
-
+    getCardsPack(params: GetPacksParamsType) {
         return instance.get<GetCardsPackResponseType>('cards/pack', {
-            params: {
-                packName,
-                min,
-                max,
-                sortPacks,
-                page,
-                pageCount,
-                user_id,
-                block
-            }
+            params: {params}
         })
     },
 
@@ -70,6 +60,19 @@ export const cardsAPI = {
             }
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
+    },
+    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
+        const data = {
+            cardAnswer,
+            cardQuestion,
+            cardsPack_id,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        }
+        return instance.get<GetCardResponseType>('/cards/card', {data})
     }
 }
 
@@ -146,6 +149,17 @@ export type GetCardsPackResponseType = {
 
 }
 
+
+export type GetCardResponseType = {
+    cards: CardType[],
+    cardsTotalCount: number,
+    maxGrade: number,
+    minGrade: number,
+    page: number,
+    pageCount: number,
+    packUserId: string
+}
+
 export type CardPacksType = {
     id: string,
     user_id: string,
@@ -156,3 +170,25 @@ export type CardPacksType = {
     user_name: string
 }
 
+export type CardType = {
+    answer: string,
+    question: string,
+    cardsPack_id: string,
+    grade: number,
+    shots: number,
+    user_id: string,
+    created: string,
+    updated:string,
+    _id: string
+}
+
+export type GetPacksParamsType = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
+    block?: boolean
+}
