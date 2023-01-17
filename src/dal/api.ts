@@ -46,9 +46,9 @@ export const authAPI = {
 
 export const cardsAPI = {
     getCardsPack(params: GetPacksParamsType) {
-        return instance.get<GetCardsPackResponseType>('cards/pack', {
-            params: {params}
-        })
+        return instance.get<GetCardsPackResponseType>('cards/pack',
+            {params}
+        )
     },
 
     addNewCardPack(name: string, deckCover: string, privatePack: boolean) {
