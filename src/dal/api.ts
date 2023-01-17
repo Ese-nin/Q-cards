@@ -6,7 +6,6 @@ const instance = axios.create({
     withCredentials: true,
     headers: {}
 })
-
 export const authAPI = {
     me() {
         return instance.post<UserDataResponseType>(`auth/me`);
@@ -43,8 +42,7 @@ export const authAPI = {
     },
 
 }
-
-export const cardsAPI = {
+export const cardPackAPI = {
     getCardsPack(params: GetPacksParamsType) {
         return instance.get<GetCardsPackResponseType>('cards/pack',
             {params}
@@ -58,19 +56,6 @@ export const cardsAPI = {
             }
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
-    },
-    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
-        const data = {
-            cardAnswer,
-            cardQuestion,
-            cardsPack_id,
-            min,
-            max,
-            sortCards,
-            page,
-            pageCount
-        }
-        return instance.get<GetCardResponseType>('/cards/card', {data})
     },
 
     deleteCardPack(cardPackID:string){
@@ -91,6 +76,40 @@ export const cardsAPI = {
     }
 }
 
+export const cardsAPI={
+    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
+        const data = {
+            cardAnswer,
+            cardQuestion,
+            cardsPack_id,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
+        }
+        return instance.get<GetCardResponseType>('/cards/card', {data})
+    },
+    addNewCards(params:AddNewCardsType){
+        const data={
+            params
+        }
+       return  instance.post('cards/card',data)
+    },
+    deleteCards(cardsID:string){
+        return instance.delete('cards/card',{
+            params:{
+                cardsID
+            }
+        })
+    },
+    renameCardQuestion(params:RenameCardQuestionType){
+        const data={
+            params
+        }
+        return instance.put('cards/card',data)
+    }
+}
 
 export type DefaultRequestCardsPack = {
     packName: string,
@@ -105,6 +124,7 @@ export type DefaultRequestCardsPack = {
 
 // types
 
+type NewPassResponseType = LogOutResponseType
 type RegisterResponseType = {
     addedUser: {
         created: string
@@ -119,7 +139,6 @@ type RegisterResponseType = {
         _id: string
     }
 }
-
 export type UserDataResponseType = {
     _id: string;
     email: string;
@@ -135,25 +154,20 @@ export type UserDataResponseType = {
     tokenDeathTime: number;
     avatar?: any;
 }
-
 export type ChangeNameResponseType = {
     updatedUser: UserDataResponseType;
     token: string;
     tokenDeathTime: number;
 }
-
-type NewPassResponseType = LogOutResponseType
 export type LogOutResponseType = {
     info: string
 }
-
 export type ForgotResponseType = {
     info: string;
     success: boolean;
     answer: boolean;
     html: boolean;
 }
-
 export type GetCardsPackResponseType = {
     cardPacks: Array<CardPacksType>,
     cardPacksTotalCount: number, // количество колод
@@ -163,8 +177,6 @@ export type GetCardsPackResponseType = {
     pageCount: number  // количество элементов на странице
 
 }
-
-
 export type GetCardResponseType = {
     cards: CardType[],
     cardsTotalCount: number,
@@ -174,7 +186,6 @@ export type GetCardResponseType = {
     pageCount: number,
     packUserId: string
 }
-
 export type CardPacksType = {
     id: string,
     user_id: string,
@@ -184,7 +195,6 @@ export type CardPacksType = {
     updated: string,
     user_name: string
 }
-
 export type CardType = {
     answer: string,
     question: string,
@@ -196,7 +206,6 @@ export type CardType = {
     updated:string,
     _id: string
 }
-
 export type GetPacksParamsType = {
     packName?: string
     min?: number
@@ -207,14 +216,29 @@ export type GetPacksParamsType = {
     user_id?: string
     block?: boolean
 }
-
 export type AddNewCardPackType ={
     name?:string,
     deckCover?:string,
     privatePack?:boolean
 }
-
 export type RenameCardPackType ={
     cardPackID:string,
     newNameCardPack?:string
+}
+export type AddNewCardsType={
+    card: {
+        cardsPack_id: string,
+        question?: string
+        answer?: string,
+        grade?: number,
+        shots?: number,
+        answerImg?: string,
+        questionImg?: string,
+        questionVideo?: string,
+        answerVideo?: string
+    }
+}
+export type RenameCardQuestionType={
+    id: string,
+    question?: string
 }

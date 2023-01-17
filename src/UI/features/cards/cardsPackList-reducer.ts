@@ -1,4 +1,4 @@
-import {AddNewCardPackType, CardPacksType, cardsAPI, GetPacksParamsType} from "../../../dal/api";
+import {AddNewCardPackType, CardPacksType, cardPackAPI, GetPacksParamsType} from "../../../dal/api";
 import {ThunkAppDispatchType} from "../../../bll/store";
 import {setAppStatusAC} from "../../app-reducer";
 import {AxiosError} from "axios";
@@ -91,7 +91,7 @@ export type RenameCardPackACType=ReturnType<typeof renameCardPackAC>
 
 export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack(params)
+    cardPackAPI.getCardsPack(params)
         .then((res) => {
             const data = res.data
             dispatch(getCardsPackAC(data.cardPacks, data.cardPacksTotalCount, data.maxCardsCount, data.minCardsCount, data.page, data.pageCount))
@@ -104,7 +104,7 @@ export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAp
 
 export const addNewCardPackTC=(params:AddNewCardPackType)=>(dispatch: ThunkAppDispatchType)=>{
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.addNewCardPack(params)
+    cardPackAPI.addNewCardPack(params)
         .then((res)=>{
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
@@ -116,7 +116,7 @@ export const addNewCardPackTC=(params:AddNewCardPackType)=>(dispatch: ThunkAppDi
 
 export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchType)=>{
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.deleteCardPack(cardPackID)
+    cardPackAPI.deleteCardPack(cardPackID)
         .then((res)=>{
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
@@ -128,7 +128,7 @@ export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchTy
 
 export const renameCardPackTC=(params:RenameCardPackACType)=>(dispatch: ThunkAppDispatchType)=>{
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.renameCardPack(params)
+    cardPackAPI.renameCardPack(params)
         .then((res)=>{
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))

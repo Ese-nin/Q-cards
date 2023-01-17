@@ -1,4 +1,4 @@
-import {cardsAPI, CardType} from '../../../dal/api';
+import {AddNewCardsType, cardPackAPI, cardsAPI, CardType, RenameCardQuestionType} from '../../../dal/api';
 import {ThunkAppDispatchType} from '../../../bll/store';
 import {setAppStatusAC} from '../../app-reducer';
 import {AxiosError} from 'axios';
@@ -105,3 +105,44 @@ export const getCardsPageTC = (cardAnswer: string = 'english ',
         })
 }
 
+export const addNewCardsTC=(params:AddNewCardsType)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.addNewCards(params)
+        .then((res)=>{
+            dispatch(getCardsPageTC())
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            console.log('сломалось')
+            handleServerNetworkError(err, dispatch)
+        })
+
+}
+
+export const deleteCardsTC=(cardsID:string)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.deleteCards(cardsID)
+        .then((res)=>{
+            dispatch(getCardsPageTC())
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            console.log('сломалось')
+            handleServerNetworkError(err, dispatch)
+        })
+
+}
+
+export const renameCardQuestionTC=(params:RenameCardQuestionType)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.renameCardQuestion(params)
+        .then((res)=>{
+            dispatch(getCardsPageTC())
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            console.log('сломалось')
+            handleServerNetworkError(err, dispatch)
+        })
+
+}
