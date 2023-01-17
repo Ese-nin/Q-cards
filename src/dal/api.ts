@@ -71,23 +71,18 @@ export const cardsAPI = {
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
     },
-
-    deleteCardPack(cardPackID:string){
-        return instance.delete('cards/pack', {
-            params:{
-                cardPackID
-            }
-        })
-    },
-
-    renameCardPack(cardPackID:string, newNameCardPack:string){
+    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
         const data = {
-            cardsPack: {
-                cardPackID: cardPackID,
-                newNameCardPack: newNameCardPack
-            }
+            cardAnswer,
+            cardQuestion,
+            cardsPack_id,
+            min,
+            max,
+            sortCards,
+            page,
+            pageCount
         }
-        return instance.put('cards/pack',data)
+        return instance.get<GetCardResponseType>('/cards/card', {data})
     }
 }
 
@@ -164,6 +159,17 @@ export type GetCardsPackResponseType = {
 
 }
 
+
+export type GetCardResponseType = {
+    cards: CardType[],
+    cardsTotalCount: number,
+    maxGrade: number,
+    minGrade: number,
+    page: number,
+    pageCount: number,
+    packUserId: string
+}
+
 export type CardPacksType = {
     id: string,
     user_id: string,
@@ -174,3 +180,25 @@ export type CardPacksType = {
     user_name: string
 }
 
+export type CardType = {
+    answer: string,
+    question: string,
+    cardsPack_id: string,
+    grade: number,
+    shots: number,
+    user_id: string,
+    created: string,
+    updated:string,
+    _id: string
+}
+
+export type GetPacksParamsType = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string
+    page?: number
+    pageCount?: number
+    user_id?: string
+    block?: boolean
+}

@@ -14,6 +14,7 @@ import {CheckEmail} from './features/forgotPassword/checkEmail';
 import {CreateNewPass} from './features/forgotPassword/createNewPass';
 import {ErrorAlert} from './common/ErrorAlert/ErrorAlert';
 import {PackList} from './features/cards/PacksList';
+import {PackPage} from './features/cards/PacksPage';
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -47,6 +48,7 @@ export const App = () => {
                 <Route path={'/checkMail'} element={<CheckEmail/>}/>
                 <Route path={'/createNewPass/:token'} element={<CreateNewPass/>}/>
                 <Route path={'/packlist'} element={<PackList/>}/>
+                <Route path={'/packPage'} element={<PackPage/>}/>
                 <Route path={'*'} element={<Navigate to="/404"/>}/>
             </Routes>
         </div>

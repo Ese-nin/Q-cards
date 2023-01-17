@@ -3,56 +3,50 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
-import TablesPackList from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
-import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
-import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
-import {RangeSlider} from "./RangeSlider/RangeSlider";
+import TablesPackPage from './tables/TablesPackPage';
 
 
-export const PackList = () => {
+export const PackPage = () => {
     const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const page = useAppSelector(state => state.cards.page)
     const pageCount = useAppSelector(state => state.cards.pageCount)
     const cardPacksTotalCount = useAppSelector(state => state.cards.cardPacksTotalCount)
-    let userID = useAppSelector(state => state.auth.user_id)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
 
 
-    const buttonClickHandler = () => {
-        dispatch(addNewCardPackTC())
-    }
-
-    const onChangePagination = (newPage: number, newCount: number) => {
+    const onChangePagination = (page: number, pageCount: number) => {
         const params = Object.fromEntries(searchParams)
 
-        dispatch(getCardsPackTC({...params, page: newPage, pageCount: newCount}))
-        setSearchParams({...params, page: newPage, pageCount: newCount})
+        dispatch(getCardsPackTC({...params, page, pageCount}))
+        setSearchParams({...params, page, pageCount})
+    }
+
+    const buttonClickHandler = () => {
+        dispatch(addNewCardPackTC())
     }
 
     if (!isLoggedIn) {
         return <Navigate to={'/login'}/>
     }
 
+
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Packs list</div>
+                <div>Friend’s Pack</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
-                    Add new pack
+                    Learn to pack
                 </Button>
             </div>
             <div className={s.formLine}>
                 <div>строка поиска</div>
-                <div><ChoiceCards userID={userID}/></div>
-                <div><RangeSlider/></div>
-                <div><FilterAltOffIcon/></div>
             </div>
 
             <div className={s.tableBlock}>
-                <TablesPackList/>
+                <TablesPackPage/>
             </div>
 
             <div>
