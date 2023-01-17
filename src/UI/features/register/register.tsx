@@ -12,6 +12,7 @@ import {Navigate, NavLink} from 'react-router-dom';
 import {registerTC} from '../login/auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {InputWithEyeIcon} from "./InputWithEyeIcon/InputWithEyeIcon";
+import {PATH} from "../../../bll/Path";
 
 type RegFormikErrorsType = {
     email?: string
@@ -66,11 +67,11 @@ export const Register = () => {
     const handleClickShowPassword2 = useCallback(() => setShowPassword2((show) => !show), []);
 
     if (isHaveAccount) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
 
     if (isLoggedIn) {
-        return <Navigate to={'/'}/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (

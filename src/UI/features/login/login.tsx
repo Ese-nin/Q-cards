@@ -14,6 +14,7 @@ import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
+import {PATH} from "../../../bll/Path";
 
 type LoginFormikErrorsType = {
     email?: string
@@ -61,7 +62,7 @@ export const LoginPage = () => {
     }
 
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (<div className={s.regContainer}>
