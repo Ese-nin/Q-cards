@@ -38,12 +38,12 @@ export type initialCardsStateType = {
 }
 
 
-export type CardsActionType = GetCardsPackACType
+export type CardsPageActionType = GetCardsPackACType
 
 
-export const cardPackPageReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
+export const cardPackPageReducer = (state: initialCardsStateType = initialState, action: CardsPageActionType): initialCardsStateType => {
     switch (action.type) {
-        case 'GET_CARDS_PACK':
+        case 'GET_CARDS_PAGE':
             return {
                 ...state,
                 ...action
@@ -53,42 +53,54 @@ export const cardPackPageReducer = (state: initialCardsStateType = initialState,
     }
 }
 
-export const getCardsPackAC = (cards: Array<CardType>,
-                               cardPacksTotalCount: number, // количество колод
-                               maxCardsCount: number,
-                               minCardsCount: number,
+export const getCardsPageAC = (cards: Array<CardType>,
+                               cardsTotalCount: number, // количество колод
+                               maxGrade: number,
+                               minGrade: number,
                                page: number, // выбранная страница
-                               pageCount: number) => (
+                               pageCount: number,
+                               packUserId: string
+) => (
     {
-        type: 'GET_CARDS_PACK',
-        cardPacks: cards,
-        cardPacksTotalCount,
-        maxCardsCount,
-        minCardsCount,
+        type: 'GET_CARDS_PAGE',
+        cards,
+        cardsTotalCount,
+        maxGrade,
+        minGrade,
         page,
-        pageCount
+        pageCount,
+        packUserId
     } as const
 )
 
 
-export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
-export const getCardsPackTC = (packName: string = '', // для поиковой строки
+export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>
+export const getCardsPageTC = (cardAnswer: string = 'english ',
+                               cardQuestion: string = 'english ',
+                               cardsPack_id: string = '634dc6dd4e2e6c50ec5a1369', // тестовый айди 3ей карточки
                                min: number = 1,  // для кол-ва отображаемых паков
                                max: number = 4, // для кол-ва отображаемых паков
-                               sortPacks: string = '', // для сортировки по возрастанию или убыванию
+                               sortCards: string = '0grade', // для сортировки по возрастанию или убыванию
                                page: number = 1, // какая страница открыта
                                pageCount: number = 4, //кол-во паков на страницу
-                               user_id: string = '', //чьи колоды, если пусто то, всех
-                               block: boolean = false //для блока
 ) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPack(packName, min, max, sortPacks, page, pageCount, user_id, block)
+    cardsAPI.getCardsPage(cardAnswer, cardQuestion, cardsPack_id, min, max, sortCards, page, pageCount)
         .then((res) => {
             const data = res.data
-            // dispatch(getCardsPackAC(data.cardPacks, data.cardPacksTotalCount, data.maxCardsCount, data.minCardsCount, data.page, data.pageCount))
+            dispatch(getCardsPageAC(
+                data.cards,
+                data.cardsTotalCount,
+                data.maxGrade,
+                data.minGrade,
+                data.page,
+                data.pageCount,
+                data.packUserId)
+            )
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
+            console.log('сломалось')
             handleServerNetworkError(err, dispatch)
         })
 }

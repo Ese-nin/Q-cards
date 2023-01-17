@@ -12,12 +12,13 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {getCardsPageTC} from '../cardPackPage-reducer';
 
 
 export default function TablesPackPage() {
 
     useEffect(() => {
-        dispatch(getCardsPackTC())
+        dispatch(getCardsPageTC())
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)

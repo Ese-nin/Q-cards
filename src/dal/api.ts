@@ -71,7 +71,7 @@ export const cardsAPI = {
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
     },
-    getCardsCard(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
+    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
         const data = {
             cardAnswer,
             cardQuestion,
