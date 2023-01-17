@@ -17,7 +17,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 export default function TablesPackList() {
 
     useEffect(() => {
-        dispatch(getCardsPackTC())
+        dispatch(getCardsPackTC({}))
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)

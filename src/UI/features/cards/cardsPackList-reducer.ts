@@ -34,7 +34,7 @@ export type initialCardsStateType = {
 }
 
 
-export type CardsActionType = GetCardsPackACType
+export type CardsActionType = GetCardsPackACType | AddNewCardPackACType
 
 
 export const cardsPackListReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
