@@ -1,4 +1,4 @@
-import {CardPacksType, cardsAPI, GetPacksParamsType} from "../../../dal/api";
+import {AddNewCardPackType, CardPacksType, cardsAPI, GetPacksParamsType} from "../../../dal/api";
 import {ThunkAppDispatchType} from "../../../bll/store";
 import {setAppStatusAC} from "../../app-reducer";
 import {AxiosError} from "axios";
@@ -34,7 +34,10 @@ export type initialCardsStateType = {
 }
 
 
-export type CardsActionType = GetCardsPackACType | AddNewCardPackACType
+export type CardsActionType = GetCardsPackACType
+    | AddNewCardPackACType
+    | DeleteCardPackACType
+    | RenameCardPackACType
 
 
 export const cardsPackListReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
@@ -71,10 +74,21 @@ export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
                                  pageCount: number) => ({
         type: "ADD_NEW_CARD_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
 )
+export const deleteCardPackAC=(cardPackID:string)=>({
+        type:"DELETE_CARS_PACK", cardPackID}as const
+)
+
+export const renameCardPackAC=(cardPackID:string, newNameCardPack:string)=>({
+        type:"RENAME_CARD_PACK", cardPackID,newNameCardPack }as const
+)
+
 
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
 export type AddNewCardPackACType=ReturnType<typeof addNewCardPackAC>
+export type DeleteCardPackACType=ReturnType<typeof deleteCardPackAC>
+export type RenameCardPackACType=ReturnType<typeof renameCardPackAC>
+
 export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.getCardsPack(params)
@@ -88,9 +102,33 @@ export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAp
         })
 }
 
-export const addNewCardPackTC=(name:string="New Card Pack",deckCover:string="",privatePack:boolean=false)=>(dispatch: ThunkAppDispatchType)=>{
+export const addNewCardPackTC=(params:AddNewCardPackType)=>(dispatch: ThunkAppDispatchType)=>{
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.addNewCardPack(name,deckCover,privatePack)
+    cardsAPI.addNewCardPack(params)
+        .then((res)=>{
+            dispatch(getCardsPackTC({}))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.deleteCardPack(cardPackID)
+        .then((res)=>{
+            dispatch(getCardsPackTC({}))
+            dispatch(setAppStatusAC('succeeded'))
+        })
+        .catch((err: AxiosError<{ error: string }>) => {
+            handleServerNetworkError(err, dispatch)
+        })
+}
+
+export const renameCardPackTC=(params:RenameCardPackACType)=>(dispatch: ThunkAppDispatchType)=>{
+    dispatch(setAppStatusAC('loading'))
+    cardsAPI.renameCardPack(params)
         .then((res)=>{
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))

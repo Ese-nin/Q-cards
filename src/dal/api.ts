@@ -51,12 +51,10 @@ export const cardsAPI = {
         )
     },
 
-    addNewCardPack(name: string, deckCover: string, privatePack: boolean) {
+    addNewCardPack(params:AddNewCardPackType) {
         const data = {
             cardsPack: {
-                name: name,
-                deckCover: deckCover,
-                privatePack: privatePack
+                params
             }
         }
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
@@ -73,6 +71,23 @@ export const cardsAPI = {
             pageCount
         }
         return instance.get<GetCardResponseType>('/cards/card', {data})
+    },
+
+    deleteCardPack(cardPackID:string){
+        return instance.delete('cards/pack', {
+            params:{
+                cardPackID
+            }
+        })
+    },
+
+    renameCardPack(params:RenameCardPackType){
+        const data = {
+            cardsPack: {
+                params
+            }
+        }
+        return instance.put('cards/pack',data)
     }
 }
 
@@ -191,4 +206,15 @@ export type GetPacksParamsType = {
     pageCount?: number
     user_id?: string
     block?: boolean
+}
+
+export type AddNewCardPackType ={
+    name?:string,
+    deckCover?:string,
+    privatePack?:boolean
+}
+
+export type RenameCardPackType ={
+    cardPackID:string,
+    newNameCardPack?:string
 }
