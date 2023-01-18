@@ -1,0 +1,17 @@
+.button_style{
+    margin: 5px;
+    min-width: 20px;
+}
+
+.icon_style{
+    display: flex;
+
+}
+
+.button_style:disabled{
+    background: darkgrey;
+}
+
+.button_style:hover{
+    background: cadetblue;
+}
