@@ -24,6 +24,10 @@ export default function TablesPackList() {
     const cards = useAppSelector(state => state.cards.cardPacks)
     const meID = useAppSelector(state => state.auth.user_id) //для коммита
 
+    const learnCards = () => {
+        alert('функция в разработке')
+    }
+
     const renamePack = (cardPackID: string, newNameCardPack: string) => {
         dispatch(renameCardPackTC(cardPackID, newNameCardPack))
     }
@@ -61,7 +65,7 @@ export default function TablesPackList() {
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
                             <div style={{display: "flex", marginTop: "15px", marginBottom: "5px"}}>
-                                <SuperButton className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon
+                                <SuperButton onClick={learnCards} className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon
                                     className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
                                     <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
@@ -73,7 +77,6 @@ export default function TablesPackList() {
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>
                                 </div>}
-
                             </div>
 
                         </TableRow>
