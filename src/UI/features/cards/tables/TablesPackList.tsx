@@ -56,7 +56,7 @@ export default function TablesPackList() {
                             <TableCell align="left">{row.user_name}</TableCell>
                             <div style={{display:"flex", marginTop:"15px"}}>
                                 {row.cardsCount !== 0 && <SchoolIcon/>}
-                                {meID === row.user_id && <div>
+                                {meID === row.user_id &&  <div>
                                 <BorderColorIcon/>
                                 <DeleteOutlineIcon/>
                             </div> }
