@@ -7,6 +7,7 @@ import {Button} from '@mui/material';
 import {Logout} from '@mui/icons-material';
 import {logoutTC, setNewNameTC} from '../login/auth-reducer';
 import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
+import {PATH} from "../../../bll/Path";
 
 
 export const Profile = () => {
@@ -25,7 +26,7 @@ export const Profile = () => {
 
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
 
     return (
