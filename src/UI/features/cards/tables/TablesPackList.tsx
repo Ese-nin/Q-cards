@@ -13,6 +13,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {addNewCardsTC} from "../cardPackPage-reducer";
+import SuperButton from "../../../common/c2-SuperButton/SuperButton";
+import s from "./TablesPackList.module.css"
 
 
 export default function TablesPackList() {
@@ -22,10 +24,7 @@ export default function TablesPackList() {
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)
-    const meID=useAppSelector(state => state.auth.user_id) //для коммита
-
-
-
+    const meID = useAppSelector(state => state.auth.user_id) //для коммита
     const cards = value.cardPacks
 
 
@@ -42,7 +41,7 @@ export default function TablesPackList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards.map((row,index) => (
+                    {cards.map((row) => (
                         <TableRow
                             key={row.id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
@@ -56,12 +55,12 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display:"flex", marginTop:"15px"}}>
-                                {row.cardsCount !== 0 && <SchoolIcon/>}
-                                {meID === row.user_id &&  <div>
-                                <BorderColorIcon/>
-                                <DeleteOutlineIcon/>
-                            </div> }
+                            <div style={{display: "flex", marginTop: "15px", marginBottom:"5px"}}>
+                                 <SuperButton className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon className={s.icon_style}/></SuperButton>
+                                {meID === row.user_id && <div>
+                                    <SuperButton className={s.button_style}><BorderColorIcon className={s.icon_style}/></SuperButton>
+                                    <SuperButton className={s.button_style}> <DeleteOutlineIcon className={s.icon_style}/> </SuperButton>
+                                </div>}
 
                             </div>
 
