@@ -24,15 +24,13 @@ export default function TablesPackList() {
     const cards = useAppSelector(state => state.cards.cardPacks)
     const meID = useAppSelector(state => state.auth.user_id) //для коммита
 
-    // rename cardsPack
-    // const renamePack = (cardPackID: string, newNameCardPack: string) => {
-    //     dispatch(renameCardPackTC(cardPackID, newNameCardPack))
-    // }
+    const renamePack = (cardPackID: string, newNameCardPack: string) => {
+        dispatch(renameCardPackTC(cardPackID, newNameCardPack))
+    }
 
-    // delete cardsPack
-    // const removePack = (pack_id: string) => {
-    //     dispatch(deleteCardPackTC(pack_id))
-    // }
+    const removePack = (pack_id: string) => {
+        dispatch(deleteCardPackTC(pack_id))
+    }
 
 
     return (
@@ -62,11 +60,18 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display: "flex", marginTop: "15px", marginBottom:"5px"}}>
-                                 <SuperButton className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon className={s.icon_style}/></SuperButton>
+                            <div style={{display: "flex", marginTop: "15px", marginBottom: "5px"}}>
+                                <SuperButton className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon
+                                    className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
-                                    <SuperButton className={s.button_style}><BorderColorIcon className={s.icon_style}/></SuperButton>
-                                    <SuperButton className={s.button_style}> <DeleteOutlineIcon className={s.icon_style}/> </SuperButton>
+                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
+                                                 className={s.button_style}>
+                                        <BorderColorIcon className={s.icon_style}/>
+                                    </SuperButton>
+                                    <SuperButton onClick={() => removePack(row._id)}
+                                                 className={s.button_style}>
+                                        <DeleteOutlineIcon className={s.icon_style}/>
+                                    </SuperButton>
                                 </div>}
 
                             </div>
