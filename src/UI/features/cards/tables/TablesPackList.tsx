@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,13 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {useEffect} from 'react';
-import {getCardsPackTC} from '../cardsPackList-reducer';
+import {deleteCardPackTC, getCardsPackTC, renameCardPackTC} from '../cardsPackList-reducer';
 import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {addNewCardsTC} from "../cardPackPage-reducer";
 
 
 export default function TablesPackList() {
@@ -21,12 +20,18 @@ export default function TablesPackList() {
         dispatch(getCardsPackTC({}))
     }, [])
     const dispatch = useAppDispatch()
-    const value = useAppSelector(state => state.cards)
-    const meID=useAppSelector(state => state.auth.user_id) //для коммита
+    const cards = useAppSelector(state => state.cards.cardPacks)
+    const meID = useAppSelector(state => state.auth.user_id) //для коммита
 
+    // rename cardsPack
+    // const renamePack = (cardPackID: string, newNameCardPack: string) => {
+    //     dispatch(renameCardPackTC(cardPackID, newNameCardPack))
+    // }
 
-
-    const cards = value.cardPacks
+    // delete cardsPack
+    // const removePack = (pack_id: string) => {
+    //     dispatch(deleteCardPackTC(pack_id))
+    // }
 
 
     return (
@@ -42,9 +47,9 @@ export default function TablesPackList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards.map((row,index) => (
+                    {cards.map((row, index) => (
                         <TableRow
-                            key={row.id}
+                            key={row._id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell component="th" scope="row">{row.name} </TableCell>
@@ -56,12 +61,13 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display:"flex", marginTop:"15px"}}>
+                            <div style={{display: "flex", marginTop: "15px"}}>
                                 {row.cardsCount !== 0 && <SchoolIcon/>}
-                                {meID === row.user_id &&  <div>
-                                <BorderColorIcon/>
-                                <DeleteOutlineIcon/>
-                            </div> }
+                                {meID === row.user_id && <div>
+
+                                    <BorderColorIcon/>
+                                    <DeleteOutlineIcon/>
+                                </div>}
 
                             </div>
 

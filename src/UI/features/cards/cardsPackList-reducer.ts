@@ -1,4 +1,4 @@
-import {AddNewCardPackType, CardPacksType, cardPackAPI, GetPacksParamsType} from "../../../dal/api";
+import {AddNewCardPackType, cardPackAPI, CardPacksType, GetPacksParamsType} from "../../../dal/api";
 import {ThunkAppDispatchType} from "../../../bll/store";
 import {setAppStatusAC} from "../../app-reducer";
 import {AxiosError} from "axios";
@@ -7,7 +7,7 @@ import {handleServerNetworkError} from "../../../utils/error-utils";
 
 const initialState = {
     cardPacks: [{
-        id: "",
+        _id: "",
         user_id: "",
         name: "",
         cardsCount: 0,
@@ -43,10 +43,6 @@ export type CardsActionType = GetCardsPackACType
 export const cardsPackListReducer = (state: initialCardsStateType = initialState, action: CardsActionType): initialCardsStateType => {
     switch (action.type) {
         case "GET_CARDS_PACK":
-            return {
-                ...state,
-                ...action
-            }
         case "ADD_NEW_CARD_PACK":
             return {
                 ...state,
@@ -63,7 +59,15 @@ export const getCardsPackAC = (cardPacks: Array<CardPacksType>,
                                minCardsCount: number,
                                page: number, // выбранная страница
                                pageCount: number) => (
-    {type: "GET_CARDS_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+    {
+        type: "GET_CARDS_PACK",
+        cardPacks: cardPacks,
+        cardPacksTotalCount,
+        maxCardsCount,
+        minCardsCount,
+        page,
+        pageCount
+    } as const
 )
 
 export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
@@ -72,22 +76,30 @@ export const addNewCardPackAC = (cardPacks: Array<CardPacksType>,
                                  minCardsCount: number,
                                  page: number, // выбранная страница
                                  pageCount: number) => ({
-        type: "ADD_NEW_CARD_PACK", cardPacks: cardPacks, cardPacksTotalCount, maxCardsCount, minCardsCount, page, pageCount} as const
+        type: "ADD_NEW_CARD_PACK",
+        cardPacks: cardPacks,
+        cardPacksTotalCount,
+        maxCardsCount,
+        minCardsCount,
+        page,
+        pageCount
+    } as const
 )
-export const deleteCardPackAC=(cardPackID:string)=>({
-        type:"DELETE_CARS_PACK", cardPackID}as const
+export const deleteCardPackAC = (cardPackID: string) => ({
+        type: "DELETE_CARS_PACK", cardPackID
+    } as const
 )
 
-export const renameCardPackAC=(cardPackID:string, newNameCardPack:string)=>({
-        type:"RENAME_CARD_PACK", cardPackID,newNameCardPack }as const
+export const renameCardPackAC = (cardPackID: string, newNameCardPack: string) => ({
+        type: "RENAME_CARD_PACK", cardPackID, newNameCardPack
+    } as const
 )
-
 
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>
-export type AddNewCardPackACType=ReturnType<typeof addNewCardPackAC>
-export type DeleteCardPackACType=ReturnType<typeof deleteCardPackAC>
-export type RenameCardPackACType=ReturnType<typeof renameCardPackAC>
+export type AddNewCardPackACType = ReturnType<typeof addNewCardPackAC>
+export type DeleteCardPackACType = ReturnType<typeof deleteCardPackAC>
+export type RenameCardPackACType = ReturnType<typeof renameCardPackAC>
 
 export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
@@ -102,10 +114,10 @@ export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAp
         })
 }
 
-export const addNewCardPackTC=(params:AddNewCardPackType)=>(dispatch: ThunkAppDispatchType)=>{
+export const addNewCardPackTC = (params: AddNewCardPackType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardPackAPI.addNewCardPack(params)
-        .then((res)=>{
+        .then((res) => {
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -114,10 +126,10 @@ export const addNewCardPackTC=(params:AddNewCardPackType)=>(dispatch: ThunkAppDi
         })
 }
 
-export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchType)=>{
+export const deleteCardPackTC = (cardPackID: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardPackAPI.deleteCardPack(cardPackID)
-        .then((res)=>{
+        .then((res) => {
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
@@ -126,10 +138,10 @@ export const deleteCardPackTC=(cardPackID:string)=>(dispatch: ThunkAppDispatchTy
         })
 }
 
-export const renameCardPackTC=(params:RenameCardPackACType)=>(dispatch: ThunkAppDispatchType)=>{
+export const renameCardPackTC = (pack_id: string, newName: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardPackAPI.renameCardPack(params)
-        .then((res)=>{
+    cardPackAPI.renameCardPack(pack_id, newName)
+        .then((res) => {
             dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })

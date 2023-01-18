@@ -1,4 +1,11 @@
-import {AddNewCardsType, cardPackAPI, cardsAPI, CardType, RenameCardQuestionType} from '../../../dal/api';
+import {
+    AddNewCardsType,
+    cardPackAPI,
+    cardsAPI,
+    CardType,
+    GetCardsParamsType,
+    RenameCardQuestionType
+} from '../../../dal/api';
 import {ThunkAppDispatchType} from '../../../bll/store';
 import {setAppStatusAC} from '../../app-reducer';
 import {AxiosError} from 'axios';
@@ -75,17 +82,17 @@ export const getCardsPageAC = (cards: Array<CardType>,
 
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>
-export const getCardsPageTC = (cardAnswer: string = 'english ',
+export const getCardsPageTC = (params: GetCardsParamsType/*cardAnswer: string = 'english ',
                                cardQuestion: string = 'english ',
                                cardsPack_id: string = '634dc6dd4e2e6c50ec5a1369', // тестовый айди 3ей карточки
                                min: number = 1,  // для кол-ва отображаемых паков
                                max: number = 4, // для кол-ва отображаемых паков
                                sortCards: string = '0grade', // для сортировки по возрастанию или убыванию
                                page: number = 1, // какая страница открыта
-                               pageCount: number = 4, //кол-во паков на страницу
+                               pageCount: number = 4, //кол-во паков на страницу*/
 ) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCardsPage(cardAnswer, cardQuestion, cardsPack_id, min, max, sortCards, page, pageCount)
+    cardsAPI.getCardsPage(params)
         .then((res) => {
             const data = res.data
             dispatch(getCardsPageAC(
@@ -109,7 +116,7 @@ export const addNewCardsTC=(params:AddNewCardsType)=>(dispatch: ThunkAppDispatch
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addNewCards(params)
         .then((res)=>{
-            dispatch(getCardsPageTC())
+            dispatch(getCardsPageTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -123,7 +130,7 @@ export const deleteCardsTC=(cardsID:string)=>(dispatch: ThunkAppDispatchType)=>{
     dispatch(setAppStatusAC('loading'))
     cardsAPI.deleteCards(cardsID)
         .then((res)=>{
-            dispatch(getCardsPageTC())
+            dispatch(getCardsPageTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -137,7 +144,7 @@ export const renameCardQuestionTC=(params:RenameCardQuestionType)=>(dispatch: Th
     dispatch(setAppStatusAC('loading'))
     cardsAPI.renameCardQuestion(params)
         .then((res)=>{
-            dispatch(getCardsPageTC())
+            dispatch(getCardsPageTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {

@@ -14,7 +14,7 @@ import {getCardsPageTC} from '../cardPackPage-reducer';
 export default function TablesPackPage() {
 
     useEffect(() => {
-        dispatch(getCardsPageTC())
+        dispatch(getCardsPageTC({}))
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)
@@ -36,7 +36,7 @@ export default function TablesPackPage() {
                 <TableBody>
                     {cards.map((row) => (
                         <TableRow
-                            key={row.id}
+                            key={row._id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell component="th" scope="row">{row.name} </TableCell>
