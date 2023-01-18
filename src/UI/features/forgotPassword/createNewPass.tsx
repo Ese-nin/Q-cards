@@ -12,6 +12,7 @@ import InputLabel from '@mui/material/InputLabel';
 
 import {setNewPasswordTC} from '../login/auth-reducer';
 import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
+import {PATH} from "../../../bll/Path";
 
 type LoginFormikErrorsType = {
     password?: string
@@ -55,7 +56,7 @@ export const CreateNewPass = () => {
 
 
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (<div className={s.regContainer}>

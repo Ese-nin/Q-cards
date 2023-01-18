@@ -5,6 +5,7 @@ import {useFormik} from 'formik';
 import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, Input, InputLabel} from '@mui/material';
 import {forgotPasswordTC} from "../login/auth-reducer";
+import {PATH} from "../../../bll/Path";
 
 type ForgotFormikErrorsType = {
     email?: string
@@ -39,7 +40,7 @@ export const ForgotPassPage = () => {
     })
 
     if (sentInstruction) {
-        return <Navigate to={'/checkMail'}/>
+        return <Navigate to={PATH.CHECK_MAIL}/>
     }
 
     if (isLoggedIn) {

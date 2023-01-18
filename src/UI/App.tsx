@@ -15,6 +15,7 @@ import {CreateNewPass} from './features/forgotPassword/createNewPass';
 import {ErrorAlert} from './common/ErrorAlert/ErrorAlert';
 import {PackList} from './features/cards/PacksList';
 import {PackPage} from './features/cards/PacksPage';
+import {PATH} from "../bll/Path";
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -39,16 +40,16 @@ export const App = () => {
             <Header/>
             {status === 'loading' && <Loading/>}
             <Routes>
-                <Route path={'/profile'} element={<Profile/>}/>
+                <Route path={PATH.PROFILE} element={<Profile/>}/>
                 <Route path={'/'} element={<Navigate to={'/profile'}/>}/>
-                <Route path={'/register'} element={<Register/>}/>
-                <Route path={'/login'} element={<LoginPage/>}/>
-                <Route path={'/404'} element={<h1>404: PAGE NOT FOUND</h1>}/>
-                <Route path={'/forgot'} element={<ForgotPassPage/>}/>
-                <Route path={'/checkMail'} element={<CheckEmail/>}/>
-                <Route path={'/createNewPass/:token'} element={<CreateNewPass/>}/>
-                <Route path={'/packlist'} element={<PackList/>}/>
-                <Route path={'/packPage'} element={<PackPage/>}/>
+                <Route path={PATH.REG} element={<Register/>}/>
+                <Route path={PATH.LOGIN} element={<LoginPage/>}/>
+                <Route path={PATH["404"]} element={<h1>404: PAGE NOT FOUND</h1>}/>
+                <Route path={PATH.FORGOT} element={<ForgotPassPage/>}/>
+                <Route path={PATH.CHECK_MAIL} element={<CheckEmail/>}/>
+                <Route path={PATH.NEW_PASS} element={<CreateNewPass/>}/>
+                <Route path={PATH.PACK_LIST} element={<PackList/>}/>
+                <Route path={PATH.PACK_PAGE} element={<PackPage/>}/>
                 <Route path={'*'} element={<Navigate to="/404"/>}/>
             </Routes>
         </div>

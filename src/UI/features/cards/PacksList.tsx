@@ -9,6 +9,8 @@ import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
 import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
 import {RangeSlider} from "./RangeSlider/RangeSlider";
+import {SearchInput} from "./SearchInput/SearchInput";
+import {PATH} from "../../../bll/Path";
 
 
 export const PackList = () => {
@@ -24,17 +26,26 @@ export const PackList = () => {
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
 
-    const [value1, setValue1] = useState(minCardsCount)
-    const [value2, setValue2] = useState(maxCardsCount)
+    const [values, setValues] = useState([minCardsCount, maxCardsCount])
+    // const [value2, setValue2] = useState(maxCardsCount)
+    const [find, setFind] = useState('')
 
-    const changeSliderValues = (event: Event, value: number | number[]) => {
+    const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
         if (Array.isArray(value)) {
-            setValue1(value[0])
-            setValue2(value[1])
+            setValues(value)
         }
 
         // dispatch(getCardsPackTC({...params, min: value1, max: value2}))
-        // setSearchParams({...params, min: value1, max: value2})
+        setSearchParams({...params, min: values[0], max: values[1]})
+    }
+
+    const onChangeText = (value: string) => {
+        setFind(value)
+    }
+
+    const onDebouncedChange = (value: string) => {
+        // dispatch(getCardsPackTC({...params, packName: value}))
+        setSearchParams({...params, packName: value})
     }
 
     const buttonClickHandler = () => {
@@ -51,7 +62,7 @@ export const PackList = () => {
     }
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
 
     return (<div className={s.page}>
@@ -62,16 +73,21 @@ export const PackList = () => {
                 </Button>
             </div>
             <div className={s.formLine}>
-                <div>строка поиска</div>
+                <div className={s.searchField}>
+                    <SearchInput value={find}
+                                 onChangeText={onChangeText}
+                                 onDebouncedChange={onDebouncedChange}
+                                 placeholder={'Search'}/>
+                </div>
                 <div><ChoiceCards userID={userID}/></div>
                 <div className={s.slider}>
-                    <span>{value1}</span>
+                    <span>{values[0]}</span>
                     <RangeSlider
                         min={minCardsCount}
                         max={maxCardsCount}
-                        value={[value1, value2]}
-                        onChange={changeSliderValues}/>
-                    <span>{value2}</span>
+                        value={values}
+                        onChangeCommitted={changeSliderValues}/>
+                    <span>{values[1]}</span>
                 </div>
                 <div><FilterAltOffIcon onClick={resetFilter}/></div>
             </div>

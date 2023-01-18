@@ -6,6 +6,7 @@ import s from './packList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
 import TablesPackPage from './tables/TablesPackPage';
+import {PATH} from "../../../bll/Path";
 
 
 export const PackPage = () => {
@@ -30,7 +31,7 @@ export const PackPage = () => {
     }
 
     if (!isLoggedIn) {
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
 
 

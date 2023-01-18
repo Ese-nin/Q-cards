@@ -4,13 +4,14 @@ import {Navigate, NavLink} from 'react-router-dom';
 import s from '../register/register.module.css';
 import {Button, FormControl} from '@mui/material';
 import mail from './Group 281.png'
+import {PATH} from "../../../bll/Path";
 
 export const CheckEmail = () => {
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const Email = useAppSelector(store => store.auth.email)
 
     if (isLoggedIn) {
-        return <Navigate to={'/profile'}/>
+        return <Navigate to={PATH.PROFILE}/>
     }
 
     return (<div className={s.regContainer}>
