@@ -12,18 +12,14 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import {addNewCardsTC} from "../cardPackPage-reducer";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import s from "./TablesPackList.module.css"
-import {useDebounce} from "../../../../utils/hooks/useDebounce";
-import {CardPacksType} from "../../../../dal/api";
-
-type TablesPackListPropsType={
-    newCards:Array<CardPacksType>
-}
 
 
-export default function TablesPackList({newCards}:TablesPackListPropsType) {
+
+
+
+export default function TablesPackList() {
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))

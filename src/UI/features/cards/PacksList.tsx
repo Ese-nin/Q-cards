@@ -30,7 +30,7 @@ export const PackList = () => {
     const [values, setValues] = useState([minCardsCount, maxCardsCount])
     // const [value2, setValue2] = useState(maxCardsCount)
     const [find, setFind] = useState('')
-    const debouncedValue  = useDebounce<string>(find, 500)
+
 
     const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
         if (Array.isArray(value)) {
@@ -45,18 +45,8 @@ export const PackList = () => {
         setFind(value)
     }
 
-    const valueCard = useAppSelector(state => state.cards)
-    const cards = valueCard.cardPacks
-    let searchPack = cards
 
 
-
-
-    useEffect(() => {
-        searchPack =cards.filter(card=>{
-            return card.name.toLowerCase().includes(find.toLowerCase())
-        })
-    }, [debouncedValue])
 
 
     const onDebouncedChange = (value: string) => {
@@ -109,7 +99,7 @@ export const PackList = () => {
             </div>
 
             <div className={s.tableBlock}>
-                <TablesPackList newCards={searchPack}/>
+                <TablesPackList/>
             </div>
 
             <div>
