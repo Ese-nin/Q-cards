@@ -24,7 +24,7 @@ export default function TablesPackList() {
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)
-    const meID=useAppSelector(state => state.auth.user_id) //для коммита
+    const meID=useAppSelector(state => state.auth.user_id)
     const cards = value.cardPacks
 
 
