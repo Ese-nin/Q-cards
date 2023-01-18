@@ -26,18 +26,17 @@ export const PackList = () => {
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
 
-    const [value1, setValue1] = useState(minCardsCount)
-    const [value2, setValue2] = useState(maxCardsCount)
+    const [values, setValues] = useState([minCardsCount, maxCardsCount])
+    // const [value2, setValue2] = useState(maxCardsCount)
     const [find, setFind] = useState('')
 
     const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
         if (Array.isArray(value)) {
-            setValue1(value[0])
-            setValue2(value[1])
+            setValues(value)
         }
 
         // dispatch(getCardsPackTC({...params, min: value1, max: value2}))
-        setSearchParams({...params, min: value1, max: value2})
+        setSearchParams({...params, min: values[0], max: values[1]})
     }
 
     const onChangeText = (value: string) => {
@@ -82,13 +81,13 @@ export const PackList = () => {
                 </div>
                 <div><ChoiceCards userID={userID}/></div>
                 <div className={s.slider}>
-                    <span>{value1}</span>
+                    <span>{values[0]}</span>
                     <RangeSlider
                         min={minCardsCount}
                         max={maxCardsCount}
-                        value={[value1, value2]}
+                        value={values}
                         onChangeCommitted={changeSliderValues}/>
-                    <span>{value2}</span>
+                    <span>{values[1]}</span>
                 </div>
                 <div><FilterAltOffIcon onClick={resetFilter}/></div>
             </div>
