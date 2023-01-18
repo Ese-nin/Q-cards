@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +11,8 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import SuperButton from "../../../common/c2-SuperButton/SuperButton";
+import s from "./TablesPackList.module.css"
 
 
 export default function TablesPackList() {
@@ -47,7 +48,7 @@ export default function TablesPackList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards.map((row, index) => (
+                    {cards.map((row) => (
                         <TableRow
                             key={row._id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
@@ -61,12 +62,11 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display: "flex", marginTop: "15px"}}>
-                                {row.cardsCount !== 0 && <SchoolIcon/>}
+                            <div style={{display: "flex", marginTop: "15px", marginBottom:"5px"}}>
+                                 <SuperButton className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
-
-                                    <BorderColorIcon/>
-                                    <DeleteOutlineIcon/>
+                                    <SuperButton className={s.button_style}><BorderColorIcon className={s.icon_style}/></SuperButton>
+                                    <SuperButton className={s.button_style}> <DeleteOutlineIcon className={s.icon_style}/> </SuperButton>
                                 </div>}
 
                             </div>
