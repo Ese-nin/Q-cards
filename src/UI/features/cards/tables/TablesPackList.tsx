@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useEffect} from 'react';
-import {getCardsPackTC} from '../cardsPackList-reducer';
+import {getCardsPackTC, initialCardsStateType} from '../cardsPackList-reducer';
 import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -15,9 +15,15 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import {addNewCardsTC} from "../cardPackPage-reducer";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import s from "./TablesPackList.module.css"
+import {useDebounce} from "../../../../utils/hooks/useDebounce";
+import {CardPacksType} from "../../../../dal/api";
+
+type TablesPackListPropsType={
+    newCards:Array<CardPacksType>
+}
 
 
-export default function TablesPackList() {
+export default function TablesPackList({newCards}:TablesPackListPropsType) {
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -26,6 +32,7 @@ export default function TablesPackList() {
     const value = useAppSelector(state => state.cards)
     const meID = useAppSelector(state => state.auth.user_id) //для коммита
     const cards = value.cardPacks
+
 
 
     return (

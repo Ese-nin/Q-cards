@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
@@ -11,6 +11,7 @@ import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
 import {RangeSlider} from "./RangeSlider/RangeSlider";
 import {SearchInput} from "./SearchInput/SearchInput";
 import {PATH} from "../../../bll/Path";
+import {useDebounce} from "../../../utils/hooks/useDebounce";
 
 
 export const PackList = () => {
@@ -29,6 +30,7 @@ export const PackList = () => {
     const [values, setValues] = useState([minCardsCount, maxCardsCount])
     // const [value2, setValue2] = useState(maxCardsCount)
     const [find, setFind] = useState('')
+    const debouncedValue  = useDebounce<string>(find, 500)
 
     const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
         if (Array.isArray(value)) {
@@ -42,6 +44,20 @@ export const PackList = () => {
     const onChangeText = (value: string) => {
         setFind(value)
     }
+
+    const valueCard = useAppSelector(state => state.cards)
+    const cards = valueCard.cardPacks
+    let searchPack = cards
+
+
+
+
+    useEffect(() => {
+        searchPack =cards.filter(card=>{
+            return card.name.toLowerCase().includes(find.toLowerCase())
+        })
+    }, [debouncedValue])
+
 
     const onDebouncedChange = (value: string) => {
         // dispatch(getCardsPackTC({...params, packName: value}))
@@ -93,7 +109,7 @@ export const PackList = () => {
             </div>
 
             <div className={s.tableBlock}>
-                <TablesPackList/>
+                <TablesPackList newCards={searchPack}/>
             </div>
 
             <div>
