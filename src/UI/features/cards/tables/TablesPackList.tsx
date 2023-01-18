@@ -21,7 +21,6 @@ export default function TablesPackList() {
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)
-    console.log(value)
     const cards = value.cardPacks
 
 
