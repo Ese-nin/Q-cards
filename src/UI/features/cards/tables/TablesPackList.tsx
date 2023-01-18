@@ -12,6 +12,7 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {addNewCardsTC} from "../cardPackPage-reducer";
 
 
 export default function TablesPackList() {
@@ -21,6 +22,8 @@ export default function TablesPackList() {
     }, [])
     const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cards)
+    const meID=useAppSelector(state => state.auth.user_id) //для коммита
+    console.log(value)
     const cards = value.cardPacks
 
 
@@ -51,9 +54,15 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <SchoolIcon/>
-                            <BorderColorIcon/>
-                            <DeleteOutlineIcon/>
+                            <div style={{display:"flex", marginTop:"15px"}}>
+                                {row.cardsCount !== 0 && <SchoolIcon/>}
+                                {meID === row.user_id && <div>
+                                <BorderColorIcon/>
+                                <DeleteOutlineIcon/>
+                            </div> }
+
+                            </div>
+
                         </TableRow>
                     ))}
                 </TableBody>
