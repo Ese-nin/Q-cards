@@ -59,7 +59,7 @@ const SuperPagination: React.FC<SuperPaginationPropsType> = (
             />
 
             <span className={s.text2}>
-                Cards per Page
+                Items per Page
             </span>
         </div>
     )
