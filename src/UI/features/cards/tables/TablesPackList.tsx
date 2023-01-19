@@ -38,7 +38,7 @@ export default function TablesPackList() {
 
     const getPackPage = (cardsPack_id: string) => {
         dispatch(getCardsPageTC({cardsPack_id}))
-        navigate(PATH.PACK_PAGE + '?cardsPack_id' + cardsPack_id)
+        navigate(PATH.PACK_PAGE + '?cardsPack_id=' + cardsPack_id)
     }
 
 
@@ -51,7 +51,6 @@ export default function TablesPackList() {
     }
 
 
-    // @ts-ignore
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">

@@ -22,7 +22,8 @@ const initialState = {
     minGrade: 2,
     page: 1, // выбранная страница
     pageCount: 1,  // количество элементов на странице
-    packUserId: ''
+    packUserId: '',
+    packName: ''
 
 }
 
@@ -33,7 +34,8 @@ export type initialCardsStateType = {
     minGrade: number,
     page: number, // выбранная страница
     pageCount: number,  // количество элементов на странице
-    packUserId: string
+    packUserId: string,
+    packName: string
 
 }
 
@@ -59,7 +61,8 @@ export const getCardsPageAC = (cards: Array<CardType>,
                                minGrade: number,
                                page: number, // выбранная страница
                                pageCount: number,
-                               packUserId: string
+                               packUserId: string,
+                               packName: string
 ) => (
     {
         type: 'GET_CARDS_PAGE',
@@ -69,7 +72,8 @@ export const getCardsPageAC = (cards: Array<CardType>,
         minGrade,
         page,
         pageCount,
-        packUserId
+        packUserId,
+        packName
     } as const
 )
 
@@ -95,7 +99,8 @@ export const getCardsPageTC = (params: GetCardsParamsType) => (dispatch: ThunkAp
                 data.minGrade,
                 data.page,
                 data.pageCount,
-                data.packUserId)
+                data.packUserId,
+                data.packName)
             )
             dispatch(setAppStatusAC('succeeded'))
         })

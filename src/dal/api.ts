@@ -79,7 +79,7 @@ export const cardPackAPI = {
 
 export const cardsAPI = {
     getCardsPage(params: GetCardsParamsType) {
-        return instance.get<GetCardResponseType>('/cards/card', {params})
+        return instance.get<'', GetCardResponseType>('/cards/card', {params})
     },
     addNewCards(params: AddNewCardsType) {
         const data = {
@@ -169,13 +169,27 @@ export type GetCardsPackResponseType = {
 
 }
 export type GetCardResponseType = {
-    cards: CardType[],
-    cardsTotalCount: number,
-    maxGrade: number,
-    minGrade: number,
-    page: number,
-    pageCount: number,
-    packUserId: string
+    config: any
+    data: {
+        cards: CardType[];
+        packUserId: string;
+        packName: string;
+        packPrivate: boolean;
+        packDeckCover: string;
+        packCreated: string;
+        packUpdated: string;
+        page: number;
+        pageCount: number;
+        cardsTotalCount: number;
+        minGrade: number;
+        maxGrade: number;
+        token: string;
+        tokenDeathTime: number;
+    }
+    headers: any
+    request: any
+    status: number
+    statusText: string
 }
 export type CardPacksType = {
     _id: string,

@@ -17,6 +17,7 @@ export const PackPage = () => {
     const page = useAppSelector(state => state.cardPage.page)
     const pageCount = useAppSelector(state => state.cardPage.pageCount)
     const cardsTotalCount = useAppSelector(state => state.cardPage.cardsTotalCount)
+    const packName = useAppSelector(state => state.cardPage.packName)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
@@ -25,8 +26,8 @@ export const PackPage = () => {
 
     const onChangePagination = (page: number, pageCount: number) => {
 
-
-        dispatch(getCardsPageTC({cardsPack_id: 'pack_id', page, pageCount})) // допилить
+        const cardsPack_id = params.cardsPack_id
+        dispatch(getCardsPageTC({cardsPack_id, page, pageCount}))
         setSearchParams({...params, page, pageCount})
     }
 
@@ -50,7 +51,7 @@ export const PackPage = () => {
 
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Friend’s Pack</div>
+                <div>{packName}</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
                     Learn to pack
                 </Button>
