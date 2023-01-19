@@ -9,15 +9,21 @@ import {getCardsPageTC} from "./cardPackPage-reducer";
 import {SearchInput} from "./SearchInput/SearchInput";
 import {Navigate, useSearchParams} from "react-router-dom";
 import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {
+    cardsTotalCountSelector,
+    isLoggedInSelector, packNameSelector,
+    pageCardsSelector,
+    pageCountCardsSelector
+} from "../../../bll/selectors";
 
 
 export const PackPage = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const page = useAppSelector(state => state.cardPage.page)
-    const pageCount = useAppSelector(state => state.cardPage.pageCount)
-    const cardsTotalCount = useAppSelector(state => state.cardPage.cardsTotalCount)
-    const packName = useAppSelector(state => state.cardPage.packName)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const page = useAppSelector(pageCardsSelector)
+    const pageCount = useAppSelector(pageCountCardsSelector)
+    const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+    const packName = useAppSelector(packNameSelector)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)

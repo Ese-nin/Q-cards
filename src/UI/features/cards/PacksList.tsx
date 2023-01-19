@@ -12,17 +12,23 @@ import {SearchInput} from './SearchInput/SearchInput';
 import {PATH} from '../../../bll/Path';
 import TablesPackList from './tables/TablesPackList';
 import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {
+    cardPacksTotalCountSelector,
+    isLoggedInSelector, maxCardsCountSelector, minCardsCountSelector,
+    pageCountPacksSelector,
+    pagePacksSelector, user_idSelector
+} from "../../../bll/selectors";
 
 
 export const PackList = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const page = useAppSelector(state => state.cards.page)
-    const pageCount = useAppSelector(state => state.cards.pageCount)
-    const cardPacksTotalCount = useAppSelector(state => state.cards.cardPacksTotalCount)
-    const minCardsCount = useAppSelector(state => state.cards.minCardsCount)
-    const maxCardsCount = useAppSelector(state => state.cards.maxCardsCount)
-    let userID = useAppSelector(state => state.auth.user_id)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const page = useAppSelector(pagePacksSelector)
+    const pageCount = useAppSelector(pageCountPacksSelector)
+    const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
+    const minCardsCount = useAppSelector(minCardsCountSelector)
+    const maxCardsCount = useAppSelector(maxCardsCountSelector)
+    const userID = useAppSelector(user_idSelector)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)

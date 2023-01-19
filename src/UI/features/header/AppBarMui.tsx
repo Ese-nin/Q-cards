@@ -7,14 +7,13 @@ import {useAppSelector} from '../../../bll/store';
 import SuperButton from '../../common/c2-SuperButton/SuperButton';
 import s from './header.module.css';
 import {NavLink} from 'react-router-dom';
-import {ForgotPassPage} from '../forgotPassword/forgotPassword';
-import {CreateNewPass} from '../forgotPassword/createNewPass';
+import {isLoggedInSelector, nameSelector} from "../../../bll/selectors";
 
 
 export default function MenuAppBar() {
     // добавленный код
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const Name = useAppSelector(store => store.auth.name)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const Name = useAppSelector(nameSelector)
     // const dispatch = useAppDispatch()
 
 

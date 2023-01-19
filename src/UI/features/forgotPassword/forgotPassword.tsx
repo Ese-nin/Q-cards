@@ -6,6 +6,7 @@ import s from '../register/register.module.css';
 import {Button, FormControl, FormGroup, Input, InputLabel} from '@mui/material';
 import {forgotPasswordTC} from "../login/auth-reducer";
 import {PATH} from "../../../bll/Path";
+import {isLoggedInSelector, isSentInstructionSelector} from "../../../bll/selectors";
 
 type ForgotFormikErrorsType = {
     email?: string
@@ -23,8 +24,8 @@ const validate = (values: ForgotFormikErrorsType) => {
 
 
 export const ForgotPassPage = () => {
-    const sentInstruction = useAppSelector(state => state.auth.isSentInstruction)
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const sentInstruction = useAppSelector(isSentInstructionSelector)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({

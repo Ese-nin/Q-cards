@@ -16,14 +16,15 @@ import s from './TablesPackList.module.css'
 import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
+import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
 
 
 export default function TablesPackList() {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch()
-    const cardPacks = useAppSelector(state => state.cards.cardPacks)
-    const meID = useAppSelector(state => state.auth.user_id)
+    const cardPacks = useAppSelector(cardPacksSelector)
+    const meID = useAppSelector(user_idSelector)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
