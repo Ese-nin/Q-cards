@@ -43,3 +43,126 @@
     width: 500px;
     margin-bottom: 10px;
 }
+
+.iconMenu {
+
+}
+
+.rectangle {
+
+    width: 10.5px;
+    height: 10.5px;
+
+}
+
+.containerGroup {
+    margin: 2px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.ellipse {
+    margin: 1px;
+    width: 1.75px;
+    height: 1.75px;
+
+
+    background: #000000;
+}
+
+.ellipseBig {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+
+
+    width: 18px;
+    height: 18px;
+
+
+    /* Neutral Dark/-60 */
+    border-radius: 50%;
+    border: 1px solid #0D0C0B;
+}
+
+.rectangleContainer {
+
+    width: 24px;
+    height: 24px;
+
+
+}
+
+.menuBarContainer{
+    position: absolute;
+}
+
+.menuBar{
+
+    width: 116.5px;
+    height: 136.5px;
+
+
+    background: #FFFFFF;
+    border: 1px solid #CFCFCF;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
+}
+
+.buttonGroup{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+}
+
+.buttonAndName{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    width: 82%;
+    min-height: 45.5px;
+    padding-right: 20px;
+}
+
+.buttonAndName:hover{
+    background: gainsboro;
+}
+
+.name{
+
+    width: 28px;
+    height: 24px;
+    margin-left: 5px;
+
+
+    /* 14px */
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    /* identical to box height, or 171% */
+
+    letter-spacing: -0.01em;
+
+    /* Neutral Dark/-60 */
+
+    color: #0D0C0B;
+}
+
+.burgerMenu{
+    width: 20px;
+}

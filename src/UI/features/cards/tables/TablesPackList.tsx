@@ -16,6 +16,7 @@ import s from './TablesPackList.module.css'
 import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
+import {useEffect} from "react";
 
 
 export default function TablesPackList() {
