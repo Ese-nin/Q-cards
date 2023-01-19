@@ -29,9 +29,10 @@ export default function TablesPackList() {
         alert('функция в разработке')
     }
 
-    // const getPackPage = (cardsPack_id: string) => {
-    //     dispatch(getCardsPageTC({cardsPack_id}))
-    // }
+    const getPackPage = (cardsPack_id: string) => {
+        dispatch(getCardsPageTC({cardsPack_id}))
+
+    }
 
 
     const renamePack = (cardPackID: string, newNameCardPack: string) => {
@@ -64,7 +65,7 @@ export default function TablesPackList() {
                         >
                             <TableCell component="th" scope="row">
                                 <button
-                                    // onClick={getPackPage(row._id)}
+                                    onClick={()=>getPackPage(row._id)}
                                     className={s.btnNamePagePack}>
                                     {row.name}
                                 </button>
