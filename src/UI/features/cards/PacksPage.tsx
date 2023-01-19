@@ -25,7 +25,7 @@ export const PackPage = () => {
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
-    const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(true)
+    const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false)
     const [find, setFind] = useState('')
 
 
