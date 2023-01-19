@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
     cardPage: cardPackPageReducer
 })
 
-type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof rootReducer>
 type RootActionsType = AuthActionsType | AppActionsType | CardsActionType | CardsPageActionType
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 

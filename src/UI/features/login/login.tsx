@@ -15,6 +15,7 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
 import {PATH} from "../../../bll/Path";
+import {isLoggedInSelector} from "../../../bll/selectors";
 
 type LoginFormikErrorsType = {
     email?: string
@@ -38,7 +39,7 @@ const validate = (values: LoginFormikErrorsType) => {
 
 
 export const LoginPage = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({

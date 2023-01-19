@@ -8,13 +8,14 @@ import {Logout} from '@mui/icons-material';
 import {logoutTC, setNewNameTC} from '../login/auth-reducer';
 import {EditableSpan} from '../../common/EditableSpan/EditableSpan';
 import {PATH} from "../../../bll/Path";
+import {emailSelector, isLoggedInSelector, nameSelector} from "../../../bll/selectors";
 
 
 export const Profile = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const Name = useAppSelector(store=> store.auth.name)
-    const Email = useAppSelector(store=> store.auth.email)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const Name = useAppSelector(nameSelector)
+    const Email = useAppSelector(emailSelector)
 
     const LogOutHandler = useCallback(() => {
         dispatch(logoutTC())

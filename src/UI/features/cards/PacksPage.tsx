@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import s from './packList.module.css'
@@ -13,19 +13,29 @@ import SuperButton from "../../common/c2-SuperButton/SuperButton";
 import SchoolIcon from "@mui/icons-material/School";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import {Navigate, useSearchParams} from "react-router-dom";
+import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {
+    cardsTotalCountSelector,
+    isLoggedInSelector, packNameSelector,
+    pageCardsSelector,
+    pageCountCardsSelector
+} from "../../../bll/selectors";
 
 
 export const PackPage = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const page = useAppSelector(state => state.cardPage.page)
-    const pageCount = useAppSelector(state => state.cardPage.pageCount)
-    const cardsTotalCount = useAppSelector(state => state.cardPage.cardsTotalCount)
-    const packName = useAppSelector(state => state.cardPage.packName)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const page = useAppSelector(pageCardsSelector)
+    const pageCount = useAppSelector(pageCountCardsSelector)
+    const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+    const packName = useAppSelector(packNameSelector)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
     const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false)
+    const cardsPack_id = params.cardsPack_id
+
     const [find, setFind] = useState('')
 
 
@@ -35,24 +45,25 @@ export const PackPage = () => {
         setVisibleMenuBar(!visibleMenuBar)
     }
 
+    const searchDebouncedValue = useDebounce<string>(find, 600)
+
     const onChangePagination = (page: number, pageCount: number) => {
-        let cardsPack_id = params.cardsPack_id
-        dispatch(getCardsPageTC({cardsPack_id, page, pageCount}))
+        dispatch(getCardsPageTC({...params, cardsPack_id, page, pageCount}))
         setSearchParams({...params, page, pageCount})
     }
 
     const buttonClickHandler = () => {
-        dispatch(addNewCardPackTC({}))
+        // some handle
     }
 
     const onChangeText = (value: string) => {
         setFind(value)
     }
 
-    const onDebouncedChange = (value: string) => {
-        // dispatch(getCardsPackTC({...params, cardsPack_id: 'pack_id', cardQuestion: value}))
-        setSearchParams({...params, cardQuestion: value})
-    }
+    useEffect(() => {
+        dispatch(getCardsPageTC({...params, cardsPack_id, cardQuestion: find}))
+        setSearchParams({...params, cardQuestion: find})
+    }, [searchDebouncedValue])
 
     if (!isLoggedIn) {
         return <Navigate to={PATH.LOGIN}/>
@@ -114,7 +125,6 @@ export const PackPage = () => {
                 <div className={s.searchFieldCards}>
                     <SearchInput value={find}
                                  onChangeText={onChangeText}
-                                 onDebouncedChange={onDebouncedChange}
                                  placeholder={'Search'}/>
                 </div>
             </div>

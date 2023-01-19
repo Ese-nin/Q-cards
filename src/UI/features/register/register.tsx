@@ -13,6 +13,7 @@ import {registerTC} from '../login/auth-reducer';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {InputWithEyeIcon} from "./InputWithEyeIcon/InputWithEyeIcon";
 import {PATH} from "../../../bll/Path";
+import {isHaveAccountSelector, isLoggedInSelector} from "../../../bll/selectors";
 
 type RegFormikErrorsType = {
     email?: string
@@ -43,8 +44,8 @@ const validate = (values: RegFormikErrorsType) => {
 }
 
 export const Register = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const isHaveAccount = useAppSelector(state => state.auth.isHaveAccount)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const isHaveAccount = useAppSelector(isHaveAccountSelector)
     const dispatch = useAppDispatch()
 
     const formik = useFormik({

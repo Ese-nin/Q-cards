@@ -5,10 +5,11 @@ import s from '../register/register.module.css';
 import {Button, FormControl} from '@mui/material';
 import mail from './Group 281.png'
 import {PATH} from "../../../bll/Path";
+import {emailSelector, isLoggedInSelector} from "../../../bll/selectors";
 
 export const CheckEmail = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const Email = useAppSelector(store => store.auth.email)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const Email = useAppSelector(emailSelector)
 
     if (isLoggedIn) {
         return <Navigate to={PATH.PROFILE}/>

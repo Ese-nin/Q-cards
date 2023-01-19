@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,15 +16,14 @@ import s from './TablesPackList.module.css'
 import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
-import {useEffect} from "react";
-
+import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
 
 export default function TablesPackList() {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch()
-    const cardPacks = useAppSelector(state => state.cards.cardPacks)
-    const meID = useAppSelector(state => state.auth.user_id)
+    const cardPacks = useAppSelector(cardPacksSelector)
+    const meID = useAppSelector(user_idSelector)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -104,7 +103,6 @@ export default function TablesPackList() {
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>
                                 </div>}
-
                             </div>
 
                         </TableRow>

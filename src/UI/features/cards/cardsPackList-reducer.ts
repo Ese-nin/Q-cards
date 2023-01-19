@@ -16,7 +16,7 @@ const initialState = {
         user_name: ""
     }],
     cardPacksTotalCount: 0,
-    maxCardsCount: 0,
+    maxCardsCount: 30,
     minCardsCount: 0,
     page: 1, // выбранная страница
     pageCount: 1  // количество элементов на странице

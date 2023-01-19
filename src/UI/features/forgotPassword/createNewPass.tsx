@@ -13,6 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import {setNewPasswordTC} from '../login/auth-reducer';
 import {InputWithEyeIcon} from "../register/InputWithEyeIcon/InputWithEyeIcon";
 import {PATH} from "../../../bll/Path";
+import {isLoggedInSelector} from "../../../bll/selectors";
 
 type LoginFormikErrorsType = {
     password?: string
@@ -30,7 +31,7 @@ const validate = (values: LoginFormikErrorsType) => {
 
 
 export const CreateNewPass = () => {
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
     const dispatch = useAppDispatch()
 
     const params = useParams<'token'>()
