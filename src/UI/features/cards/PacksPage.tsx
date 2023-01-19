@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import {addNewCardPackTC} from "./cardsPackList-reducer";
@@ -9,6 +8,7 @@ import TablesPackPage from './tables/TablesPackPage';
 import {PATH} from "../../../bll/Path";
 import {getCardsPageTC} from "./cardPackPage-reducer";
 import {SearchInput} from "./SearchInput/SearchInput";
+import {Navigate, useSearchParams} from "react-router-dom";
 
 
 export const PackPage = () => {
@@ -17,6 +17,7 @@ export const PackPage = () => {
     const page = useAppSelector(state => state.cardPage.page)
     const pageCount = useAppSelector(state => state.cardPage.pageCount)
     const cardsTotalCount = useAppSelector(state => state.cardPage.cardsTotalCount)
+    const packName = useAppSelector(state => state.cardPage.packName)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
@@ -24,9 +25,9 @@ export const PackPage = () => {
     const [find, setFind] = useState('')
 
     const onChangePagination = (page: number, pageCount: number) => {
-
-
-        dispatch(getCardsPageTC({cardsPack_id: 'pack_id', page, pageCount})) // допилить
+        let cardsPack_id = params.cardsPack_id
+        console.log(params)
+        dispatch(getCardsPageTC({cardsPack_id, page, pageCount}))
         setSearchParams({...params, page, pageCount})
     }
 
@@ -50,7 +51,7 @@ export const PackPage = () => {
 
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Friend’s Pack</div>
+                <div>{packName}</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
                     Learn to pack
                 </Button>

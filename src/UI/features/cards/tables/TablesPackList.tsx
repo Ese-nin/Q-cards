@@ -13,7 +13,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SuperButton from '../../../common/c2-SuperButton/SuperButton';
 import s from './TablesPackList.module.css'
-import {useNavigate, useSearchParams} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
 
@@ -23,10 +23,7 @@ export default function TablesPackList() {
 
     const dispatch = useAppDispatch()
     const cardPacks = useAppSelector(state => state.cards.cardPacks)
-    const meID = useAppSelector(state => state.auth.user_id) //для коммита
-
-    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
-    const params = Object.fromEntries(searchParams)
+    const meID = useAppSelector(state => state.auth.user_id)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -38,7 +35,7 @@ export default function TablesPackList() {
 
     const getPackPage = (cardsPack_id: string) => {
         dispatch(getCardsPageTC({cardsPack_id}))
-        navigate(PATH.PACK_PAGE + '?cardsPack_id' + cardsPack_id)
+        navigate(PATH.PACK_PAGE + '?cardsPack_id=' + cardsPack_id)
     }
 
 
@@ -50,8 +47,15 @@ export default function TablesPackList() {
         dispatch(deleteCardPackTC(pack_id))
     }
 
+    /*const onChangeSort = (newSort: string) => {
 
-    // @ts-ignore
+        dispatch(getCardsPackTC({sortPacks: newSort, page: 1, pageCount: count}))
+
+        setSearchParams({sortPacks: newSort, page: 1, pageCount: count})
+
+    }*/
+
+
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
