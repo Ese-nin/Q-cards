@@ -33,7 +33,7 @@ export const PackList = () => {
     const sliderDebouncedValue = useDebounce<number[]>(values, 600)
     const searchDebouncedValue = useDebounce<string>(find, 600)
 
-    const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
+    const changeSliderValues = (event: Event, value: number | number[]) => {
         if (Array.isArray(value)) {
             setValues(value)
         }
@@ -90,7 +90,7 @@ export const PackList = () => {
                         min={minCardsCount}
                         max={maxCardsCount}
                         value={values}
-                        onChangeCommitted={changeSliderValues}/>
+                        onChange={changeSliderValues}/>
                     <span>{values[1]}</span>
                 </div>
                 <div><FilterAltOffIcon onClick={resetFilter}/></div>
