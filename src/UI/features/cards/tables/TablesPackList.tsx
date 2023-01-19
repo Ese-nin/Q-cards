@@ -13,16 +13,24 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import s from "./TablesPackList.module.css"
+import {NavLink, useSearchParams} from "react-router-dom";
+import {getCardsPageTC} from "../cardPackPage-reducer";
+import {PATH} from "../../../../bll/Path";
+import SuperSort from "../../../common/SuperSort/SuperSort";
 
 
-export default function TablesPackList() {
+export function TablesPackList() {
+
+    const dispatch = useAppDispatch()
+    const cardPacks = useAppSelector(state => state.cards.cardPacks)
+    const meID = useAppSelector(state => state.auth.user_id) //для коммита
+
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
+    const params = Object.fromEntries(searchParams)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
     }, [])
-    const dispatch = useAppDispatch()
-    const cards = useAppSelector(state => state.cards.cardPacks)
-    const meID = useAppSelector(state => state.auth.user_id) //для коммита
 
     const learnCards = () => {
         alert('функция в разработке')
@@ -36,6 +44,56 @@ export default function TablesPackList() {
         dispatch(deleteCardPackTC(pack_id))
     }
 
+    const viewCardsOfPack = (pack_id: string) => {
+
+        dispatch(getCardsPageTC({cardsPack_id: pack_id}))
+        setSearchParams({...params, cardsPack_id: pack_id})
+    }
+
+    /*const onChangeSort = (newSort: string) => {
+
+        dispatch(getCardsPackTC({sortPacks: newSort, page: 1, pageCount: count}))
+
+        setSearchParams({sortPacks: newSort, page: 1, pageCount: count})
+
+    }*/
+
+    const tableBody = cardPacks.length
+        ? cardPacks.map((row) => (
+            <TableRow
+                key={row._id}
+                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+            >
+                <TableCell component="th" scope="row">
+                    <NavLink to={PATH.PACK_PAGE}
+                             onClick={() => viewCardsOfPack(row._id)}>{row.name}
+                    </NavLink>
+                </TableCell>
+                <TableCell align="left">{row.cardsCount}</TableCell>
+                <TableCell
+                    align="left">{(new Date(row.updated)).getDate()}
+                    .{(new Date(row.updated)).getMonth() < 10
+                        ? ((new Date(row.updated)).getMonth() + '1')
+                        : (new Date(row.updated)).getMonth() + 1}
+                    .{(new Date(row.updated)).getFullYear()}</TableCell>
+                <TableCell align="left">{row.user_name}</TableCell>
+                <div style={{display: "flex", marginTop: "15px", marginBottom: "5px"}}>
+                    <SuperButton onClick={learnCards} className={s.button_style}
+                                 disabled={row.cardsCount === 0}><SchoolIcon
+                        className={s.icon_style}/></SuperButton>
+                    {meID === row.user_id && <div>
+                        <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
+                                     className={s.button_style}>
+                            <BorderColorIcon className={s.icon_style}/>
+                        </SuperButton>
+                        <SuperButton onClick={() => removePack(row._id)}
+                                     className={s.button_style}>
+                            <DeleteOutlineIcon className={s.icon_style}/>
+                        </SuperButton>
+                    </div>}
+                </div>
+            </TableRow>
+        )) : <span>Packs not found</span>
 
     return (
         <TableContainer component={Paper}>
@@ -44,43 +102,15 @@ export default function TablesPackList() {
                     <TableRow sx={{backgroundColor: '#EFEFEF'}}>
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
-                        <TableCell align="left">Last Updated</TableCell>
+                        <TableCell align="left">Last Updated
+                            {/*<SuperSort sort={} value={'updated'} onChange={onChangeSort}/>*/}
+                        </TableCell>
                         <TableCell align="left">Created by</TableCell>
                         <TableCell align="left">Actions</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {cards.map((row) => (
-                        <TableRow
-                            key={row._id}
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                        >
-                            <TableCell component="th" scope="row">{row.name} </TableCell>
-                            <TableCell align="left">{row.cardsCount}</TableCell>
-                            <TableCell
-                                align="left">{(new Date(row.updated)).getDate()}
-                                .{(new Date(row.updated)).getMonth() < 10
-                                    ? ((new Date(row.updated)).getMonth() + '1')
-                                    : (new Date(row.updated)).getMonth() + 1}
-                                .{(new Date(row.updated)).getFullYear()}</TableCell>
-                            <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display: "flex", marginTop: "15px", marginBottom: "5px"}}>
-                                <SuperButton onClick={learnCards} className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon
-                                    className={s.icon_style}/></SuperButton>
-                                {meID === row.user_id && <div>
-                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
-                                                 className={s.button_style}>
-                                        <BorderColorIcon className={s.icon_style}/>
-                                    </SuperButton>
-                                    <SuperButton onClick={() => removePack(row._id)}
-                                                 className={s.button_style}>
-                                        <DeleteOutlineIcon className={s.icon_style}/>
-                                    </SuperButton>
-                                </div>}
-                            </div>
-
-                        </TableRow>
-                    ))}
+                    {tableBody}
                 </TableBody>
             </Table>
         </TableContainer>
