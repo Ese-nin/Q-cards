@@ -12,10 +12,9 @@ import {PATH} from "../../../bll/Path";
 
 
 export default function MenuAppBar() {
-    // добавленный код
+
     const isLoggedIn = useAppSelector(isLoggedInSelector)
     const Name = useAppSelector(nameSelector)
-    // const dispatch = useAppDispatch()
 
 
     return (
@@ -50,7 +49,7 @@ export default function MenuAppBar() {
                         <span>{Name} photo</span>
                     )}
                     {isLoggedIn || (<>
-                            <NavLink to="/login">
+                            <NavLink to={PATH.LOGIN}>
                                 <SuperButton>
                                     Sign in
                                 </SuperButton>

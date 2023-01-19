@@ -3,21 +3,20 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import s from './packList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
-import {addNewCardPackTC, deleteCardPackTC, renameCardPackTC} from "./cardsPackList-reducer";
+import {deleteCardPackTC, renameCardPackTC} from "./cardsPackList-reducer";
 import TablesPackPage from './tables/TablesPackPage';
 import {PATH} from "../../../bll/Path";
 import {getCardsPageTC} from "./cardPackPage-reducer";
 import {SearchInput} from "./SearchInput/SearchInput";
-import {Navigate, useParams, useSearchParams} from "react-router-dom";
-import SuperButton from "../../common/c2-SuperButton/SuperButton";
+import {Navigate, useSearchParams} from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {Navigate, useSearchParams} from "react-router-dom";
 import {useDebounce} from "../../../utils/hooks/useDebounce";
 import {
     cardsTotalCountSelector,
-    isLoggedInSelector, packNameSelector,
+    isLoggedInSelector,
+    packNameSelector,
     pageCardsSelector,
     pageCountCardsSelector
 } from "../../../bll/selectors";
@@ -81,40 +80,40 @@ export const PackPage = () => {
         alert('функция в разработке')
     }
 
-
+    const burgerMenu = <div className={s.burgerMenu} onClick={onVisibleMenuBarHandler}>
+        <div className={s.iconMenu}>
+            <div className={s.rectangleContainer}>
+                <div className={s.ellipseBig}>
+                    <div className={s.containerGroup}>
+                        <div className={s.ellipse} style={{top: "150.62px"}}></div>
+                        <div className={s.ellipse} style={{top: "147.12px"}}></div>
+                        <div className={s.ellipse} style={{top: "143.63px"}}></div>
+                        <div className={s.rectangle}></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {visibleMenuBar && <div className={s.menuBarContainer}>
+            <div className={s.menuBar}>
+                <div className={s.buttonGroup}>
+                    <div className={s.buttonAndName} onClick={()=>renamePack(params.cardsPack_id,"Update Pack")}><BorderColorIcon className={s.icon_style}/>
+                        <div className={s.name}>Edit</div>
+                    </div>
+                    <div className={s.buttonAndName} onClick={()=>removePack(params.cardsPack_id)}><DeleteOutlineIcon className={s.icon_style}/>
+                        <div className={s.name}>Delete</div>
+                    </div>
+                    <div className={s.buttonAndName}><SchoolIcon className={s.icon_style}/>
+                        <div className={s.name}>Learn</div>
+                    </div>
+                </div>
+            </div>
+        </div>}
+    </div>
 
     return (<div className={s.page}>
-            <div className={s.burgerMenu} onClick={onVisibleMenuBarHandler}>
-                <div className={s.iconMenu}>
-                    <div className={s.rectangleContainer}>
-                        <div className={s.ellipseBig}>
-                            <div className={s.containerGroup}>
-                                <div className={s.ellipse} style={{top: "150.62px"}}></div>
-                                <div className={s.ellipse} style={{top: "147.12px"}}></div>
-                                <div className={s.ellipse} style={{top: "143.63px"}}></div>
-                                <div className={s.rectangle}></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {visibleMenuBar && <div className={s.menuBarContainer}>
-                    <div className={s.menuBar}>
-                        <div className={s.buttonGroup}>
-                            <div className={s.buttonAndName} onClick={()=>renamePack(params.cardsPack_id,"Update Pack")}><BorderColorIcon className={s.icon_style}/>
-                                <div className={s.name}>Edit</div>
-                            </div>
-                            <div className={s.buttonAndName} onClick={()=>removePack(params.cardsPack_id)}><DeleteOutlineIcon className={s.icon_style}/>
-                                <div className={s.name}>Delete</div>
-                            </div>
-                            <div className={s.buttonAndName}><SchoolIcon className={s.icon_style}/>
-                                <div className={s.name}>Learn</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                }
 
-            </div>
+            {burgerMenu} {/*поставить на место */}
+
             <div className={s.addNewPackLine}>
                 <div>{packName}</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
