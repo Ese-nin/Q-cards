@@ -46,7 +46,7 @@ export const PackList = () => {
     }
 
     useEffect(()=>{
-        dispatch(getCardsPackTC({...params, min: values[0], max: values[1]}))
+        // dispatch(getCardsPackTC({...params, min: values[0], max: values[1]}))
         setSearchParams({...params, min: values[0], max: values[1]})
     },[sliderDebouncedValue])
 
@@ -55,7 +55,7 @@ export const PackList = () => {
     }
 
     useEffect(()=>{
-        dispatch(getCardsPackTC({...params, packName: find}))
+        // dispatch(getCardsPackTC({...params, packName: find}))
         setSearchParams({...params, packName: find})
     },[searchDebouncedValue])
 
