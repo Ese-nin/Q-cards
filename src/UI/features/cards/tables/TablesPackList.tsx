@@ -14,9 +14,12 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SuperButton from '../../../common/c2-SuperButton/SuperButton';
 import s from './TablesPackList.module.css'
 import {getCardsPageTC} from '../cardPackPage-reducer';
-
+import { useNavigate } from "react-router-dom";
+import {PATH} from '../../../../bll/Path';
 
 export default function TablesPackList() {
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -31,7 +34,7 @@ export default function TablesPackList() {
 
     const getPackPage = (cardsPack_id: string) => {
         dispatch(getCardsPageTC({cardsPack_id}))
-
+        navigate(PATH.PACK_PAGE + '?cardsPack_id' + cardsPack_id)
     }
 
 
