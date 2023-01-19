@@ -14,10 +14,10 @@ import {Rating} from '@mui/material';
 
 export default function TablesPackPage() {
 
-    useEffect(() => {
-        dispatch(getCardsPageTC({}))
-    }, [])
-    const dispatch = useAppDispatch()
+    // useEffect(() => {
+    //     dispatch(getCardsPageTC({}))
+    // }, [])
+    // const dispatch = useAppDispatch()
     const value = useAppSelector(state => state.cardPage)
     console.log(value)
     const cards = value.cards

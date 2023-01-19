@@ -11,8 +11,9 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import SchoolIcon from '@mui/icons-material/School';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import SuperButton from "../../../common/c2-SuperButton/SuperButton";
-import s from "./TablesPackList.module.css"
+import SuperButton from '../../../common/c2-SuperButton/SuperButton';
+import s from './TablesPackList.module.css'
+import {getCardsPageTC} from '../cardPackPage-reducer';
 
 
 export default function TablesPackList() {
@@ -28,6 +29,11 @@ export default function TablesPackList() {
         alert('функция в разработке')
     }
 
+    // const getPackPage = (cardsPack_id: string) => {
+    //     dispatch(getCardsPageTC({cardsPack_id}))
+    // }
+
+
     const renamePack = (cardPackID: string, newNameCardPack: string) => {
         dispatch(renameCardPackTC(cardPackID, newNameCardPack))
     }
@@ -37,6 +43,7 @@ export default function TablesPackList() {
     }
 
 
+    // @ts-ignore
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -55,7 +62,13 @@ export default function TablesPackList() {
                             key={row._id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
-                            <TableCell component="th" scope="row">{row.name} </TableCell>
+                            <TableCell component="th" scope="row">
+                                <button
+                                    // onClick={getPackPage(row._id)}
+                                    className={s.btnNamePagePack}>
+                                    {row.name}
+                                </button>
+                            </TableCell>
                             <TableCell align="left">{row.cardsCount}</TableCell>
                             <TableCell
                                 align="left">{(new Date(row.updated)).getDate()}
@@ -64,8 +77,9 @@ export default function TablesPackList() {
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
                             <TableCell align="left">{row.user_name}</TableCell>
-                            <div style={{display: "flex", marginTop: "15px", marginBottom: "5px"}}>
-                                <SuperButton onClick={learnCards} className={s.button_style} disabled={row.cardsCount === 0}><SchoolIcon
+                            <div style={{display: 'flex', marginTop: '15px', marginBottom: '5px'}}>
+                                <SuperButton onClick={learnCards} className={s.button_style}
+                                             disabled={row.cardsCount === 0}><SchoolIcon
                                     className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
                                     <SuperButton onClick={() => renamePack(row._id, 'Updated name')}

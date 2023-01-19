@@ -15,3 +15,11 @@
 .button_style:hover{
     background: cadetblue;
 }
+
+.btnNamePagePack{
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
