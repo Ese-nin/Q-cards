@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,6 +16,7 @@ import s from './TablesPackList.module.css'
 import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
+import {useEffect} from "react";
 
 
 export default function TablesPackList() {
@@ -103,6 +104,7 @@ export default function TablesPackList() {
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>
                                 </div>}
+
                             </div>
 
                         </TableRow>
