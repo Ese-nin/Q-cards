@@ -27,8 +27,8 @@ export const PackPage = () => {
     const params = Object.fromEntries(searchParams)
     const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(true)
     const [find, setFind] = useState('')
-    const params1=useParams<'cardsPack_id'>()
-    console.log(params1)
+
+
 
 
     const onVisibleMenuBarHandler=()=>{
@@ -90,10 +90,10 @@ export const PackPage = () => {
                 {visibleMenuBar && <div className={s.menuBarContainer}>
                     <div className={s.menuBar}>
                         <div className={s.buttonGroup}>
-                            <div className={s.buttonAndName}><BorderColorIcon className={s.icon_style}/>
+                            <div className={s.buttonAndName} onClick={()=>renamePack(params.cardsPack_id,"Update Pack")}><BorderColorIcon className={s.icon_style}/>
                                 <div className={s.name}>Edit</div>
                             </div>
-                            <div className={s.buttonAndName}><DeleteOutlineIcon className={s.icon_style}/>
+                            <div className={s.buttonAndName} onClick={()=>removePack(params.cardsPack_id)}><DeleteOutlineIcon className={s.icon_style}/>
                                 <div className={s.name}>Delete</div>
                             </div>
                             <div className={s.buttonAndName}><SchoolIcon className={s.icon_style}/>
