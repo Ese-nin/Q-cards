@@ -3,14 +3,14 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
-import {TablesPackList} from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
-import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
-import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
-import {RangeSlider} from "./RangeSlider/RangeSlider";
-import {SearchInput} from "./SearchInput/SearchInput";
-import {PATH} from "../../../bll/Path";
+import {addNewCardPackTC, getCardsPackTC} from './cardsPackList-reducer';
+import {ChoiceCards} from './ChoiceCards/ChoiceCards';
+import {RangeSlider} from './RangeSlider/RangeSlider';
+import {SearchInput} from './SearchInput/SearchInput';
+import {PATH} from '../../../bll/Path';
+import TablesPackList from './tables/TablesPackList';
 
 
 export const PackList = () => {
