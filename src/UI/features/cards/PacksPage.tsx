@@ -1,33 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
-import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
-import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
+import {addNewCardPackTC} from "./cardsPackList-reducer";
 import TablesPackPage from './tables/TablesPackPage';
 import {PATH} from "../../../bll/Path";
+import {getCardsPageTC} from "./cardPackPage-reducer";
+import {SearchInput} from "./SearchInput/SearchInput";
+import {Navigate, useSearchParams} from "react-router-dom";
 
 
 export const PackPage = () => {
     const dispatch = useAppDispatch()
     const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const page = useAppSelector(state => state.cards.page)
-    const pageCount = useAppSelector(state => state.cards.pageCount)
-    const cardPacksTotalCount = useAppSelector(state => state.cards.cardPacksTotalCount)
+    const page = useAppSelector(state => state.cardPage.page)
+    const pageCount = useAppSelector(state => state.cardPage.pageCount)
+    const cardsTotalCount = useAppSelector(state => state.cardPage.cardsTotalCount)
+    const packName = useAppSelector(state => state.cardPage.packName)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
+    const params = Object.fromEntries(searchParams)
 
+    const [find, setFind] = useState('')
 
     const onChangePagination = (page: number, pageCount: number) => {
-        const params = Object.fromEntries(searchParams)
-
-        dispatch(getCardsPackTC({...params, page, pageCount}))
+        let cardsPack_id = params.cardsPack_id
+        console.log(params)
+        dispatch(getCardsPageTC({cardsPack_id, page, pageCount}))
         setSearchParams({...params, page, pageCount})
     }
 
     const buttonClickHandler = () => {
         dispatch(addNewCardPackTC({}))
+    }
+
+    const onChangeText = (value: string) => {
+        setFind(value)
+    }
+
+    const onDebouncedChange = (value: string) => {
+        // dispatch(getCardsPackTC({...params, cardsPack_id: 'pack_id', cardQuestion: value}))
+        setSearchParams({...params, cardQuestion: value})
     }
 
     if (!isLoggedIn) {
@@ -37,24 +51,29 @@ export const PackPage = () => {
 
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Friend’s Pack</div>
+                <div>{packName}</div>
                 <Button variant="outlined" onClick={buttonClickHandler}>
                     Learn to pack
                 </Button>
             </div>
             <div className={s.formLine}>
-                <div>строка поиска</div>
+                <div className={s.searchFieldCards}>
+                    <SearchInput value={find}
+                                 onChangeText={onChangeText}
+                                 onDebouncedChange={onDebouncedChange}
+                                 placeholder={'Search'}/>
+                </div>
             </div>
 
             <div className={s.tableBlock}>
                 <TablesPackPage/>
             </div>
 
-            <div>
+            <div className={s.pagination}>
                 <SuperPagination
                     page={page}
                     itemsCountForPage={pageCount}
-                    totalCount={cardPacksTotalCount}
+                    totalCount={cardsTotalCount}
                     onChange={onChangePagination}
                 />
             </div>

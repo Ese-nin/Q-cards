@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
-import TablesPackList from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
-import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
-import {ChoiceCards} from "./ChoiceCards/ChoiceCards";
-import {RangeSlider} from "./RangeSlider/RangeSlider";
-import {SearchInput} from "./SearchInput/SearchInput";
-import {PATH} from "../../../bll/Path";
-import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {addNewCardPackTC, getCardsPackTC} from './cardsPackList-reducer';
+import {ChoiceCards} from './ChoiceCards/ChoiceCards';
+import {RangeSlider} from './RangeSlider/RangeSlider';
+import {SearchInput} from './SearchInput/SearchInput';
+import {PATH} from '../../../bll/Path';
+import TablesPackList from './tables/TablesPackList';
 
 
 export const PackList = () => {
@@ -31,7 +30,6 @@ export const PackList = () => {
     // const [value2, setValue2] = useState(maxCardsCount)
     const [find, setFind] = useState('')
 
-
     const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
         if (Array.isArray(value)) {
             setValues(value)
@@ -44,10 +42,6 @@ export const PackList = () => {
     const onChangeText = (value: string) => {
         setFind(value)
     }
-
-
-
-
 
     const onDebouncedChange = (value: string) => {
         // dispatch(getCardsPackTC({...params, packName: value}))
@@ -102,7 +96,7 @@ export const PackList = () => {
                 <TablesPackList/>
             </div>
 
-            <div>
+            <div className={s.pagination}>
                 <SuperPagination
                     page={page}
                     itemsCountForPage={pageCount}

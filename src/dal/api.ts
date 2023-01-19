@@ -42,6 +42,7 @@ export const authAPI = {
     },
 
 }
+
 export const cardPackAPI = {
     getCardsPack(params: GetPacksParamsType) {
         return instance.get<GetCardsPackResponseType>('cards/pack',
@@ -49,7 +50,7 @@ export const cardPackAPI = {
         )
     },
 
-    addNewCardPack(params:AddNewCardPackType) {
+    addNewCardPack(params: AddNewCardPackType) {
         const data = {
             cardsPack: {
                 params
@@ -58,56 +59,46 @@ export const cardPackAPI = {
         return instance.post<GetCardsPackResponseType>('cards/pack', data)
     },
 
-    deleteCardPack(cardPackID:string){
+    deleteCardPack(cardPackID: string) {
         return instance.delete('cards/pack', {
-            params:{
-                cardPackID
+            params: {
+                id: cardPackID
             }
         })
     },
 
-    renameCardPack(params:RenameCardPackType){
+    renameCardPack(_id: string, name: string) {
         const data = {
             cardsPack: {
-                params
+                _id, name
             }
         }
-        return instance.put('cards/pack',data)
+        return instance.put<RenameCardPackType>('cards/pack', data)
     }
 }
 
-export const cardsAPI={
-    getCardsPage(cardAnswer: string, cardQuestion: string, cardsPack_id: string, min: number, max: number, sortCards: string, page: number, pageCount: number){
-        const data = {
-            cardAnswer,
-            cardQuestion,
-            cardsPack_id,
-            min,
-            max,
-            sortCards,
-            page,
-            pageCount
-        }
-        return instance.get<GetCardResponseType>('/cards/card', {data})
+export const cardsAPI = {
+    getCardsPage(params: GetCardsParamsType) {
+        return instance.get<'', GetCardResponseType>('/cards/card', {params})
     },
-    addNewCards(params:AddNewCardsType){
-        const data={
+    addNewCards(params: AddNewCardsType) {
+        const data = {
             params
         }
-       return  instance.post('cards/card',data)
+        return instance.post('cards/card', data)
     },
-    deleteCards(cardsID:string){
-        return instance.delete('cards/card',{
-            params:{
+    deleteCards(cardsID: string) {
+        return instance.delete('cards/card', {
+            params: {
                 cardsID
             }
         })
     },
-    renameCardQuestion(params:RenameCardQuestionType){
-        const data={
+    renameCardQuestion(params: RenameCardQuestionType) {
+        const data = {
             params
         }
-        return instance.put('cards/card',data)
+        return instance.put('cards/card', data)
     }
 }
 
@@ -177,17 +168,42 @@ export type GetCardsPackResponseType = {
     pageCount: number  // количество элементов на странице
 
 }
+
 export type GetCardResponseType = {
-    cards: CardType[],
-    cardsTotalCount: number,
-    maxGrade: number,
-    minGrade: number,
-    page: number,
-    pageCount: number,
-    packUserId: string
+    config: any
+    data: {
+        cards: CardType[];
+        packUserId: string;
+        packName: string;
+        packPrivate: boolean;
+        packDeckCover: string;
+        packCreated: string;
+        packUpdated: string;
+        page: number;
+        pageCount: number;
+        cardsTotalCount: number;
+        minGrade: number;
+        maxGrade: number;
+        token: string;
+        tokenDeathTime: number;
+    }
+    headers: any
+    request: any
+    status: number
+    statusText: string
 }
+
+// export type GetCardResponseType = {
+//     cards: CardType[],
+//     cardsTotalCount: number,
+//     maxGrade: number,
+//     minGrade: number,
+//     page: number,
+//     pageCount: number,
+//     packUserId: string
+// }
 export type CardPacksType = {
-    id: string,
+    _id: string,
     user_id: string,
     name: string,
     cardsCount: number,
@@ -203,7 +219,7 @@ export type CardType = {
     shots: number,
     user_id: string,
     created: string,
-    updated:string,
+    updated: string,
     _id: string
 }
 export type GetPacksParamsType = {
@@ -216,16 +232,16 @@ export type GetPacksParamsType = {
     user_id?: string
     block?: boolean
 }
-export type AddNewCardPackType ={
-    name?:string,
-    deckCover?:string,
-    privatePack?:boolean
+export type AddNewCardPackType = {
+    name?: string,
+    deckCover?: string,
+    privatePack?: boolean
 }
-export type RenameCardPackType ={
-    cardPackID:string,
-    newNameCardPack?:string
+export type RenameCardPackType = {
+    cardPackID: string,
+    newNameCardPack?: string
 }
-export type AddNewCardsType={
+export type AddNewCardsType = {
     card: {
         cardsPack_id: string,
         question?: string
@@ -238,7 +254,18 @@ export type AddNewCardsType={
         answerVideo?: string
     }
 }
-export type RenameCardQuestionType={
+export type RenameCardQuestionType = {
     id: string,
     question?: string
+}
+
+export type GetCardsParamsType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    cardsPack_id: string
+    min?: number
+    max?: number
+    sortCards?: string
+    page?: number
+    pageCount?: number
 }

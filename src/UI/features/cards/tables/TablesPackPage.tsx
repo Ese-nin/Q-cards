@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,17 +8,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import {getCardsPageTC} from '../cardPackPage-reducer';
+import {Rating} from '@mui/material';
 
 
 export default function TablesPackPage() {
 
-    useEffect(() => {
-        dispatch(getCardsPageTC())
-    }, [])
     const dispatch = useAppDispatch()
-    const value = useAppSelector(state => state.cards)
-    console.log(value)
-    const cards = value.cardPacks
+    const cards = useAppSelector(state => state.cardPage.cards)
 
 
     return (
@@ -36,18 +31,20 @@ export default function TablesPackPage() {
                 <TableBody>
                     {cards.map((row) => (
                         <TableRow
-                            key={row.id}
+                            key={row._id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
-                            <TableCell component="th" scope="row">{row.name} </TableCell>
-                            <TableCell align="left">{row.cardsCount}</TableCell>
+                            <TableCell component="th" scope="row">{row.question} </TableCell>
+                            <TableCell align="left">{row.answer}</TableCell>
                             <TableCell
                                 align="left">{(new Date(row.updated)).getDate()}
                                 .{(new Date(row.updated)).getMonth() < 10
                                     ? ((new Date(row.updated)).getMonth() + '1')
                                     : (new Date(row.updated)).getMonth() + 1}
                                 .{(new Date(row.updated)).getFullYear()}</TableCell>
-                            <TableCell align="left">Grade</TableCell>
+                            <TableCell align="left">
+                                <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
+                            </TableCell>
 
                         </TableRow>
                     ))}
