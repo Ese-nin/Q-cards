@@ -193,15 +193,6 @@ export type GetCardResponseType = {
     statusText: string
 }
 
-// export type GetCardResponseType = {
-//     cards: CardType[],
-//     cardsTotalCount: number,
-//     maxGrade: number,
-//     minGrade: number,
-//     page: number,
-//     pageCount: number,
-//     packUserId: string
-// }
 export type CardPacksType = {
     _id: string,
     user_id: string,

@@ -26,7 +26,6 @@ export const PackPage = () => {
 
     const onChangePagination = (page: number, pageCount: number) => {
         let cardsPack_id = params.cardsPack_id
-        console.log(params)
         dispatch(getCardsPageTC({cardsPack_id, page, pageCount}))
         setSearchParams({...params, page, pageCount})
     }
