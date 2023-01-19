@@ -3,7 +3,7 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
-import TablesPackList from './tables/TablesPackList';
+import {TablesPackList} from './tables/TablesPackList';
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC, getCardsPackTC} from "./cardsPackList-reducer";
@@ -96,7 +96,7 @@ export const PackList = () => {
                 <TablesPackList/>
             </div>
 
-            <div>
+            <div className={s.pagination}>
                 <SuperPagination
                     page={page}
                     itemsCountForPage={pageCount}
