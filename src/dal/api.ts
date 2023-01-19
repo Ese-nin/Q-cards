@@ -42,6 +42,7 @@ export const authAPI = {
     },
 
 }
+
 export const cardPackAPI = {
     getCardsPack(params: GetPacksParamsType) {
         return instance.get<GetCardsPackResponseType>('cards/pack',
@@ -236,7 +237,7 @@ export type RenameCardQuestionType = {
 export type GetCardsParamsType = {
     cardAnswer?: string
     cardQuestion?: string
-    cardsPack_id?: string
+    cardsPack_id: string
     min?: number
     max?: number
     sortCards?: string

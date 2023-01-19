@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {useEffect} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -14,13 +13,8 @@ import {Rating} from '@mui/material';
 
 export default function TablesPackPage() {
 
-    // useEffect(() => {
-    //     dispatch(getCardsPageTC({}))
-    // }, [])
-    // const dispatch = useAppDispatch()
-    const value = useAppSelector(state => state.cardPage)
-    console.log(value)
-    const cards = value.cards
+    const dispatch = useAppDispatch()
+    const cards = useAppSelector(state => state.cardPage.cards)
 
 
     return (

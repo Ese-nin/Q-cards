@@ -23,6 +23,10 @@
 
 }
 
+.pagination {
+    margin-top: 10px;
+}
+
 .slider {
     display: flex;
     align-items: center;
@@ -32,5 +36,10 @@
 
 .searchField {
     width: 200px;
+    margin-bottom: 10px;
 }
 
+.searchFieldCards {
+    width: 500px;
+    margin-bottom: 10px;
+}
