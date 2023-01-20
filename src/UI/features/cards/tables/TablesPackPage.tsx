@@ -11,12 +11,13 @@ import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import {Rating} from '@mui/material';
 import {cardsSelector, packUserIdSelector, user_idSelector} from "../../../../bll/selectors";
 import SuperSort from "../../../common/SuperSort/SuperSort";
-import {useSearchParams} from "react-router-dom";
+import {Navigate, useSearchParams} from 'react-router-dom';
 import {deleteCardTC, getCardsPageTC, renameCardQuestionTC} from "../cardPackPage-reducer";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import s from "./TablesPackList.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import {PATH} from '../../../../bll/Path';
 
 
 export default function TablesPackPage() {
@@ -46,6 +47,12 @@ export default function TablesPackPage() {
 
         setSearchParams({...params, sortPacks: newSort, page: 1})
     }
+
+    console.log(cards)
+    if (cards.length < 1) {
+        return <Navigate to={PATH.PACK_PAGE_EMPTY}/>
+    }
+
 
     return (
         <TableContainer component={Paper}>
