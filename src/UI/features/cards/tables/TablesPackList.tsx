@@ -39,12 +39,16 @@ export default function TablesPackList() {
     }
 
 
-    const renamePack = (cardPackID: string, newNameCardPack: string) => {
-        dispatch(renameCardPackTC(cardPackID, newNameCardPack))
+    const renamePack = (cardPackID: string, newNameCardPack: string, user_id: string) => {
+        user_id === meID
+            ? dispatch(renameCardPackTC(cardPackID, newNameCardPack, user_id))
+            : dispatch(renameCardPackTC(cardPackID, newNameCardPack))
     }
 
-    const removePack = (pack_id: string) => {
-        dispatch(deleteCardPackTC(pack_id))
+    const removePack = (pack_id: string, user_id: string) => {
+        user_id === meID
+            ? dispatch(deleteCardPackTC(pack_id, user_id))
+            : dispatch(deleteCardPackTC(pack_id))
     }
 
     /*const onChangeSort = (newSort: string) => {
@@ -94,11 +98,11 @@ export default function TablesPackList() {
                                              disabled={row.cardsCount === 0}><SchoolIcon
                                     className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
-                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
+                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name', row.user_id)}
                                                  className={s.button_style}>
                                         <BorderColorIcon className={s.icon_style}/>
                                     </SuperButton>
-                                    <SuperButton onClick={() => removePack(row._id)}
+                                    <SuperButton onClick={() => removePack(row._id, row.user_id)}
                                                  className={s.button_style}>
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>

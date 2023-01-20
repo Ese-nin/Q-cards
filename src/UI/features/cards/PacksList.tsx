@@ -45,22 +45,24 @@ export const PackList = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         // dispatch(getCardsPackTC({...params, min: values[0], max: values[1]}))
         setSearchParams({...params, min: values[0], max: values[1]})
-    },[sliderDebouncedValue])
+    }, [sliderDebouncedValue])
 
     const onChangeText = (value: string) => {
         setFind(value)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         // dispatch(getCardsPackTC({...params, packName: find}))
         setSearchParams({...params, packName: find})
-    },[searchDebouncedValue])
+    }, [searchDebouncedValue])
 
-    const buttonClickHandler = () => {
-        dispatch(addNewCardPackTC({}))
+    const addNewCardsPack = () => {
+        params.user_id
+            ? dispatch(addNewCardPackTC({}, userID))
+            : dispatch(addNewCardPackTC({}))
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
@@ -79,7 +81,7 @@ export const PackList = () => {
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
                 <div>Packs list</div>
-                <Button variant="outlined" onClick={buttonClickHandler}>
+                <Button variant="outlined" onClick={addNewCardsPack}>
                     Add new pack
                 </Button>
             </div>
