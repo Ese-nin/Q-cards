@@ -1,10 +1,11 @@
 import React from 'react'
 import downArrow from './icons/down-arrow.png'
 import upArrow from './icons/up-arrow.png'
+import noneArrows from './icons/none.jpg'
 
 const downIcon = downArrow
 const upIcon = upArrow
-const noneIcon = ''
+const noneIcon = noneArrows
 
 
 export type SuperSortPropsType = {
