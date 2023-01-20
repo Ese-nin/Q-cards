@@ -58,7 +58,7 @@ export default function TablesPackList() {
 
     const onChangeSort = (newSort: string) => {
         setSort(newSort)
-        dispatch(getCardsPackTC({...params, sortPacks: newSort, page: 1}))
+        dispatch(getCardsPackTC({sortPacks: newSort, page: 1}))
 
         setSearchParams({...params, sortPacks: newSort, page: 1})
     }

@@ -9,10 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from '../../../../bll/store';
 import {Rating} from '@mui/material';
-import {cardsSelector} from "../../../../bll/selectors";
+import {cardsSelector, packUserIdSelector, user_idSelector} from "../../../../bll/selectors";
 import SuperSort from "../../../common/SuperSort/SuperSort";
 import {useSearchParams} from "react-router-dom";
-import {addNewCardTC, deleteCardTC, getCardsPageTC, renameCardQuestionTC} from "../cardPackPage-reducer";
+import {deleteCardTC, getCardsPageTC, renameCardQuestionTC} from "../cardPackPage-reducer";
 import SuperButton from "../../../common/c2-SuperButton/SuperButton";
 import s from "./TablesPackList.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -23,6 +23,8 @@ export default function TablesPackPage() {
 
     const dispatch = useAppDispatch()
     const cards = useAppSelector(cardsSelector)
+    const meID = useAppSelector(user_idSelector)
+    const packUserID = useAppSelector(packUserIdSelector)
 
     const [sort, setSort] = useState('')
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
@@ -40,7 +42,7 @@ export default function TablesPackPage() {
     const onChangeSort = (newSort: string) => {
         setSort(newSort)
 
-        dispatch(getCardsPageTC({...params, cardsPack_id, sortCards: newSort, page: 1}))
+        dispatch(getCardsPageTC({cardsPack_id, sortCards: newSort, page: 1}))
 
         setSearchParams({...params, sortPacks: newSort, page: 1})
     }
@@ -57,7 +59,7 @@ export default function TablesPackPage() {
                             <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
                         </TableCell>
                         <TableCell align="left">Grade</TableCell>
-                        <TableCell align="left">Actions</TableCell>
+                        {meID === packUserID && <TableCell align="left">Actions</TableCell>}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -77,6 +79,7 @@ export default function TablesPackPage() {
                             <TableCell align="left">
                                 <Rating name="half-rating" defaultValue={row.grade} precision={0.5}/>
                             </TableCell>
+                            { meID === row.user_id &&
                             <TableCell align="left">
                                 <div style={{display: 'flex', marginTop: '15px', marginBottom: '5px'}}>
                                     <SuperButton onClick={() => changeCardQuestion(row._id, 'Updated question')}
@@ -88,7 +91,7 @@ export default function TablesPackPage() {
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>
                                 </div>
-                            </TableCell>
+                            </TableCell>}
 
                         </TableRow>
                     ))}
