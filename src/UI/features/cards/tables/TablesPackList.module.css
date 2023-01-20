@@ -1,22 +1,22 @@
-.button_style{
+.button_style {
     margin: 5px;
     min-width: 20px;
 }
 
-.icon_style{
+.icon_style {
     display: flex;
 
 }
 
-.button_style:disabled{
+.button_style:disabled {
     background: darkgrey;
 }
 
-.button_style:hover{
+.button_style:hover {
     background: cadetblue;
 }
 
-.btnNamePagePack{
+.btnNamePagePack {
     padding: 0;
     border: none;
     font: inherit;
@@ -24,3 +24,8 @@
     background-color: transparent;
     cursor: pointer;
 }
+.sortIcon{
+    width: 8px;
+    height: 6px;
+}
+

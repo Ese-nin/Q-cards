@@ -16,7 +16,9 @@ import s from './TablesPackList.module.css'
 import {useNavigate} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
-
+import iconDown from '../../../../assets/icon/iconDown.png'
+import iconUp from '../../../../assets/icon/iconUp.png'
+import sort from '../../../../assets/icon/sort.svg'
 
 export default function TablesPackList() {
     const navigate = useNavigate();
@@ -47,7 +49,7 @@ export default function TablesPackList() {
         dispatch(deleteCardPackTC(pack_id))
     }
 
-    /*const onChangeSort = (newSort: string) => {
+    /*const onChangeSort = (newSort: string) => {  // допилить сортировку!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
         dispatch(getCardsPackTC({sortPacks: newSort, page: 1, pageCount: count}))
 
@@ -55,6 +57,26 @@ export default function TablesPackList() {
 
     }*/
 
+    // export const pureChange = (sort: string, down: string, up: string) => {
+    //     let res = ''
+    //     if (sort === res) {
+    //         res = down
+    //     } else if (sort !== down && sort === up) {
+    //         res = ''
+    //     } else if (sort === down) {
+    //         res = up
+    //     } else {
+    //         res = down
+    //     }
+    //     return res
+    // }
+    //
+    //
+    const icon = sort === iconDown     // реализация иконки сортировки
+        ? iconDown
+        : sort === iconUp
+            ? iconUp
+            : sort
 
     return (
         <TableContainer component={Paper}>
@@ -63,7 +85,19 @@ export default function TablesPackList() {
                     <TableRow sx={{backgroundColor: '#EFEFEF'}}>
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
-                        <TableCell align="left">Last Updated</TableCell>
+                        <TableCell align="left">
+                            <button
+                                // onClick={onChangeSort}
+                                className={s.btnNamePagePack}
+                            >
+                                Last Updated
+                                <img
+                                    className={s.sortIcon}
+                                    src={icon}
+                                    alt={'sort'}
+                                />
+                            </button>
+                        </TableCell>
                         <TableCell align="left">Created by</TableCell>
                         <TableCell align="left">Actions</TableCell>
                     </TableRow>
