@@ -7,14 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {useAppDispatch, useAppSelector} from '../../../../bll/store';
-import {getCardsPageTC} from '../cardPackPage-reducer';
 import {Rating} from '@mui/material';
+import {cardsSelector} from "../../../../bll/selectors";
 
 
 export default function TablesPackPage() {
 
     const dispatch = useAppDispatch()
-    const cards = useAppSelector(state => state.cardPage.cards)
+    const cards = useAppSelector(cardsSelector)
 
 
     return (

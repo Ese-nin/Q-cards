@@ -19,13 +19,14 @@ import {PATH} from '../../../../bll/Path';
 import iconDown from '../../../../assets/icon/iconDown.png'
 import iconUp from '../../../../assets/icon/iconUp.png'
 import sort from '../../../../assets/icon/sort.svg'
+import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
 
 export default function TablesPackList() {
     const navigate = useNavigate();
 
     const dispatch = useAppDispatch()
-    const cardPacks = useAppSelector(state => state.cards.cardPacks)
-    const meID = useAppSelector(state => state.auth.user_id)
+    const cardPacks = useAppSelector(cardPacksSelector)
+    const meID = useAppSelector(user_idSelector)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
@@ -11,42 +11,53 @@ import {RangeSlider} from './RangeSlider/RangeSlider';
 import {SearchInput} from './SearchInput/SearchInput';
 import {PATH} from '../../../bll/Path';
 import TablesPackList from './tables/TablesPackList';
+import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {
+    cardPacksTotalCountSelector,
+    isLoggedInSelector, maxCardsCountSelector, minCardsCountSelector,
+    pageCountPacksSelector,
+    pagePacksSelector, user_idSelector
+} from "../../../bll/selectors";
 
 
 export const PackList = () => {
     const dispatch = useAppDispatch()
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const page = useAppSelector(state => state.cards.page)
-    const pageCount = useAppSelector(state => state.cards.pageCount)
-    const cardPacksTotalCount = useAppSelector(state => state.cards.cardPacksTotalCount)
-    const minCardsCount = useAppSelector(state => state.cards.minCardsCount)
-    const maxCardsCount = useAppSelector(state => state.cards.maxCardsCount)
-    let userID = useAppSelector(state => state.auth.user_id)
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const page = useAppSelector(pagePacksSelector)
+    const pageCount = useAppSelector(pageCountPacksSelector)
+    const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
+    const minCardsCount = useAppSelector(minCardsCountSelector)
+    const maxCardsCount = useAppSelector(maxCardsCountSelector)
+    const userID = useAppSelector(user_idSelector)
 
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
 
     const [values, setValues] = useState([minCardsCount, maxCardsCount])
-    // const [value2, setValue2] = useState(maxCardsCount)
     const [find, setFind] = useState('')
 
-    const changeSliderValues = (event: React.SyntheticEvent | Event, value: number | number[]) => {
+    const sliderDebouncedValue = useDebounce<number[]>(values, 600)
+    const searchDebouncedValue = useDebounce<string>(find, 600)
+
+    const changeSliderValues = (event: Event, value: number | number[]) => {
         if (Array.isArray(value)) {
             setValues(value)
         }
-
-        // dispatch(getCardsPackTC({...params, min: value1, max: value2}))
-        setSearchParams({...params, min: values[0], max: values[1]})
     }
+
+    useEffect(()=>{
+        // dispatch(getCardsPackTC({...params, min: values[0], max: values[1]}))
+        setSearchParams({...params, min: values[0], max: values[1]})
+    },[sliderDebouncedValue])
 
     const onChangeText = (value: string) => {
         setFind(value)
     }
 
-    const onDebouncedChange = (value: string) => {
-        // dispatch(getCardsPackTC({...params, packName: value}))
-        setSearchParams({...params, packName: value})
-    }
+    useEffect(()=>{
+        // dispatch(getCardsPackTC({...params, packName: find}))
+        setSearchParams({...params, packName: find})
+    },[searchDebouncedValue])
 
     const buttonClickHandler = () => {
         dispatch(addNewCardPackTC({}))
@@ -76,7 +87,6 @@ export const PackList = () => {
                 <div className={s.searchField}>
                     <SearchInput value={find}
                                  onChangeText={onChangeText}
-                                 onDebouncedChange={onDebouncedChange}
                                  placeholder={'Search'}/>
                 </div>
                 <div><ChoiceCards userID={userID}/></div>
@@ -86,7 +96,7 @@ export const PackList = () => {
                         min={minCardsCount}
                         max={maxCardsCount}
                         value={values}
-                        onChangeCommitted={changeSliderValues}/>
+                        onChange={changeSliderValues}/>
                     <span>{values[1]}</span>
                 </div>
                 <div><FilterAltOffIcon onClick={resetFilter}/></div>

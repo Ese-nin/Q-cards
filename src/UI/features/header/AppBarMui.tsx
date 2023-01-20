@@ -7,15 +7,14 @@ import {useAppSelector} from '../../../bll/store';
 import SuperButton from '../../common/c2-SuperButton/SuperButton';
 import s from './header.module.css';
 import {NavLink} from 'react-router-dom';
-import {ForgotPassPage} from '../forgotPassword/forgotPassword';
-import {CreateNewPass} from '../forgotPassword/createNewPass';
+import {isLoggedInSelector, nameSelector} from "../../../bll/selectors";
+import {PATH} from "../../../bll/Path";
 
 
 export default function MenuAppBar() {
-    // добавленный код
-    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-    const Name = useAppSelector(store => store.auth.name)
-    // const dispatch = useAppDispatch()
+
+    const isLoggedIn = useAppSelector(isLoggedInSelector)
+    const Name = useAppSelector(nameSelector)
 
 
     return (
@@ -27,22 +26,22 @@ export default function MenuAppBar() {
                 }}>
                     <img src={logo} alt="logo"/>
                     <div className={s.tempDiv}>
-                        <NavLink to="/profile"
+                        <NavLink to={PATH.PROFILE}
                                  className={({isActive}) => (isActive ? s.active : '')}>Profile</NavLink>
-                        <NavLink to="/login"
+                        <NavLink to={PATH.LOGIN}
                                  className={({isActive}) => (isActive ? s.active : '')}>Login</NavLink>
-                        <NavLink to="/register"
+                        <NavLink to={PATH.REG}
                                  className={({isActive}) => (isActive ? s.active : '')}>Register</NavLink>
-                        <NavLink to="/forgot"
+                        <NavLink to={PATH.FORGOT}
                                  className={({isActive}) => (isActive ? s.active : '')}>ForgotPassPage
                         </NavLink>
-                        <NavLink to="/checkMail"
+                        <NavLink to={PATH.CHECK_MAIL}
                                  className={({isActive}) => (isActive ? s.active : '')}>checkMail</NavLink>
-                        <NavLink to="/createNewPass/*"
+                        <NavLink to={PATH.NEW_PASS}
                                  className={({isActive}) => (isActive ? s.active : '')}>CreateNewPass</NavLink>
-                        <NavLink to="/packlist"
+                        <NavLink to={PATH.PACK_LIST}
                                  className={({isActive}) => (isActive ? s.active : '')}>packlist</NavLink>
-                        <NavLink to="/packPage"
+                        <NavLink to={PATH.PACK_PAGE}
                                  className={({isActive}) => (isActive ? s.active : '')}>packPage</NavLink>
                     </div>
 
@@ -50,7 +49,7 @@ export default function MenuAppBar() {
                         <span>{Name} photo</span>
                     )}
                     {isLoggedIn || (<>
-                            <NavLink to="/login">
+                            <NavLink to={PATH.LOGIN}>
                                 <SuperButton>
                                     Sign in
                                 </SuperButton>
