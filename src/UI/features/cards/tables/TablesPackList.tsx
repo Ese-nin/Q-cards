@@ -72,7 +72,7 @@ export default function TablesPackList() {
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
                         <TableCell align="left">
-                            <button>
+                            <button className={s.btnNamePagePack}>
                                 Last Updated
                                 <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
                             </button>

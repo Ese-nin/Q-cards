@@ -53,7 +53,7 @@ const SuperSort: React.FC<SuperSortPropsType> = (
             id={id + '-sort-' + value}
             onClick={onChangeCallback}
         >
-            <img className={s.sortIcon}
+            <img className={icon === noneIcon ? s.sortIcon : s.upDownIcon}
                 id={id + '-icon-' + sort}
                 src={icon}
                 alt={''}
