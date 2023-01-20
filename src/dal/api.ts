@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, {AxiosResponse} from 'axios'
 
 
 const instance = axios.create({
@@ -8,19 +8,30 @@ const instance = axios.create({
 })
 export const authAPI = {
     me() {
-        return instance.post<UserDataResponseType>(`auth/me`);
+        return instance.post<{}, AxiosResponse<UserDataResponseType>>(`auth/me`);
     },
     logIn(email: string, password: string, rememberMe: boolean) {
-        return instance.post<UserDataResponseType>('auth/login', {email, password, rememberMe})
+        return instance.post<{ email: string, password: string, rememberMe: boolean }, AxiosResponse<UserDataResponseType>>
+        ('auth/login',
+            {
+                email,
+                password,
+                rememberMe
+            })
     },
     logOut() {
-        return instance.delete<LogOutResponseType>(`auth/me`);
+        return instance.delete<'', AxiosResponse<LogOutResponseType>>(`auth/me`);
     },
     register(email: string, password: string) {
-        return instance.post<RegisterResponseType>(`auth/register`, {email, password})
+        return instance.post<{ email: string, password: string }, AxiosResponse<RegisterResponseType>>
+        (`auth/register`,
+            {
+                email,
+                password
+            })
     },
-    changeName(name: string) { // тут потом нужно будет допилить изменение аватара!!!!
-        return instance.put<ChangeNameResponseType>('/auth/me', {name})
+    changeName(name: string, avatar?: string) { // тут потом нужно будет допилить изменение аватара!!!!
+        return instance.put<{ name: string, avatar?: string }, AxiosResponse<ChangeNameResponseType>>('/auth/me', {name})
     },
     forgotPass(email: string) {
         const data = {
@@ -31,21 +42,20 @@ export const authAPI = {
             link</a>
                 </div>`
         }
-        return axios.post<ForgotResponseType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
+        return axios.post<{ email: string, message: string }, AxiosResponse<ForgotResponseType>>('https://neko-back.herokuapp.com/2.0/auth/forgot', data)
     },
     setNewPass(password: string, token: string) {
         const data = {
             password,
             resetPasswordToken: token
         }
-        return instance.post<NewPassResponseType>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
+        return instance.post<{ password: string, resetPasswordToken: string }, AxiosResponse<NewPassResponseType>>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data)
     },
-
 }
 
 export const cardPackAPI = {
     getCardsPack(params: GetPacksParamsType) {
-        return instance.get<GetCardsPackResponseType>('cards/pack',
+        return instance.get<'', AxiosResponse<GetCardsPackResponseType>>('cards/pack',
             {params}
         )
     },
@@ -56,11 +66,11 @@ export const cardPackAPI = {
                 params
             }
         }
-        return instance.post<GetCardsPackResponseType>('cards/pack', data)
+        return instance.post<{ cardsPack: AddNewCardPackType }, AxiosResponse<GetCardsPackResponseType>>('cards/pack', data)
     },
 
     deleteCardPack(cardPackID: string) {
-        return instance.delete('cards/pack', {
+        return instance.delete<'', AxiosResponse<DeletePackResponseType>>('cards/pack', {
             params: {
                 id: cardPackID
             }
@@ -73,44 +83,30 @@ export const cardPackAPI = {
                 _id, name
             }
         }
-        return instance.put<RenameCardPackType>('cards/pack', data)
+        return instance.put<{ _id: string, name: string }, AxiosResponse<RenameCardPackType>>('cards/pack', data)
     }
 }
 
 export const cardsAPI = {
     getCardsPage(params: GetCardsParamsType) {
-        return instance.get<'', GetCardResponseType>('/cards/card', {params})
+        return instance.get<'', AxiosResponse<GetCardResponseType>>('/cards/card', {params})
     },
     addNewCards(params: AddNewCardsType) {
         const data = {
+            card:
             params
         }
-        return instance.post('cards/card', data)
+        return instance.post<{card: GetCardsParamsType}, AxiosResponse<AddNewCardResponseType>>('cards/card', data)
     },
-    deleteCards(cardsID: string) {
-        return instance.delete('cards/card', {
-            params: {
-                cardsID
-            }
-        })
+    deleteCards(cardID: string) {
+        return instance.delete<'', AxiosResponse<RemoveCardResponseType>>(`cards/card?id=${cardID}`)
     },
     renameCardQuestion(params: RenameCardQuestionType) {
         const data = {
-            params
+            card: params
         }
-        return instance.put('cards/card', data)
+        return instance.put<{card: RenameCardQuestionType}, AxiosResponse<RenameCardResponseType>>('cards/card', data)
     }
-}
-
-export type DefaultRequestCardsPack = {
-    packName: string,
-    min: number,
-    max: number,
-    sortPacks: string,
-    page: number,
-    pageCount: number,
-    user_id: string,
-    block: boolean
 }
 
 // types
@@ -166,31 +162,47 @@ export type GetCardsPackResponseType = {
     minCardsCount: number,
     page: number, // выбранная страница
     pageCount: number  // количество элементов на странице
+}
 
+export type DeletedCardsPack = {
+    _id: string;
+    user_id: string;
+    user_name: string;
+    private: boolean;
+    name: string;
+    path: string;
+    grade: number;
+    shots: number;
+    cardsCount: number;
+    type: string;
+    rating: number;
+    created: string;
+    updated: string;
+    more_id: string;
+    __v: number;
+}
+
+export type DeletePackResponseType = {
+    deletedCardsPack: DeletedCardsPack;
+    token: string;
+    tokenDeathTime: number;
 }
 
 export type GetCardResponseType = {
-    config: any
-    data: {
-        cards: CardType[];
-        packUserId: string;
-        packName: string;
-        packPrivate: boolean;
-        packDeckCover: string;
-        packCreated: string;
-        packUpdated: string;
-        page: number;
-        pageCount: number;
-        cardsTotalCount: number;
-        minGrade: number;
-        maxGrade: number;
-        token: string;
-        tokenDeathTime: number;
-    }
-    headers: any
-    request: any
-    status: number
-    statusText: string
+    cards: CardType[];
+    packUserId: string;
+    packName: string;
+    packPrivate: boolean;
+    packDeckCover: string;
+    packCreated: string;
+    packUpdated: string;
+    page: number;
+    pageCount: number;
+    cardsTotalCount: number;
+    minGrade: number;
+    maxGrade: number;
+    token: string;
+    tokenDeathTime: number;
 }
 
 export type CardPacksType = {
@@ -233,21 +245,76 @@ export type RenameCardPackType = {
     newNameCardPack?: string
 }
 export type AddNewCardsType = {
-    card: {
-        cardsPack_id: string,
-        question?: string
-        answer?: string,
-        grade?: number,
-        shots?: number,
-        answerImg?: string,
-        questionImg?: string,
-        questionVideo?: string,
-        answerVideo?: string
-    }
-}
-export type RenameCardQuestionType = {
-    id: string,
+    cardsPack_id: string,
     question?: string
+    answer?: string,
+    grade?: number,
+    shots?: number,
+    answerImg?: string,
+    questionImg?: string,
+    questionVideo?: string,
+    answerVideo?: string
+}
+
+export type NewCard = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+}
+
+export type AddNewCardResponseType = {
+  newCard: NewCard;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export type RenameCardQuestionType = {
+    _id: string,
+    question?: string
+}
+
+export type Updated_DeletedCardType = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+  answerImg: string;
+  answerVideo: string;
+  questionImg: string;
+  questionVideo: string;
+}
+
+export type RenameCardResponseType = {
+  updatedCard: Updated_DeletedCardType;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export type RemoveCardResponseType = {
+  deletedCard: Updated_DeletedCardType;
+  token: string;
+  tokenDeathTime: number;
 }
 
 export type GetCardsParamsType = {

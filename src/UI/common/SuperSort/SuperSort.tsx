@@ -1,10 +1,12 @@
 import React from 'react'
-import downArrow from './icons/down-arrow.png'
-import upArrow from './icons/up-arrow.png'
+import s from './SuperSort.module.css'
+import downArrow from './icons/iconDown.png'
+import upArrow from './icons/iconUp.png'
+import noneArrows from './icons/sort.svg'
 
 const downIcon = downArrow
 const upIcon = upArrow
-const noneIcon = ''
+const noneIcon = noneArrows
 
 
 export type SuperSortPropsType = {
@@ -51,7 +53,7 @@ const SuperSort: React.FC<SuperSortPropsType> = (
             id={id + '-sort-' + value}
             onClick={onChangeCallback}
         >
-            <img
+            <img className={icon === noneIcon ? s.sortIcon : s.upDownIcon}
                 id={id + '-icon-' + sort}
                 src={icon}
                 alt={''}

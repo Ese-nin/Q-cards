@@ -111,11 +111,11 @@ export const getCardsPageTC = (params: GetCardsParamsType) => (dispatch: ThunkAp
         })
 }
 
-export const addNewCardsTC = (params: AddNewCardsType) => (dispatch: ThunkAppDispatchType) => {
+export const addNewCardTC = (params: AddNewCardsType) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.addNewCards(params)
         .then((res) => {
-            dispatch(getCardsPageTC({cardsPack_id: ''}))
+            dispatch(getCardsPageTC({cardsPack_id: params.cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -125,11 +125,11 @@ export const addNewCardsTC = (params: AddNewCardsType) => (dispatch: ThunkAppDis
 
 }
 
-export const deleteCardsTC = (cardsID: string) => (dispatch: ThunkAppDispatchType) => {
+export const deleteCardTC = (cardsPack_id: string, cardID: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.deleteCards(cardsID)
+    cardsAPI.deleteCards(cardID)
         .then((res) => {
-            dispatch(getCardsPageTC({cardsPack_id: ''}))
+            dispatch(getCardsPageTC({cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -139,11 +139,11 @@ export const deleteCardsTC = (cardsID: string) => (dispatch: ThunkAppDispatchTyp
 
 }
 
-export const renameCardQuestionTC = (params: RenameCardQuestionType) => (dispatch: ThunkAppDispatchType) => {
+export const renameCardQuestionTC = (params: RenameCardQuestionType, cardsPack_id: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardsAPI.renameCardQuestion(params)
         .then((res) => {
-            dispatch(getCardsPageTC({cardsPack_id: ''}))
+            dispatch(getCardsPageTC({cardsPack_id}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {

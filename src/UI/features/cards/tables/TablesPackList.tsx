@@ -13,13 +13,14 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SuperButton from '../../../common/c2-SuperButton/SuperButton';
 import s from './TablesPackList.module.css'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
 import iconDown from '../../../../assets/icon/iconDown.png'
 import iconUp from '../../../../assets/icon/iconUp.png'
 import sort from '../../../../assets/icon/sort.svg'
 import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
+import SuperSort from "../../../common/SuperSort/SuperSort";
 
 export default function TablesPackList() {
     const navigate = useNavigate();
@@ -27,6 +28,10 @@ export default function TablesPackList() {
     const dispatch = useAppDispatch()
     const cardPacks = useAppSelector(cardPacksSelector)
     const meID = useAppSelector(user_idSelector)
+
+    const [sort, setSort] = useState('')
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
+    const params = Object.fromEntries(searchParams)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -42,21 +47,24 @@ export default function TablesPackList() {
     }
 
 
-    const renamePack = (cardPackID: string, newNameCardPack: string) => {
-        dispatch(renameCardPackTC(cardPackID, newNameCardPack))
+    const renamePack = (cardPackID: string, newNameCardPack: string, user_id: string) => {
+        user_id === meID
+            ? dispatch(renameCardPackTC(cardPackID, newNameCardPack, user_id))
+            : dispatch(renameCardPackTC(cardPackID, newNameCardPack))
     }
 
-    const removePack = (pack_id: string) => {
-        dispatch(deleteCardPackTC(pack_id))
+    const removePack = (pack_id: string, user_id: string) => {
+        user_id === meID
+            ? dispatch(deleteCardPackTC(pack_id, user_id))
+            : dispatch(deleteCardPackTC(pack_id))
     }
 
-    /*const onChangeSort = (newSort: string) => {  // допилить сортировку!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const onChangeSort = (newSort: string) => {
+        setSort(newSort)
+        dispatch(getCardsPackTC({sortPacks: newSort, page: 1}))
 
-        dispatch(getCardsPackTC({sortPacks: newSort, page: 1, pageCount: count}))
-
-        setSearchParams({sortPacks: newSort, page: 1, pageCount: count})
-
-    }*/
+        setSearchParams({...params, sortPacks: newSort, page: 1})
+    }
 
     // export const pureChange = (sort: string, down: string, up: string) => {
     //     let res = ''
@@ -88,7 +96,6 @@ export default function TablesPackList() {
                         <TableCell align="left">Cards</TableCell>
                         <TableCell align="left">
                             <button
-                                // onClick={onChangeSort}
                                 className={s.btnNamePagePack}
                             >
                                 Last Updated
@@ -97,6 +104,12 @@ export default function TablesPackList() {
                                     src={icon}
                                     alt={'sort'}
                                 />
+                            </button>
+                        </TableCell>
+                        <TableCell align="left">
+                            <button className={s.btnNamePagePack}>
+                                Last Updated
+                                <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
                             </button>
                         </TableCell>
                         <TableCell align="left">Created by</TableCell>
@@ -129,11 +142,11 @@ export default function TablesPackList() {
                                              disabled={row.cardsCount === 0}><SchoolIcon
                                     className={s.icon_style}/></SuperButton>
                                 {meID === row.user_id && <div>
-                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name')}
+                                    <SuperButton onClick={() => renamePack(row._id, 'Updated name', row.user_id)}
                                                  className={s.button_style}>
                                         <BorderColorIcon className={s.icon_style}/>
                                     </SuperButton>
-                                    <SuperButton onClick={() => removePack(row._id)}
+                                    <SuperButton onClick={() => removePack(row._id, row.user_id)}
                                                  className={s.button_style}>
                                         <DeleteOutlineIcon className={s.icon_style}/>
                                     </SuperButton>

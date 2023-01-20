@@ -114,11 +114,11 @@ export const getCardsPackTC = (params: GetPacksParamsType) => (dispatch: ThunkAp
         })
 }
 
-export const addNewCardPackTC = (params: AddNewCardPackType) => (dispatch: ThunkAppDispatchType) => {
+export const addNewCardPackTC = (params: AddNewCardPackType, user_id?: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardPackAPI.addNewCardPack(params)
         .then((res) => {
-            dispatch(getCardsPackTC({}))
+            user_id ? dispatch(getCardsPackTC({user_id})) : dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -126,11 +126,11 @@ export const addNewCardPackTC = (params: AddNewCardPackType) => (dispatch: Thunk
         })
 }
 
-export const deleteCardPackTC = (cardPackID: string) => (dispatch: ThunkAppDispatchType) => {
+export const deleteCardPackTC = (cardPackID: string, user_id?: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardPackAPI.deleteCardPack(cardPackID)
         .then((res) => {
-            dispatch(getCardsPackTC({}))
+            user_id ? dispatch(getCardsPackTC({user_id})) : dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
@@ -138,11 +138,11 @@ export const deleteCardPackTC = (cardPackID: string) => (dispatch: ThunkAppDispa
         })
 }
 
-export const renameCardPackTC = (pack_id: string, newName: string) => (dispatch: ThunkAppDispatchType) => {
+export const renameCardPackTC = (pack_id: string, newName: string, user_id?: string) => (dispatch: ThunkAppDispatchType) => {
     dispatch(setAppStatusAC('loading'))
     cardPackAPI.renameCardPack(pack_id, newName)
         .then((res) => {
-            dispatch(getCardsPackTC({}))
+            user_id ? dispatch(getCardsPackTC({user_id})) : dispatch(getCardsPackTC({}))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((err: AxiosError<{ error: string }>) => {
