@@ -6,7 +6,7 @@ import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import {deleteCardPackTC, renameCardPackTC} from "./cardsPackList-reducer";
 import TablesPackPage from './tables/TablesPackPage';
 import {PATH} from "../../../bll/Path";
-import {getCardsPageTC} from "./cardPackPage-reducer";
+import {addNewCardTC, getCardsPageTC} from "./cardPackPage-reducer";
 import {SearchInput} from "./SearchInput/SearchInput";
 import {Navigate, useSearchParams} from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
@@ -30,18 +30,20 @@ export const PackPage = () => {
     const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
     const packName = useAppSelector(packNameSelector)
 
+    const [find, setFind] = useState('')
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
-    const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false)
     const cardsPack_id = params.cardsPack_id
 
-    const [find, setFind] = useState('')
-
-
-
+    const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false)
 
     const onVisibleMenuBarHandler=()=>{
         setVisibleMenuBar(!visibleMenuBar)
+    }
+
+    const addNewCard = (question: string) => {
+        dispatch(addNewCardTC({cardsPack_id, question}))
+        setSearchParams({...params, cardsPack_id, cardQuestion: question})
     }
 
     const searchDebouncedValue = useDebounce<string>(find, 600)
@@ -60,7 +62,7 @@ export const PackPage = () => {
     }
 
     useEffect(() => {
-        dispatch(getCardsPageTC({...params, cardsPack_id, cardQuestion: find}))
+        // dispatch(getCardsPageTC({...params, cardsPack_id, cardQuestion: find}))
         setSearchParams({...params, cardQuestion: find})
     }, [searchDebouncedValue])
 
@@ -116,7 +118,7 @@ export const PackPage = () => {
 
             <div className={s.addNewPackLine}>
                 <div>{packName}</div>
-                <Button variant="outlined" onClick={buttonClickHandler}>
+                <Button variant="contained" onClick={buttonClickHandler}>
                     Learn to pack
                 </Button>
             </div>
@@ -125,6 +127,11 @@ export const PackPage = () => {
                     <SearchInput value={find}
                                  onChangeText={onChangeText}
                                  placeholder={'Search'}/>
+                </div>
+                <div>
+                    <Button variant="outlined" onClick={()=>addNewCard('New question')}>
+                        Add New Card
+                    </Button>
                 </div>
             </div>
 

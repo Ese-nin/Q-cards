@@ -93,20 +93,21 @@ export const cardsAPI = {
     },
     addNewCards(params: AddNewCardsType) {
         const data = {
-            params
+            card:
+                params
         }
         return instance.post('cards/card', data)
     },
     deleteCards(cardsID: string) {
         return instance.delete('cards/card', {
             params: {
-                cardsID
+                id: cardsID
             }
         })
     },
     renameCardQuestion(params: RenameCardQuestionType) {
         const data = {
-            params
+            card: params
         }
         return instance.put('cards/card', data)
     }
@@ -259,7 +260,7 @@ export type RenameCardPackType = {
     newNameCardPack?: string
 }
 export type AddNewCardsType = {
-    card: {
+    // card: {
         cardsPack_id: string,
         question?: string
         answer?: string,
@@ -269,10 +270,10 @@ export type AddNewCardsType = {
         questionImg?: string,
         questionVideo?: string,
         answerVideo?: string
-    }
+    // }
 }
 export type RenameCardQuestionType = {
-    id: string,
+    _id: string,
     question?: string
 }
 

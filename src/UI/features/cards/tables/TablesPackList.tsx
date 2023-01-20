@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -13,10 +13,11 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SuperButton from '../../../common/c2-SuperButton/SuperButton';
 import s from './TablesPackList.module.css'
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import {getCardsPageTC} from '../cardPackPage-reducer';
 import {PATH} from '../../../../bll/Path';
 import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
+import SuperSort from "../../../common/SuperSort/SuperSort";
 
 export default function TablesPackList() {
     const navigate = useNavigate();
@@ -24,6 +25,10 @@ export default function TablesPackList() {
     const dispatch = useAppDispatch()
     const cardPacks = useAppSelector(cardPacksSelector)
     const meID = useAppSelector(user_idSelector)
+
+    const [sort, setSort] = useState('')
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
+    const params = Object.fromEntries(searchParams)
 
     useEffect(() => {
         dispatch(getCardsPackTC({}))
@@ -51,13 +56,12 @@ export default function TablesPackList() {
             : dispatch(deleteCardPackTC(pack_id))
     }
 
-    /*const onChangeSort = (newSort: string) => {
+    const onChangeSort = (newSort: string) => {
+        setSort(newSort)
+        dispatch(getCardsPackTC({...params, sortPacks: newSort, page: 1}))
 
-        dispatch(getCardsPackTC({sortPacks: newSort, page: 1, pageCount: count}))
-
-        setSearchParams({sortPacks: newSort, page: 1, pageCount: count})
-
-    }*/
+        setSearchParams({...params, sortPacks: newSort, page: 1})
+    }
 
 
     return (
@@ -67,7 +71,10 @@ export default function TablesPackList() {
                     <TableRow sx={{backgroundColor: '#EFEFEF'}}>
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
-                        <TableCell align="left">Last Updated</TableCell>
+                        <TableCell align="left">
+                            Last Updated
+                            <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
+                        </TableCell>
                         <TableCell align="left">Created by</TableCell>
                         <TableCell align="left">Actions</TableCell>
                     </TableRow>
