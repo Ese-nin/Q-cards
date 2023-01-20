@@ -37,7 +37,7 @@ export const PackPage = () => {
 
     const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false)
 
-    const onVisibleMenuBarHandler=()=>{
+    const onVisibleMenuBarHandler = () => {
         setVisibleMenuBar(!visibleMenuBar)
     }
 
@@ -98,10 +98,12 @@ export const PackPage = () => {
         {visibleMenuBar && <div className={s.menuBarContainer}>
             <div className={s.menuBar}>
                 <div className={s.buttonGroup}>
-                    <div className={s.buttonAndName} onClick={()=>renamePack(params.cardsPack_id,"Update Pack")}><BorderColorIcon className={s.icon_style}/>
+                    <div className={s.buttonAndName} onClick={() => renamePack(params.cardsPack_id, "Update Pack")}>
+                        <BorderColorIcon className={s.icon_style}/>
                         <div className={s.name}>Edit</div>
                     </div>
-                    <div className={s.buttonAndName} onClick={()=>removePack(params.cardsPack_id)}><DeleteOutlineIcon className={s.icon_style}/>
+                    <div className={s.buttonAndName} onClick={() => removePack(params.cardsPack_id)}><DeleteOutlineIcon
+                        className={s.icon_style}/>
                         <div className={s.name}>Delete</div>
                     </div>
                     <div className={s.buttonAndName}><SchoolIcon className={s.icon_style}/>
@@ -113,11 +115,11 @@ export const PackPage = () => {
     </div>
 
     return (<div className={s.page}>
-
-            {burgerMenu} {/*поставить на место */}
-
             <div className={s.addNewPackLine}>
-                <div>{packName}</div>
+                <div className={s.nameAndBurger}>
+                    <h2>{packName}</h2>
+                    {burgerMenu}
+                </div>
                 <Button variant="contained" onClick={buttonClickHandler}>
                     Learn to pack
                 </Button>
@@ -129,7 +131,7 @@ export const PackPage = () => {
                                  placeholder={'Search'}/>
                 </div>
                 <div>
-                    <Button variant="outlined" onClick={()=>addNewCard('New question')}>
+                    <Button variant="outlined" onClick={() => addNewCard('New question')}>
                         Add New Card
                     </Button>
                 </div>

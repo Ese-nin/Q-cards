@@ -3,6 +3,7 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import s from './packList.module.css'
+import s2 from './tables/TablesPackList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
 import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import {addNewCardPackTC, getCardsPackTC} from './cardsPackList-reducer';
@@ -18,6 +19,7 @@ import {
     pageCountPacksSelector,
     pagePacksSelector, user_idSelector
 } from "../../../bll/selectors";
+import SuperButton from "../../common/c2-SuperButton/SuperButton";
 
 
 export const PackList = () => {
@@ -80,7 +82,7 @@ export const PackList = () => {
 
     return (<div className={s.page}>
             <div className={s.addNewPackLine}>
-                <div>Packs list</div>
+                <div><h2>Packs list</h2></div>
                 <Button variant="outlined" onClick={addNewCardsPack}>
                     Add new pack
                 </Button>
@@ -101,7 +103,7 @@ export const PackList = () => {
                         onChange={changeSliderValues}/>
                     <span>{values[1]}</span>
                 </div>
-                <div><FilterAltOffIcon onClick={resetFilter}/></div>
+                <SuperButton className={s2.button_style} onClick={resetFilter}><FilterAltOffIcon /></SuperButton>
             </div>
 
             <div className={s.tableBlock}>

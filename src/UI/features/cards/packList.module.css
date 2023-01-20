@@ -44,6 +44,10 @@
     margin-bottom: 10px;
 }
 
+.button_style {
+
+}
+
 .iconMenu {
 
 }
@@ -165,4 +169,10 @@
 
 .burgerMenu{
     width: 20px;
+}
+
+.nameAndBurger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
