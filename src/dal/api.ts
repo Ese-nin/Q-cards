@@ -83,7 +83,7 @@ export const cardPackAPI = {
                 _id, name
             }
         }
-        return instance.put<{_id: string, name: string}, AxiosResponse<RenameCardPackType>>('cards/pack', data)
+        return instance.put<{ _id: string, name: string }, AxiosResponse<RenameCardPackType>>('cards/pack', data)
     }
 }
 
@@ -94,34 +94,19 @@ export const cardsAPI = {
     addNewCards(params: AddNewCardsType) {
         const data = {
             card:
-                params
+            params
         }
-        return instance.post('cards/card', data)
+        return instance.post<{card: GetCardsParamsType}, AxiosResponse<AddNewCardResponseType>>('cards/card', data)
     },
-    deleteCards(cardsID: string) {
-        return instance.delete('cards/card', {
-            params: {
-                id: cardsID
-            }
-        })
+    deleteCards(cardID: string) {
+        return instance.delete<'', AxiosResponse<RemoveCardResponseType>>(`cards/card?id=${cardID}`)
     },
     renameCardQuestion(params: RenameCardQuestionType) {
         const data = {
             card: params
         }
-        return instance.put('cards/card', data)
+        return instance.put<{card: RenameCardQuestionType}, AxiosResponse<RenameCardResponseType>>('cards/card', data)
     }
-}
-
-export type DefaultRequestCardsPack = {
-    packName: string,
-    min: number,
-    max: number,
-    sortPacks: string,
-    page: number,
-    pageCount: number,
-    user_id: string,
-    block: boolean
 }
 
 // types
@@ -180,27 +165,27 @@ export type GetCardsPackResponseType = {
 }
 
 export type DeletedCardsPack = {
-  _id: string;
-  user_id: string;
-  user_name: string;
-  private: boolean;
-  name: string;
-  path: string;
-  grade: number;
-  shots: number;
-  cardsCount: number;
-  type: string;
-  rating: number;
-  created: string;
-  updated: string;
-  more_id: string;
-  __v: number;
+    _id: string;
+    user_id: string;
+    user_name: string;
+    private: boolean;
+    name: string;
+    path: string;
+    grade: number;
+    shots: number;
+    cardsCount: number;
+    type: string;
+    rating: number;
+    created: string;
+    updated: string;
+    more_id: string;
+    __v: number;
 }
 
 export type DeletePackResponseType = {
-  deletedCardsPack: DeletedCardsPack;
-  token: string;
-  tokenDeathTime: number;
+    deletedCardsPack: DeletedCardsPack;
+    token: string;
+    tokenDeathTime: number;
 }
 
 export type GetCardResponseType = {
@@ -260,21 +245,76 @@ export type RenameCardPackType = {
     newNameCardPack?: string
 }
 export type AddNewCardsType = {
-    // card: {
-        cardsPack_id: string,
-        question?: string
-        answer?: string,
-        grade?: number,
-        shots?: number,
-        answerImg?: string,
-        questionImg?: string,
-        questionVideo?: string,
-        answerVideo?: string
-    // }
+    cardsPack_id: string,
+    question?: string
+    answer?: string,
+    grade?: number,
+    shots?: number,
+    answerImg?: string,
+    questionImg?: string,
+    questionVideo?: string,
+    answerVideo?: string
 }
+
+export type NewCard = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+}
+
+export type AddNewCardResponseType = {
+  newCard: NewCard;
+  token: string;
+  tokenDeathTime: number;
+}
+
 export type RenameCardQuestionType = {
     _id: string,
     question?: string
+}
+
+export type Updated_DeletedCardType = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+  answerImg: string;
+  answerVideo: string;
+  questionImg: string;
+  questionVideo: string;
+}
+
+export type RenameCardResponseType = {
+  updatedCard: Updated_DeletedCardType;
+  token: string;
+  tokenDeathTime: number;
+}
+
+export type RemoveCardResponseType = {
+  deletedCard: Updated_DeletedCardType;
+  token: string;
+  tokenDeathTime: number;
 }
 
 export type GetCardsParamsType = {
