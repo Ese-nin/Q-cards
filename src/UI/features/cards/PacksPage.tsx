@@ -3,23 +3,24 @@ import {Button} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../bll/store';
 import s from './packList.module.css'
 import SuperPagination from '../../common/c9-SuperPagination/SuperPagination';
-import {deleteCardPackTC, renameCardPackTC} from "./cardsPackList-reducer";
+import {deleteCardPackTC, renameCardPackTC} from './cardsPackList-reducer';
 import TablesPackPage from './tables/TablesPackPage';
-import {PATH} from "../../../bll/Path";
-import {addNewCardTC, getCardsPageTC} from "./cardPackPage-reducer";
-import {SearchInput} from "./SearchInput/SearchInput";
-import {Navigate, useSearchParams} from "react-router-dom";
-import SchoolIcon from "@mui/icons-material/School";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import {useDebounce} from "../../../utils/hooks/useDebounce";
+import {PATH} from '../../../bll/Path';
+import {addNewCardTC, getCardsPageTC} from './cardPackPage-reducer';
+import {SearchInput} from './SearchInput/SearchInput';
+import {Navigate, useNavigate, useSearchParams} from 'react-router-dom';
+import SchoolIcon from '@mui/icons-material/School';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import {useDebounce} from '../../../utils/hooks/useDebounce';
 import {
     cardsTotalCountSelector,
     isLoggedInSelector,
     packNameSelector,
     pageCardsSelector,
     pageCountCardsSelector
-} from "../../../bll/selectors";
+} from '../../../bll/selectors';
+import back from '../../../assets/icon/back.svg';
 
 
 export const PackPage = () => {
@@ -29,7 +30,7 @@ export const PackPage = () => {
     const pageCount = useAppSelector(pageCountCardsSelector)
     const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
     const packName = useAppSelector(packNameSelector)
-
+    const navigate = useNavigate();
     const [find, setFind] = useState('')
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
     const params = Object.fromEntries(searchParams)
@@ -40,7 +41,9 @@ export const PackPage = () => {
     const onVisibleMenuBarHandler = () => {
         setVisibleMenuBar(!visibleMenuBar)
     }
-
+    const BackToPackList = () => {
+        navigate(PATH.PACK_LIST)
+    }
     const addNewCard = (question: string) => {
         dispatch(addNewCardTC({cardsPack_id, question}))
         setSearchParams({...params, cardsPack_id, cardQuestion: question})
@@ -87,9 +90,9 @@ export const PackPage = () => {
             <div className={s.rectangleContainer}>
                 <div className={s.ellipseBig}>
                     <div className={s.containerGroup}>
-                        <div className={s.ellipse} style={{top: "150.62px"}}></div>
-                        <div className={s.ellipse} style={{top: "147.12px"}}></div>
-                        <div className={s.ellipse} style={{top: "143.63px"}}></div>
+                        <div className={s.ellipse} style={{top: '150.62px'}}></div>
+                        <div className={s.ellipse} style={{top: '147.12px'}}></div>
+                        <div className={s.ellipse} style={{top: '143.63px'}}></div>
                         <div className={s.rectangle}></div>
                     </div>
                 </div>
@@ -98,7 +101,7 @@ export const PackPage = () => {
         {visibleMenuBar && <div className={s.menuBarContainer}>
             <div className={s.menuBar}>
                 <div className={s.buttonGroup}>
-                    <div className={s.buttonAndName} onClick={() => renamePack(params.cardsPack_id, "Update Pack")}>
+                    <div className={s.buttonAndName} onClick={() => renamePack(params.cardsPack_id, 'Update Pack')}>
                         <BorderColorIcon className={s.icon_style}/>
                         <div className={s.name}>Edit</div>
                     </div>
@@ -115,6 +118,10 @@ export const PackPage = () => {
     </div>
 
     return (<div className={s.page}>
+            <div className={s.backBlock} onClick={BackToPackList}>
+                <img src={back} alt="back"/>
+                <span>Back to Packs List</span>
+            </div>
             <div className={s.addNewPackLine}>
                 <div className={s.nameAndBurger}>
                     <h2>{packName}</h2>

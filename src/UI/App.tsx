@@ -15,7 +15,8 @@ import {CreateNewPass} from './features/forgotPassword/createNewPass';
 import {ErrorAlert} from './common/ErrorAlert/ErrorAlert';
 import {PackList} from './features/cards/PacksList';
 import {PackPage} from './features/cards/PacksPage';
-import {PATH} from "../bll/Path";
+import {PATH} from '../bll/Path';
+import {PackPageEmpty} from './features/cards/PacksPageEmpty';
 
 export const App = () => {
     const dispatch = useAppDispatch()
@@ -50,6 +51,7 @@ export const App = () => {
                 <Route path={PATH.NEW_PASS} element={<CreateNewPass/>}/>
                 <Route path={PATH.PACK_LIST} element={<PackList/>}/>
                 <Route path={PATH.PACK_PAGE} element={<PackPage/>}/>
+                <Route path={PATH.PACK_PAGE_EMPTY} element={<PackPageEmpty/>}/>
                 <Route path={'*'} element={<Navigate to="/404"/>}/>
             </Routes>
         </div>

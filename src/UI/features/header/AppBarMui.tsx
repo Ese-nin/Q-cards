@@ -43,6 +43,8 @@ export default function MenuAppBar() {
                                  className={({isActive}) => (isActive ? s.active : '')}>packlist</NavLink>
                         <NavLink to={PATH.PACK_PAGE}
                                  className={({isActive}) => (isActive ? s.active : '')}>packPage</NavLink>
+                        <NavLink to={PATH.PACK_PAGE_EMPTY}
+                                 className={({isActive}) => (isActive ? s.active : '')}>Empty</NavLink>
                     </div>
 
                     {isLoggedIn && (

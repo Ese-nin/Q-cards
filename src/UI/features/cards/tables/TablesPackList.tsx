@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -19,8 +19,8 @@ import {PATH} from '../../../../bll/Path';
 import iconDown from '../../../../assets/icon/iconDown.png'
 import iconUp from '../../../../assets/icon/iconUp.png'
 import sort from '../../../../assets/icon/sort.svg'
-import {cardPacksSelector, user_idSelector} from "../../../../bll/selectors";
-import SuperSort from "../../../common/SuperSort/SuperSort";
+import {cardPacksSelector, user_idSelector} from '../../../../bll/selectors';
+import SuperSort from '../../../common/SuperSort/SuperSort';
 
 export default function TablesPackList() {
     const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function TablesPackList() {
     const dispatch = useAppDispatch()
     const cardPacks = useAppSelector(cardPacksSelector)
     const meID = useAppSelector(user_idSelector)
+
 
     const [sort, setSort] = useState('')
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams()
@@ -66,27 +67,6 @@ export default function TablesPackList() {
         setSearchParams({...params, sortPacks: newSort, page: 1})
     }
 
-    // export const pureChange = (sort: string, down: string, up: string) => {
-    //     let res = ''
-    //     if (sort === res) {
-    //         res = down
-    //     } else if (sort !== down && sort === up) {
-    //         res = ''
-    //     } else if (sort === down) {
-    //         res = up
-    //     } else {
-    //         res = down
-    //     }
-    //     return res
-    // }
-    //
-    //
-    const icon = sort === iconDown     // реализация иконки сортировки
-        ? iconDown
-        : sort === iconUp
-            ? iconUp
-            : sort
-
     return (
         <TableContainer component={Paper}>
             <Table sx={{minWidth: 650}} aria-label="simple table">
@@ -94,18 +74,6 @@ export default function TablesPackList() {
                     <TableRow sx={{backgroundColor: '#EFEFEF'}}>
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
-                        <TableCell align="left">
-                            <button
-                                className={s.btnNamePagePack}
-                            >
-                                Last Updated
-                                <img
-                                    className={s.sortIcon}
-                                    src={icon}
-                                    alt={'sort'}
-                                />
-                            </button>
-                        </TableCell>
                         <TableCell align="left">
                             <button className={s.btnNamePagePack}>
                                 Last Updated

@@ -7,5 +7,8 @@ export const PATH = {
     CHECK_MAIL: '/checkMail',
     NEW_PASS: '/createNewPass/:token',
     PACK_LIST: '/packList',
-    PACK_PAGE: '/packPage/*'
+    PACK_PAGE: '/packPage/*',
+    PACK_PAGE_EMPTY: '/packPageEmpty',
+
+
 } as const
