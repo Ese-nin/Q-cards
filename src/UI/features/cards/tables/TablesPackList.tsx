@@ -72,8 +72,10 @@ export default function TablesPackList() {
                         <TableCell>Name</TableCell>
                         <TableCell align="left">Cards</TableCell>
                         <TableCell align="left">
-                            Last Updated
-                            <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
+                            <button>
+                                Last Updated
+                                <SuperSort sort={sort} value={'updated'} onChange={onChangeSort}/>
+                            </button>
                         </TableCell>
                         <TableCell align="left">Created by</TableCell>
                         <TableCell align="left">Actions</TableCell>
