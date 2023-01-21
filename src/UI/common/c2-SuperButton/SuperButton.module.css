@@ -1,65 +1,64 @@
 .button {
-    min-width: 129px;
-    height: 30px;
+  min-width: 129px;
+  height: 30px;
 
-    border-radius: 3px;
-    border: none;
+  border-radius: 3px;
+  border: none;
 }
 
 .default {
-    color: #FFFFFF;
-    background: #0066CC;
+  color: #ffffff;
+  background: #0066cc;
 }
 
 .disabled {
-    color: black;
-    opacity: 0.5;
-    background: #0066CC;
+  color: black;
+  opacity: 0.5;
+  background: #0066cc;
 }
 
 .secondary {
-    color: #0066cc;
-    background: white;
-    border: #0066cc solid 1px;
+  color: #0066cc;
+  background: white;
+  border: #0066cc solid 1px;
 }
 
 .red {
-    color: #FFFFFF;
-    background: #CC1439;
+  color: #ffffff;
+  background: #cc1439;
 }
 
 .default:hover {
-    background: #0080FF;
+  background: #0080ff;
 }
 
 .red:hover {
-    background: #FF1A47;
+  background: #ff1a47;
 }
 
 .secondary:hover {
-    background: #E5F0FA;
-    border: 1px solid #0066CC;
+  background: #e5f0fa;
+  border: 1px solid #0066cc;
 }
 
-
 .default:active {
-    font-weight: bold;
-    background: #0059B3;
+  font-weight: bold;
+  background: #0059b3;
 }
 
 .secondary:active {
-    font-weight: bold;
-    background: #C9E5FF;
-    border: 1px solid #0066CC;
+  font-weight: bold;
+  background: #c9e5ff;
+  border: 1px solid #0066cc;
 }
 
 .red:active {
-    font-weight: bold;
-    background: #B31232;
+  font-weight: bold;
+  background: #b31232;
 }
 
 .button:disabled {
-    font-weight: normal;
-    background: #004D99;
-    opacity: 0.5;
+  font-weight: normal;
+  background: #004d99;
+  opacity: 0.5;
 }

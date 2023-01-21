@@ -1,160 +1,160 @@
 .page {
-    display: flex;
-    max-width: 1010px;
-    margin: 0 auto;
-    justify-content: space-between;
-    flex-direction: column;
+  display: flex;
+  max-width: 1010px;
+  margin: 0 auto;
+  justify-content: space-between;
+  flex-direction: column;
 }
 
 .addNewPackLine {
-    margin: 30px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  margin: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .formLine {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .pagination {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .slider {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 200px;
 }
 
 .searchField {
-    width: 200px;
-    margin-bottom: 10px;
+  width: 200px;
+  margin-bottom: 10px;
 }
 
 .searchFieldCards {
-    width: 500px;
-    margin-bottom: 10px;
+  width: 500px;
+  margin-bottom: 10px;
 }
 
 .rectangle {
-    width: 10.5px;
-    height: 10.5px;
+  width: 10.5px;
+  height: 10.5px;
 }
 
 .containerGroup {
-    margin: 2px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
+  margin: 2px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .ellipse {
-    margin: 1px;
-    width: 1.75px;
-    height: 1.75px;
-    background: #000000;
+  margin: 1px;
+  width: 1.75px;
+  height: 1.75px;
+  background: #000000;
 }
 
 .ellipseBig {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
-    align-items: flex-start;
-    box-sizing: border-box;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid #0D0C0B;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #0d0c0b;
 }
 
 .rectangleContainer {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .menuBarContainer {
-    position: absolute;
+  position: absolute;
 }
 
 .menuBar {
-    width: 116.5px;
-    height: 136.5px;
-    background: #FFFFFF;
-    border: 1px solid #CFCFCF;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.06);
+  width: 116.5px;
+  height: 136.5px;
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
 }
 
 .buttonGroup {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
 }
 
 .buttonAndName {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-    width: 82%;
-    min-height: 45.5px;
-    padding-right: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 82%;
+  min-height: 45.5px;
+  padding-right: 20px;
 }
 
 .buttonAndName:hover {
-    background: gainsboro;
+  background: gainsboro;
 }
 
 .name {
-    width: 28px;
-    height: 24px;
-    margin-left: 5px;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-    letter-spacing: -0.01em;
-    color: #0D0C0B;
+  width: 28px;
+  height: 24px;
+  margin-left: 5px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.01em;
+  color: #0d0c0b;
 }
 
 .burgerMenu {
-    width: 20px;
+  width: 20px;
 }
 
 .nameAndBurger {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.emptyCenterBlock{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 32px;
-    padding-top: 86px;
+.emptyCenterBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding-top: 86px;
 }
 
-.backBlock{
-    padding-top: 25px;
-    cursor: pointer;
+.backBlock {
+  padding-top: 25px;
+  cursor: pointer;
 }
 
-.backBlock span{
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 24px;
-    margin-left: 12px;
+.backBlock span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-left: 12px;
 }

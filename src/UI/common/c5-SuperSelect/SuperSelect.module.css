@@ -1,15 +1,14 @@
 .select {
-    width: 165px;
-    height: 24px;
-    background: #FFFFFF;
-    border: 1px solid #C2C2C2;
-    border-radius: 2px;
-    min-width: 40px;
+  width: 165px;
+  height: 24px;
+  background: #ffffff;
+  border: 1px solid #c2c2c2;
+  border-radius: 2px;
+  min-width: 40px;
 }
 
 .select:focus {
 }
-
 
 .option:hover {
 }
