@@ -34,8 +34,7 @@ export const PackList = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector);
   const userID = useAppSelector(user_idSelector);
 
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
   const [values, setValues] = useState([minCardsCount, maxCardsCount]);
@@ -65,9 +64,7 @@ export const PackList = () => {
   }, [searchDebouncedValue]);
 
   const addNewCardsPack = () => {
-    params.user_id
-      ? dispatch(addNewCardPackTC({}, userID))
-      : dispatch(addNewCardPackTC({}));
+    params.user_id ? dispatch(addNewCardPackTC({}, userID)) : dispatch(addNewCardPackTC({}));
   };
 
   const onChangePagination = (newPage: number, newCount: number) => {
@@ -95,11 +92,7 @@ export const PackList = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchField}>
-          <SearchInput
-            value={find}
-            onChangeText={onChangeText}
-            placeholder={"Search"}
-          />
+          <SearchInput value={find} onChangeText={onChangeText} placeholder={"Search"} />
         </div>
         <div>
           <ChoiceCards userID={userID} />

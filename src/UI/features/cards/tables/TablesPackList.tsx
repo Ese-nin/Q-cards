@@ -6,11 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {
-  deleteCardPackTC,
-  getCardsPackTC,
-  renameCardPackTC,
-} from "bll/reducers/packs-reducer";
+import { deleteCardPackTC, getCardsPackTC, renameCardPackTC } from "bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import SchoolIcon from "@mui/icons-material/School";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -30,8 +26,7 @@ export default function TablesPackList() {
   const meID = useAppSelector(user_idSelector);
 
   const [sort, setSort] = useState("");
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
 
   useEffect(() => {
@@ -47,11 +42,7 @@ export default function TablesPackList() {
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
-  const renamePack = (
-    cardPackID: string,
-    newNameCardPack: string,
-    user_id: string
-  ) => {
+  const renamePack = (cardPackID: string, newNameCardPack: string, user_id: string) => {
     user_id === meID
       ? dispatch(renameCardPackTC(cardPackID, newNameCardPack, user_id))
       : dispatch(renameCardPackTC(cardPackID, newNameCardPack));
@@ -80,11 +71,7 @@ export default function TablesPackList() {
             <TableCell align="left">
               <button className={s.btnNamePagePack}>
                 Last Updated
-                <SuperSort
-                  sort={sort}
-                  value={"updated"}
-                  onChange={onChangeSort}
-                />
+                <SuperSort sort={sort} value={"updated"} onChange={onChangeSort} />
               </button>
             </TableCell>
             <TableCell align="left">Created by</TableCell>
@@ -93,15 +80,9 @@ export default function TablesPackList() {
         </TableHead>
         <TableBody>
           {cardPacks.map((row) => (
-            <TableRow
-              key={row._id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
+            <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" scope="row">
-                <button
-                  onClick={() => getPackPage(row._id)}
-                  className={s.btnNamePagePack}
-                >
+                <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
                   {row.name}
                 </button>
               </TableCell>
@@ -131,9 +112,7 @@ export default function TablesPackList() {
                 {meID === row.user_id && (
                   <div>
                     <SuperButton
-                      onClick={() =>
-                        renamePack(row._id, "Updated name", row.user_id)
-                      }
+                      onClick={() => renamePack(row._id, "Updated name", row.user_id)}
                       className={s.button_style}
                     >
                       <BorderColorIcon className={s.icon_style} />

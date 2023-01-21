@@ -1,9 +1,4 @@
-import React, {
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-  ReactNode,
-  useState,
-} from "react";
+import React, { DetailedHTMLProps, InputHTMLAttributes, ReactNode, useState } from "react";
 import { SuperInputText } from "UI/common";
 
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -11,10 +6,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
   HTMLInputElement
 >;
 
-export type SuperDebouncedInputPropsType = Omit<
-  DefaultInputPropsType,
-  "type"
-> & {
+export type SuperDebouncedInputPropsType = Omit<DefaultInputPropsType, "type"> & {
   onChangeText?: (value: string) => void;
   onEnter?: () => void;
   error?: ReactNode;

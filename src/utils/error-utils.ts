@@ -2,11 +2,7 @@
 //
 // пока не знаю зачем, но думаю пригодится
 
-import {
-  AppActionsType,
-  changeAppErrorAC,
-  setAppStatusAC,
-} from "../bll/reducers/app-reducer";
+import { AppActionsType, changeAppErrorAC, setAppStatusAC } from "../bll/reducers/app-reducer";
 import { Dispatch } from "redux";
 import { AxiosError } from "axios";
 

@@ -25,8 +25,7 @@ export const appReducer = (
 
 // actions
 
-export const setInitializeAC = () =>
-  ({ type: "APP/SET_INITIALIZE", isInitialized: true } as const);
+export const setInitializeAC = () => ({ type: "APP/SET_INITIALIZE", isInitialized: true } as const);
 export const changeAppErrorAC = (errorMessage: string | null) =>
   ({ type: "APP/SET_ERROR", error: errorMessage } as const);
 export const setAppStatusAC = (newStatus: AppStatusType) =>

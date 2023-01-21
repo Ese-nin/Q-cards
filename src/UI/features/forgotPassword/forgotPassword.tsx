@@ -3,19 +3,10 @@ import { useAppDispatch, useAppSelector } from "../../../bll/store";
 import { Navigate, NavLink } from "react-router-dom";
 import { useFormik } from "formik";
 import s from "../register/register.module.css";
-import {
-  Button,
-  FormControl,
-  FormGroup,
-  Input,
-  InputLabel,
-} from "@mui/material";
+import { Button, FormControl, FormGroup, Input, InputLabel } from "@mui/material";
 import { forgotPasswordTC } from "../../../bll/reducers/auth-reducer";
 import { PATH } from "../../../bll/Path";
-import {
-  isLoggedInSelector,
-  isSentInstructionSelector,
-} from "../../../bll/selectors";
+import { isLoggedInSelector, isSentInstructionSelector } from "../../../bll/selectors";
 
 type ForgotFormikErrorsType = {
   email?: string;
@@ -71,10 +62,7 @@ export const ForgotPassPage = () => {
               <div style={{ color: "crimson" }}>{formik.errors.email}</div>
             )}
             <div>
-              <span>
-                Enter your email address and we will send you further
-                instructions{" "}
-              </span>
+              <span>Enter your email address and we will send you further instructions </span>
             </div>
           </FormGroup>
           <Button
@@ -91,10 +79,7 @@ export const ForgotPassPage = () => {
           <span>Did you remember your password?</span>
         </div>
 
-        <NavLink
-          to="/login"
-          style={{ display: "flex", justifyContent: "end", margin: "10px" }}
-        >
+        <NavLink to="/login" style={{ display: "flex", justifyContent: "end", margin: "10px" }}>
           Try logging in
         </NavLink>
       </FormControl>

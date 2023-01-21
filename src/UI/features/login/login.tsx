@@ -55,10 +55,7 @@ export const LoginPage = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = useCallback(
-    () => setShowPassword((show) => !show),
-    []
-  );
+  const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
 
   const haveAccountHandler = () => {
     dispatch(setHaveAccountAC(false));
@@ -84,9 +81,7 @@ export const LoginPage = () => {
             )}
 
             <FormControl margin={"normal"}>
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
+              <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
               <Input
                 type={showPassword ? "text" : "password"}
                 {...formik.getFieldProps("password")}

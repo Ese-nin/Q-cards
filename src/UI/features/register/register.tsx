@@ -13,10 +13,7 @@ import { registerTC } from "../../../bll/reducers/auth-reducer";
 import { useAppDispatch, useAppSelector } from "../../../bll/store";
 import { InputWithEyeIcon } from "./InputWithEyeIcon/InputWithEyeIcon";
 import { PATH } from "../../../bll/Path";
-import {
-  isHaveAccountSelector,
-  isLoggedInSelector,
-} from "../../../bll/selectors";
+import { isHaveAccountSelector, isLoggedInSelector } from "../../../bll/selectors";
 
 type RegFormikErrorsType = {
   email?: string;
@@ -67,14 +64,8 @@ export const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
 
-  const handleClickShowPassword = useCallback(
-    () => setShowPassword((show) => !show),
-    []
-  );
-  const handleClickShowPassword2 = useCallback(
-    () => setShowPassword2((show) => !show),
-    []
-  );
+  const handleClickShowPassword = useCallback(() => setShowPassword((show) => !show), []);
+  const handleClickShowPassword2 = useCallback(() => setShowPassword2((show) => !show), []);
 
   if (isHaveAccount) {
     return <Navigate to={PATH.LOGIN} />;
@@ -100,9 +91,7 @@ export const Register = () => {
             )}
 
             <FormControl margin={"normal"}>
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
+              <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
               <Input
                 type={showPassword ? "text" : "password"}
                 {...formik.getFieldProps("password")}
@@ -119,9 +108,7 @@ export const Register = () => {
             )}
 
             <FormControl margin={"normal"}>
-              <InputLabel htmlFor="standard-adornment-password">
-                Confirm password
-              </InputLabel>
+              <InputLabel htmlFor="standard-adornment-password">Confirm password</InputLabel>
               <Input
                 type={showPassword2 ? "text" : "password"}
                 {...formik.getFieldProps("confirmPassword")}
@@ -133,12 +120,9 @@ export const Register = () => {
                 }
               />
             </FormControl>
-            {formik.errors.confirmPassword &&
-              formik.touched.confirmPassword && (
-                <div style={{ color: "crimson" }}>
-                  {formik.errors.confirmPassword}
-                </div>
-              )}
+            {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+              <div style={{ color: "crimson" }}>{formik.errors.confirmPassword}</div>
+            )}
 
             <Button
               style={{ borderRadius: "30px" }}

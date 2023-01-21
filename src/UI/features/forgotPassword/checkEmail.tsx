@@ -26,10 +26,7 @@ export const CheckEmail = () => {
           <span>We’ve sent an Email with instructions to {Email}</span>
         </div>
 
-        <NavLink
-          to="/login"
-          style={{ display: "flex", justifyContent: "end", margin: "10px" }}
-        >
+        <NavLink to="/login" style={{ display: "flex", justifyContent: "end", margin: "10px" }}>
           <Button
             style={{ borderRadius: "30px", marginTop: "20px" }}
             type={"submit"}

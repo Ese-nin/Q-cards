@@ -66,9 +66,7 @@ export const CreateNewPass = () => {
         <form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <FormControl margin={"normal"}>
-              <InputLabel htmlFor="standard-adornment-password">
-                Password
-              </InputLabel>
+              <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
               <Input
                 type={showPassword ? "text" : "password"}
                 {...formik.getFieldProps("password")}
@@ -85,10 +83,7 @@ export const CreateNewPass = () => {
             )}
           </FormGroup>
           <div>
-            <span>
-              Create new password and we will send you further instructions to
-              email
-            </span>
+            <span>Create new password and we will send you further instructions to email</span>
           </div>
           <NavLink to={"/login"}>
             <Button

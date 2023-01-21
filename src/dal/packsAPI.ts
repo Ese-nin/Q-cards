@@ -3,10 +3,7 @@ import { AxiosResponse } from "axios";
 
 export const packsAPI = {
   getCardsPack(params: GetPacksParamsType) {
-    return instance.get<"", AxiosResponse<GetCardsPackResponseType>>(
-      "cards/pack",
-      { params }
-    );
+    return instance.get<"", AxiosResponse<GetCardsPackResponseType>>("cards/pack", { params });
   },
 
   addNewCardPack(params: AddNewCardPackType) {
@@ -22,14 +19,11 @@ export const packsAPI = {
   },
 
   deleteCardPack(cardPackID: string) {
-    return instance.delete<"", AxiosResponse<DeletePackResponseType>>(
-      "cards/pack",
-      {
-        params: {
-          id: cardPackID,
-        },
-      }
-    );
+    return instance.delete<"", AxiosResponse<DeletePackResponseType>>("cards/pack", {
+      params: {
+        id: cardPackID,
+      },
+    });
   },
 
   renameCardPack(_id: string, name: string) {
@@ -39,10 +33,10 @@ export const packsAPI = {
         name,
       },
     };
-    return instance.put<
-      { _id: string; name: string },
-      AxiosResponse<RenameCardPackType>
-    >("cards/pack", data);
+    return instance.put<{ _id: string; name: string }, AxiosResponse<RenameCardPackType>>(
+      "cards/pack",
+      data
+    );
   },
 };
 

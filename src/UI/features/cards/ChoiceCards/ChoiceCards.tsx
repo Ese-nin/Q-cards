@@ -9,8 +9,7 @@ type ChoiceCardsPropsType = {
 };
 
 export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const dispatch = useAppDispatch();
 
@@ -22,16 +21,10 @@ export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
 
   return (
     <div>
-      <SuperButton
-        xType={params.user_id ? "" : "secondary"}
-        onClick={() => chooseCards(userID)}
-      >
+      <SuperButton xType={params.user_id ? "" : "secondary"} onClick={() => chooseCards(userID)}>
         My
       </SuperButton>
-      <SuperButton
-        xType={params.user_id ? "secondary" : ""}
-        onClick={() => chooseCards("")}
-      >
+      <SuperButton xType={params.user_id ? "secondary" : ""} onClick={() => chooseCards("")}>
         All
       </SuperButton>
     </div>

@@ -31,8 +31,7 @@ export const PackPage = () => {
   const packName = useAppSelector(packNameSelector);
   const navigate = useNavigate();
   const [find, setFind] = useState("");
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
@@ -110,10 +109,7 @@ export const PackPage = () => {
                 <BorderColorIcon className={s.icon_style} />
                 <div className={s.name}>Edit</div>
               </div>
-              <div
-                className={s.buttonAndName}
-                onClick={() => removePack(params.cardsPack_id)}
-              >
+              <div className={s.buttonAndName} onClick={() => removePack(params.cardsPack_id)}>
                 <DeleteOutlineIcon className={s.icon_style} />
                 <div className={s.name}>Delete</div>
               </div>
@@ -145,11 +141,7 @@ export const PackPage = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchFieldCards}>
-          <SearchInput
-            value={find}
-            onChangeText={onChangeText}
-            placeholder={"Search"}
-          />
+          <SearchInput value={find} onChangeText={onChangeText} placeholder={"Search"} />
         </div>
         <div>
           <Button variant="outlined" onClick={() => addNewCard("New question")}>

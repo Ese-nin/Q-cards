@@ -2,12 +2,7 @@ import { AppThunk } from "../store";
 import { setAppStatusAC } from "./app-reducer";
 import { AxiosError } from "axios";
 import { handleServerNetworkError } from "utils/error-utils";
-import {
-  AddNewCardPackType,
-  CardPacksType,
-  GetPacksParamsType,
-  packsAPI,
-} from "dal/packsAPI";
+import { AddNewCardPackType, CardPacksType, GetPacksParamsType, packsAPI } from "dal/packsAPI";
 
 const initialState = {
   cardPacks: [
@@ -144,9 +139,7 @@ export const addNewCardPackTC =
     packsAPI
       .addNewCardPack(params)
       .then((res) => {
-        user_id
-          ? dispatch(getCardsPackTC({ user_id }))
-          : dispatch(getCardsPackTC({}));
+        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
@@ -161,9 +154,7 @@ export const deleteCardPackTC =
     packsAPI
       .deleteCardPack(cardPackID)
       .then((res) => {
-        user_id
-          ? dispatch(getCardsPackTC({ user_id }))
-          : dispatch(getCardsPackTC({}));
+        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
@@ -178,9 +169,7 @@ export const renameCardPackTC =
     packsAPI
       .renameCardPack(pack_id, newName)
       .then((res) => {
-        user_id
-          ? dispatch(getCardsPackTC({ user_id }))
-          : dispatch(getCardsPackTC({}));
+        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {

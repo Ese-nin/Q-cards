@@ -9,17 +9,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Rating } from "@mui/material";
-import {
-  cardsSelector,
-  packUserIdSelector,
-  user_idSelector,
-} from "bll/selectors";
+import { cardsSelector, packUserIdSelector, user_idSelector } from "bll/selectors";
 import { Navigate, useSearchParams } from "react-router-dom";
-import {
-  deleteCardTC,
-  getCardsPageTC,
-  renameCardQuestionTC,
-} from "bll/reducers/cards-reducer";
+import { deleteCardTC, getCardsPageTC, renameCardQuestionTC } from "bll/reducers/cards-reducer";
 import s from "./TablesPackList.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -33,18 +25,12 @@ export default function TablesPackPage() {
   const packUserID = useAppSelector(packUserIdSelector);
 
   const [sort, setSort] = useState("");
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
   const changeCardQuestion = (card_id: string, newQuestion: string) => {
-    dispatch(
-      renameCardQuestionTC(
-        { _id: card_id, question: newQuestion },
-        cardsPack_id
-      )
-    );
+    dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
   };
 
   const removeCard = (card_id: string) => {
@@ -73,11 +59,7 @@ export default function TablesPackPage() {
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">
               Last Updated
-              <SuperSort
-                sort={sort}
-                value={"updated"}
-                onChange={onChangeSort}
-              />
+              <SuperSort sort={sort} value={"updated"} onChange={onChangeSort} />
             </TableCell>
             <TableCell align="left">Grade</TableCell>
             {meID === packUserID && <TableCell align="left">Actions</TableCell>}
@@ -85,10 +67,7 @@ export default function TablesPackPage() {
         </TableHead>
         <TableBody>
           {cards.map((row) => (
-            <TableRow
-              key={row._id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
+            <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
               <TableCell component="th" scope="row">
                 {row.question}{" "}
               </TableCell>
@@ -101,11 +80,7 @@ export default function TablesPackPage() {
                 .{new Date(row.updated).getFullYear()}
               </TableCell>
               <TableCell align="left">
-                <Rating
-                  name="half-rating"
-                  defaultValue={row.grade}
-                  precision={0.5}
-                />
+                <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
               </TableCell>
               {meID === row.user_id && (
                 <TableCell align="left">
@@ -117,17 +92,12 @@ export default function TablesPackPage() {
                     }}
                   >
                     <SuperButton
-                      onClick={() =>
-                        changeCardQuestion(row._id, "Updated question")
-                      }
+                      onClick={() => changeCardQuestion(row._id, "Updated question")}
                       className={s.button_style}
                     >
                       <BorderColorIcon className={s.icon_style} />
                     </SuperButton>
-                    <SuperButton
-                      onClick={() => removeCard(row._id)}
-                      className={s.button_style}
-                    >
+                    <SuperButton onClick={() => removeCard(row._id)} className={s.button_style}>
                       <DeleteOutlineIcon className={s.icon_style} />
                     </SuperButton>
                   </div>

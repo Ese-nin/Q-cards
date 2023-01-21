@@ -1,8 +1,4 @@
-import {
-  applyMiddleware,
-  combineReducers,
-  legacy_createStore as createStore,
-} from "redux";
+import { applyMiddleware, combineReducers, legacy_createStore as createStore } from "redux";
 import { AuthActionsType, authReducer } from "./reducers/auth-reducer";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -18,22 +14,13 @@ const rootReducer = combineReducers({
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
-type RootActionsType =
-  | AuthActionsType
-  | AppActionsType
-  | CardsActionType
-  | CardsPageActionType;
+type RootActionsType = AuthActionsType | AppActionsType | CardsActionType | CardsPageActionType;
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-type ThunkAppDispatchType = ThunkDispatch<
-  AppRootStateType,
-  any,
-  RootActionsType
->;
+type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, RootActionsType>;
 
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>();
-export const useAppSelector: TypedUseSelectorHook<AppRootStateType> =
-  useSelector;
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppRootStateType,

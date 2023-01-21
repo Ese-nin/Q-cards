@@ -52,12 +52,10 @@ export const logInAC = (name: string, email: string, user_id: string) =>
     email,
     user_id,
   } as const);
-export const logOutAC = () =>
-  ({ type: "AUTH/SET_LOG_OUT", isLoggedIn: false } as const);
+export const logOutAC = () => ({ type: "AUTH/SET_LOG_OUT", isLoggedIn: false } as const);
 export const setHaveAccountAC = (isHaveAccount: boolean) =>
   ({ type: "AUTH/SET_HAVE_ACC", isHaveAccount } as const);
-export const changeNameAC = (name: string) =>
-  ({ type: "AUTH/SET_NEW_NAME", name } as const);
+export const changeNameAC = (name: string) => ({ type: "AUTH/SET_NEW_NAME", name } as const);
 export const sentInstructionAC = (isSent: boolean) =>
   ({ type: "AUTH/SENT_INSTRUCTION", isSent } as const);
 

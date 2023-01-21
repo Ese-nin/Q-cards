@@ -11,24 +11,22 @@ export const cardsAPI = {
     const data = {
       card: params,
     };
-    return instance.post<
-      { card: GetCardsParamsType },
-      AxiosResponse<AddNewCardResponseType>
-    >("cards/card", data);
+    return instance.post<{ card: GetCardsParamsType }, AxiosResponse<AddNewCardResponseType>>(
+      "cards/card",
+      data
+    );
   },
   deleteCards(cardID: string) {
-    return instance.delete<"", AxiosResponse<RemoveCardResponseType>>(
-      `cards/card?id=${cardID}`
-    );
+    return instance.delete<"", AxiosResponse<RemoveCardResponseType>>(`cards/card?id=${cardID}`);
   },
   renameCardQuestion(params: RenameCardQuestionType) {
     const data = {
       card: params,
     };
-    return instance.put<
-      { card: RenameCardQuestionType },
-      AxiosResponse<RenameCardResponseType>
-    >("cards/card", data);
+    return instance.put<{ card: RenameCardQuestionType }, AxiosResponse<RenameCardResponseType>>(
+      "cards/card",
+      data
+    );
   },
 };
 

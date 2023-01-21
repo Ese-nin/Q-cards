@@ -26,20 +26,20 @@ export const authAPI = {
     return instance.delete<"", AxiosResponse<LogOutResponseType>>(`auth/me`);
   },
   register(email: string, password: string) {
-    return instance.post<
-      { email: string; password: string },
-      AxiosResponse<RegisterResponseType>
-    >(`auth/register`, {
-      email,
-      password,
-    });
+    return instance.post<{ email: string; password: string }, AxiosResponse<RegisterResponseType>>(
+      `auth/register`,
+      {
+        email,
+        password,
+      }
+    );
   },
   changeName(name: string, avatar?: string) {
     // тут потом нужно будет допилить изменение аватара!!!!
-    return instance.put<
-      { name: string; avatar?: string },
-      AxiosResponse<ChangeNameResponseType>
-    >("/auth/me", { name });
+    return instance.put<{ name: string; avatar?: string }, AxiosResponse<ChangeNameResponseType>>(
+      "/auth/me",
+      { name }
+    );
   },
   forgotPass(email: string) {
     const data = {
@@ -50,10 +50,10 @@ export const authAPI = {
             link</a>
                 </div>`,
     };
-    return axios.post<
-      { email: string; message: string },
-      AxiosResponse<ForgotResponseType>
-    >("https://neko-back.herokuapp.com/2.0/auth/forgot", data);
+    return axios.post<{ email: string; message: string }, AxiosResponse<ForgotResponseType>>(
+      "https://neko-back.herokuapp.com/2.0/auth/forgot",
+      data
+    );
   },
   setNewPass(password: string, token: string) {
     const data = {

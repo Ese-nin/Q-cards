@@ -13,8 +13,7 @@ export const PackPageEmpty = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const packName = useAppSelector(packNameSelector);
   const navigate = useNavigate();
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] =
-    useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 

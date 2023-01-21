@@ -15,10 +15,7 @@ export const InputWithEyeIcon: React.FC<InputWithEyePropsType> = ({
 }) => {
   return (
     <InputAdornment position="end">
-      <IconButton
-        aria-label="toggle password visibility"
-        onClick={handleClickShowPassword}
-      >
+      <IconButton aria-label="toggle password visibility" onClick={handleClickShowPassword}>
         {showPassword ? <VisibilityOff /> : <Visibility />}
       </IconButton>
     </InputAdornment>

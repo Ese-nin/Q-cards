@@ -4,10 +4,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { useAppDispatch, useAppSelector } from "../../../bll/store";
 import { changeAppErrorAC } from "../../../bll/reducers/app-reducer";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -16,10 +13,7 @@ export const ErrorAlert = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === "clickaway") {
       return;
     }
@@ -28,11 +22,7 @@ export const ErrorAlert = () => {
   };
 
   return (
-    <Snackbar
-      open={error !== null}
-      autoHideDuration={6000}
-      onClose={handleClose}
-    >
+    <Snackbar open={error !== null} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
         {error}
       </Alert>
