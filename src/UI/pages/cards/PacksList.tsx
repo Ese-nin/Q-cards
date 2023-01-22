@@ -36,6 +36,9 @@ export const PackList = () => {
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
+  const minSlider = searchParams.get("min");
+  const maxSlider = searchParams.get("max");
+  const packName = searchParams.get("packName");
 
   const [values, setValues] = useState([minCardsCount, maxCardsCount]);
   const [find, setFind] = useState("");
@@ -50,18 +53,16 @@ export const PackList = () => {
   };
 
   useEffect(() => {
-    // dispatch(getCardsPackTC({...params, min: values[0], max: values[1]}))
-    setSearchParams({ ...params, min: values[0], max: values[1] });
-  }, [sliderDebouncedValue]);
+    setSearchParams({ min: values[0], max: values[1], packName: find });
+  }, [sliderDebouncedValue, searchDebouncedValue]);
+
+  useEffect(() => {
+    // dispatch(getCardsPackTC({ ...params }));
+  }, [minSlider, maxSlider, packName]);
 
   const onChangeText = (value: string) => {
     setFind(value);
   };
-
-  useEffect(() => {
-    // dispatch(getCardsPackTC({...params, packName: find}))
-    setSearchParams({ ...params, packName: find });
-  }, [searchDebouncedValue]);
 
   const addNewCardsPack = () => {
     params.user_id ? dispatch(addNewCardPackTC({}, userID)) : dispatch(addNewCardPackTC({}));

@@ -1,9 +1,8 @@
-import { instance } from "./authAPI";
-import { AxiosResponse } from "axios";
+import { instance } from "./instance";
 
 export const packsAPI = {
   getCardsPack(params: GetPacksParamsType) {
-    return instance.get<"", AxiosResponse<GetCardsPackResponseType>>("cards/pack", { params });
+    return instance.get<GetCardsPackResponseType>("cards/pack", { params });
   },
 
   addNewCardPack(params: AddNewCardPackType) {
@@ -12,14 +11,11 @@ export const packsAPI = {
         params,
       },
     };
-    return instance.post<
-      { cardsPack: AddNewCardPackType },
-      AxiosResponse<GetCardsPackResponseType>
-    >("cards/pack", data);
+    return instance.post<GetCardsPackResponseType>("cards/pack", data);
   },
 
   deleteCardPack(cardPackID: string) {
-    return instance.delete<"", AxiosResponse<DeletePackResponseType>>("cards/pack", {
+    return instance.delete<DeletePackResponseType>("cards/pack", {
       params: {
         id: cardPackID,
       },
@@ -33,10 +29,7 @@ export const packsAPI = {
         name,
       },
     };
-    return instance.put<{ _id: string; name: string }, AxiosResponse<RenameCardPackType>>(
-      "cards/pack",
-      data
-    );
+    return instance.put<RenameCardPackType>("cards/pack", data);
   },
 };
 

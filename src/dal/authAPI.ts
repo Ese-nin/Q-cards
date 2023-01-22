@@ -1,56 +1,39 @@
-import axios, { AxiosResponse } from "axios";
-
-export const instance = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:7542/2.0/"
-      : "https://neko-back.herokuapp.com/2.0/",
-  withCredentials: true,
-});
+import { instance } from "./instance";
 
 export const authAPI = {
   me() {
-    return instance.post<{}, AxiosResponse<UserDataResponseType>>(`auth/me`);
+    return instance.post<UserDataResponseType>(`auth/me`);
   },
   logIn(email: string, password: string, rememberMe: boolean) {
-    return instance.post<
-      { email: string; password: string; rememberMe: boolean },
-      AxiosResponse<UserDataResponseType>
-    >("auth/login", {
+    return instance.post<UserDataResponseType>("auth/login", {
       email,
       password,
       rememberMe,
     });
   },
   logOut() {
-    return instance.delete<"", AxiosResponse<LogOutResponseType>>(`auth/me`);
+    return instance.delete<LogOutResponseType>(`auth/me`);
   },
   register(email: string, password: string) {
-    return instance.post<{ email: string; password: string }, AxiosResponse<RegisterResponseType>>(
-      `auth/register`,
-      {
-        email,
-        password,
-      }
-    );
+    return instance.post<RegisterResponseType>(`auth/register`, {
+      email,
+      password,
+    });
   },
   changeName(name: string, avatar?: string) {
     // тут потом нужно будет допилить изменение аватара!!!!
-    return instance.put<{ name: string; avatar?: string }, AxiosResponse<ChangeNameResponseType>>(
-      "/auth/me",
-      { name }
-    );
+    return instance.put<ChangeNameResponseType>("/auth/me", { name });
   },
   forgotPass(email: string) {
     const data = {
       email,
       message: `<div style="background-color: lime; padding: 15px">
             password recovery link: 
-            <a href='https://ese-nin.github.io/Q-cards/#/createNewPass/$token$'>
+            <a href="https://ese-nin.github.io/Q-cards/#/createNewPass/$token$">
             link</a>
                 </div>`,
     };
-    return axios.post<{ email: string; message: string }, AxiosResponse<ForgotResponseType>>(
+    return instance.post<ForgotResponseType>(
       "https://neko-back.herokuapp.com/2.0/auth/forgot",
       data
     );
@@ -60,16 +43,23 @@ export const authAPI = {
       password,
       resetPasswordToken: token,
     };
-    return instance.post<
-      { password: string; resetPasswordToken: string },
-      AxiosResponse<NewPassResponseType>
-    >("https://neko-back.herokuapp.com/2.0/auth/set-new-password", data);
+    return instance.post<NewPassResponseType>(
+      "https://neko-back.herokuapp.com/2.0/auth/set-new-password",
+      data
+    );
   },
 };
 
 // types
 
 type NewPassResponseType = LogOutResponseType;
+export type LogOutResponseType = Pick<ForgotResponseType, "info">;
+export type ForgotResponseType = {
+  info: string;
+  success: boolean;
+  answer: boolean;
+  html: boolean;
+};
 type RegisterResponseType = {
   addedUser: {
     created: string;
@@ -103,13 +93,4 @@ export type ChangeNameResponseType = {
   updatedUser: UserDataResponseType;
   token: string;
   tokenDeathTime: number;
-};
-export type LogOutResponseType = {
-  info: string;
-};
-export type ForgotResponseType = {
-  info: string;
-  success: boolean;
-  answer: boolean;
-  html: boolean;
 };

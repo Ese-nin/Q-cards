@@ -1,27 +1,26 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Header } from "./common";
+import { ErrorAlert, Header, Loading } from "./common";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Profile } from "./features/profile/profile";
-import { LoginPage } from "./features/login/login";
-import { Register } from "./features/register/register";
-import { useAppDispatch, useAppSelector } from "../bll/store";
-import { initializeProfileTC } from "../bll/reducers/auth-reducer";
+import { Profile } from "./pages/profile/profile";
+import { LoginPage } from "./pages/login/login";
+import { Register } from "./pages/register/register";
+import { useAppDispatch, useAppSelector } from "bll/store";
+import { initializeProfileTC } from "bll/reducers/auth-reducer";
 import { CircularProgress } from "@mui/material";
-import { Loading } from "./common";
-import { ForgotPassPage } from "./features/forgotPassword/forgotPassword";
-import { CheckEmail } from "./features/forgotPassword/checkEmail";
-import { CreateNewPass } from "./features/forgotPassword/createNewPass";
-import { ErrorAlert } from "./common";
-import { PackList } from "./features/cards/PacksList";
-import { PackPage } from "./features/cards/PacksPage";
-import { PATH } from "../bll/Path";
-import { PackPageEmpty } from "./features/cards/PacksPageEmpty";
+import { ForgotPassPage } from "./pages/forgotPassword/forgotPassword";
+import { CheckEmail } from "./pages/forgotPassword/checkEmail";
+import { CreateNewPass } from "./pages/forgotPassword/createNewPass";
+import { PackList } from "./pages/cards/PacksList";
+import { PackPage } from "./pages/cards/PacksPage";
+import { PATH } from "bll/Path";
+import { PackPageEmpty } from "./pages/cards/PacksPageEmpty";
+import { appStatusSelector, isInitializedSelector } from "../bll/selectors";
 
 export const App = () => {
   const dispatch = useAppDispatch();
-  const isInitialized = useAppSelector((state) => state.app.isInitialized);
-  const status = useAppSelector((state) => state.app.appStatus);
+  const isInitialized = useAppSelector(isInitializedSelector);
+  const status = useAppSelector(appStatusSelector);
 
   useEffect(() => {
     dispatch(initializeProfileTC());

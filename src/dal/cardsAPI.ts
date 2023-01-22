@@ -1,9 +1,8 @@
-import { AxiosResponse } from "axios";
-import { instance } from "./authAPI";
+import { instance } from "./instance";
 
 export const cardsAPI = {
   getCardsPage(params: GetCardsParamsType) {
-    return instance.get<"", AxiosResponse<GetCardResponseType>>("/cards/card", {
+    return instance.get<GetCardResponseType>("cards/card", {
       params,
     });
   },
@@ -11,22 +10,16 @@ export const cardsAPI = {
     const data = {
       card: params,
     };
-    return instance.post<{ card: GetCardsParamsType }, AxiosResponse<AddNewCardResponseType>>(
-      "cards/card",
-      data
-    );
+    return instance.post<AddNewCardResponseType>("cards/card", data);
   },
   deleteCards(cardID: string) {
-    return instance.delete<"", AxiosResponse<RemoveCardResponseType>>(`cards/card?id=${cardID}`);
+    return instance.delete<RemoveCardResponseType>(`cards/card?id=${cardID}`);
   },
   renameCardQuestion(params: RenameCardQuestionType) {
     const data = {
       card: params,
     };
-    return instance.put<{ card: RenameCardQuestionType }, AxiosResponse<RenameCardResponseType>>(
-      "cards/card",
-      data
-    );
+    return instance.put<RenameCardResponseType>("cards/card", data);
   },
 };
 

@@ -17,7 +17,7 @@ const initialState = {
     },
   ],
   cardPacksTotalCount: 0,
-  maxCardsCount: 30,
+  maxCardsCount: 100,
   minCardsCount: 0,
   page: 1, // выбранная страница
   pageCount: 1, // количество элементов на странице
