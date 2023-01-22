@@ -34,7 +34,7 @@ export const BasicModal: FC<PropsType> = ({children}) => {
 
     return (
         <div>
-            <Button onClick={handleOpen} variant='contained'>Add new pack</Button>
+            <Button onClick={handleOpen} variant="contained" >Add new pack</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
