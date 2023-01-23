@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
@@ -11,15 +11,16 @@ import { AddNewCardModal } from "components/modal/AddNewCardModal";
 
 export const PackPageEmpty = () => {
   const dispatch = useAppDispatch();
+
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const packName = useAppSelector(packNameSelector);
   const totalCardsCount = useAppSelector(cardsTotalCountSelector);
+
   const navigate = useNavigate();
+
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
-
-  const [cardsCount] = useState<number>(totalCardsCount);
 
   const addNewCard = (question: string) => {
     dispatch(addNewCardTC({ cardsPack_id, question }));
@@ -30,7 +31,7 @@ export const PackPageEmpty = () => {
     navigate(PATH.LOGIN);
   }
 
-  if (!cardsCount) {
+  if (totalCardsCount) {
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   }
 
