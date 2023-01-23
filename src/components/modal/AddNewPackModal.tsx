@@ -6,11 +6,14 @@ import TextField from '@mui/material/TextField';
 import {Button} from '@mui/material';
 
 export const AddNewPackModal = () => {
+
+
+
     return (
         <BasicModal>
             <div className={s.firstBlock}>
                 <span>Add new pack</span>
-                <button>
+                <button >
                     <img src={closeBtn} alt="close"/>
                 </button>
             </div>

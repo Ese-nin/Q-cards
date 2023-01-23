@@ -32,9 +32,12 @@ export const BasicModal: FC<PropsType> = ({children}) => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+
+
+
     return (
         <div>
-            <Button onClick={handleOpen} variant="contained" >Add new pack</Button>
+            <Button onClick={handleOpen} variant="contained">Add new pack</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
