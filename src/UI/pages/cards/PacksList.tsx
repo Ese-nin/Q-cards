@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import s from "./packList.module.css";
@@ -19,6 +18,7 @@ import {
   user_idSelector,
 } from "bll/selectors";
 import { SuperButton, SuperPagination } from "UI/common";
+import { AddNewPackModal } from "../../../components/modal/AddNewPackModal";
 
 export const PackList = () => {
   const dispatch = useAppDispatch();
@@ -60,9 +60,7 @@ export const PackList = () => {
         <div>
           <h2>Packs list</h2>
         </div>
-        <Button variant="outlined" onClick={addNewCardsPack}>
-          Add new pack
-        </Button>
+        <AddNewPackModal />
       </div>
       <div className={s.formLine}>
         <div className={s.searchField}>
