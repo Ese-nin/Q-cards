@@ -73,6 +73,7 @@
     width: 82%;
     min-height: 45.5px;
     padding-right: 20px;
+    cursor: pointer;
 }
 
 .buttonAndName:hover {
