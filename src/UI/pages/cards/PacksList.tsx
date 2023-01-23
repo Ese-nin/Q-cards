@@ -31,9 +31,8 @@ export const PackList = () => {
   const userID = useAppSelector(user_idSelector);
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+  const searchParamsObject = Object.fromEntries(searchParams);
   const user_id = searchParams.get("user_id");
-  const minCards = searchParams.get("min");
-  const maxCards = searchParams.get("max");
 
   const addNewCardsPack = () => {
     user_id ? dispatch(addNewCardPackTC({}, user_id)) : dispatch(addNewCardPackTC({}));
@@ -41,8 +40,8 @@ export const PackList = () => {
 
   const onChangePagination = (newPage: number, newCount: number) => {
     const params = { page: newPage, pageCount: newCount };
-    dispatch(getCardsPackTC(params));
-    setSearchParams({ ...params, user_id, min: minCards, max: maxCards });
+    dispatch(getCardsPackTC({ ...searchParamsObject, ...params }));
+    setSearchParams({ ...searchParamsObject, ...params });
   };
 
   const resetFilter = () => {
