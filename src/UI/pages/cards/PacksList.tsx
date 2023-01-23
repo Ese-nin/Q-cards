@@ -18,7 +18,7 @@ import {
   user_idSelector,
 } from "bll/selectors";
 import { SuperButton, SuperPagination } from "UI/common";
-import { AddNewPackModal } from "../../../components/modal/AddNewPackModal";
+import { AddNewPackModal } from "components/modal/AddNewPackModal";
 
 export const PackList = () => {
   const dispatch = useAppDispatch();
