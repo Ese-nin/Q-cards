@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
@@ -8,18 +8,18 @@ import { PATH } from "bll/Path";
 import { addNewCardTC, getCardsPageTC } from "bll/reducers/cards-reducer";
 import { SearchInput } from "./SearchInput/SearchInput";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import SchoolIcon from "@mui/icons-material/School";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
   cardsTotalCountSelector,
   isLoggedInSelector,
   packNameSelector,
+  packUserIdSelector,
   pageCardsSelector,
   pageCountCardsSelector,
+  user_idSelector,
 } from "bll/selectors";
 import back from "assets/icon/back.svg";
 import { SuperPagination } from "UI/common";
+import { BurgerMenu } from "./BurgerMenu/BurgerMenu";
 
 export const PackPage = () => {
   const dispatch = useAppDispatch();
@@ -28,16 +28,15 @@ export const PackPage = () => {
   const pageCount = useAppSelector(pageCountCardsSelector);
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector);
   const packName = useAppSelector(packNameSelector);
+  const meID = useAppSelector(user_idSelector);
+  const packUserID = useAppSelector(packUserIdSelector);
+
   const navigate = useNavigate();
+
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
-  const [visibleMenuBar, setVisibleMenuBar] = useState<boolean>(false);
-
-  const onVisibleMenuBarHandler = () => {
-    setVisibleMenuBar(!visibleMenuBar);
-  };
   const BackToPackList = () => {
     navigate(PATH.PACK_LIST);
   };
@@ -71,46 +70,6 @@ export const PackPage = () => {
     alert("функция в разработке");
   };
 
-  const burgerMenu = (
-    <div className={s.burgerMenu} onClick={onVisibleMenuBarHandler}>
-      <div className={s.iconMenu}>
-        <div className={s.rectangleContainer}>
-          <div className={s.ellipseBig}>
-            <div className={s.containerGroup}>
-              <div className={s.ellipse} style={{ top: "150.62px" }}></div>
-              <div className={s.ellipse} style={{ top: "147.12px" }}></div>
-              <div className={s.ellipse} style={{ top: "143.63px" }}></div>
-              <div className={s.rectangle}></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {visibleMenuBar && (
-        <div className={s.menuBarContainer}>
-          <div className={s.menuBar}>
-            <div className={s.buttonGroup}>
-              <div
-                className={s.buttonAndName}
-                onClick={() => renamePack(params.cardsPack_id, "Update Pack")}
-              >
-                <BorderColorIcon className={s.icon_style} />
-                <div className={s.name}>Edit</div>
-              </div>
-              <div className={s.buttonAndName} onClick={() => removePack(params.cardsPack_id)}>
-                <DeleteOutlineIcon className={s.icon_style} />
-                <div className={s.name}>Delete</div>
-              </div>
-              <div className={s.buttonAndName}>
-                <SchoolIcon className={s.icon_style} />
-                <div className={s.name}>Learn</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-
   return (
     <div className={s.page}>
       <div className={s.backBlock} onClick={BackToPackList}>
@@ -120,7 +79,7 @@ export const PackPage = () => {
       <div className={s.addNewPackLine}>
         <div className={s.nameAndBurger}>
           <h2>{packName}</h2>
-          {burgerMenu}
+          <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
         </div>
         <Button variant="contained" onClick={buttonClickHandler}>
           Learn to pack
@@ -131,9 +90,11 @@ export const PackPage = () => {
           <SearchInput type={"cards"} />
         </div>
         <div>
-          <Button variant="outlined" onClick={() => addNewCard("New question")}>
-            Add New Card
-          </Button>
+          {meID === packUserID && (
+            <Button variant="outlined" onClick={() => addNewCard("New question")}>
+              Add New Card
+            </Button>
+          )}
         </div>
       </div>
 

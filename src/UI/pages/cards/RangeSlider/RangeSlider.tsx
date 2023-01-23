@@ -45,7 +45,7 @@ export const RangeSlider: React.FC<SliderProps> = () => {
     }
   }, [sliderDebouncedValue]);
 
-  const minDistance = 5;
+  const minDistance = 3;
   const changeSliderValues = (event: Event, value: number | number[], activeThumb: number) => {
     if (!Array.isArray(value)) {
       return;

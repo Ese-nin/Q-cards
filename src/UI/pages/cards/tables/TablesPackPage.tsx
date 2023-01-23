@@ -45,9 +45,8 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
-  console.log(cards);
   if (cards.length < 1) {
-    return <Navigate to={PATH.PACK_PAGE_EMPTY} />;
+    return <Navigate to={PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id} />;
   }
 
   return (

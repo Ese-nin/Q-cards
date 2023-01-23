@@ -5,44 +5,24 @@ import {
   AddNewCardsType,
   cardsAPI,
   CardType,
+  GetCardResponseType,
   GetCardsParamsType,
   RenameCardQuestionType,
 } from "dal/cardsAPI";
 import { AppThunk } from "../store";
 
 const initialState = {
-  cards: [
-    {
-      answer: "",
-      question: "",
-      cardsPack_id: "",
-      grade: 0,
-      shots: 1,
-      user_id: "",
-      created: "",
-      updated: "",
-      _id: "",
-    },
-  ],
+  cards: [] as CardType[],
   cardsTotalCount: 3,
   maxGrade: 5,
   minGrade: 2,
-  page: 1, // выбранная страница
-  pageCount: 1, // количество элементов на странице
+  page: 1,
+  pageCount: 1,
   packUserId: "",
   packName: "",
 };
 
-export type InitialCardsStateType = {
-  cards: Array<CardType>;
-  cardsTotalCount: number;
-  maxGrade: number;
-  minGrade: number;
-  page: number; // выбранная страница
-  pageCount: number; // количество элементов на странице
-  packUserId: string;
-  packName: string;
-};
+export type InitialCardsStateType = typeof initialState;
 
 export type CardsPageActionType = GetCardsPackACType;
 
@@ -54,43 +34,15 @@ export const cardsReducer = (
     case "GET_CARDS_PAGE":
       return {
         ...state,
-        ...action,
+        ...action.data,
       };
     default:
       return state;
   }
 };
 
-export const getCardsPageAC = (
-  cards: Array<CardType>,
-  cardsTotalCount: number, // количество колод
-  maxGrade: number,
-  minGrade: number,
-  page: number, // выбранная страница
-  pageCount: number,
-  packUserId: string,
-  packName: string
-) =>
-  ({
-    type: "GET_CARDS_PAGE",
-    cards,
-    cardsTotalCount,
-    maxGrade,
-    minGrade,
-    page,
-    pageCount,
-    packUserId,
-    packName,
-  } as const);
-
-// cardAnswer: string = 'english ',
-// cardQuestion: string = 'english ',
-// cardsPack_id: string = '634dc6dd4e2e6c50ec5a1369', // тестовый айди 3ей карточки
-// min: number = 1,  // для кол-ва отображаемых паков
-// max: number = 4, // для кол-ва отображаемых паков
-// sortCards: string = '0grade', // для сортировки по возрастанию или убыванию
-// page: number = 1, // какая страница открыта
-// pageCount: number = 4, //кол-во паков на страницу
+export const getCardsPageAC = (data: GetCardResponseType) =>
+  ({ type: "GET_CARDS_PAGE", data } as const);
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>;
 export const getCardsPageTC =
@@ -100,19 +52,7 @@ export const getCardsPageTC =
     cardsAPI
       .getCardsPage(params)
       .then((res) => {
-        const data = res.data;
-        dispatch(
-          getCardsPageAC(
-            data.cards,
-            data.cardsTotalCount,
-            data.maxGrade,
-            data.minGrade,
-            data.page,
-            data.pageCount,
-            data.packUserId,
-            data.packName
-          )
-        );
+        dispatch(getCardsPageAC(res.data));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {

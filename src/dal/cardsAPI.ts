@@ -25,6 +25,23 @@ export const cardsAPI = {
 
 // types
 
+export type CardType = {
+  _id: string;
+  cardsPack_id: string;
+  user_id: string;
+  answer: string;
+  question: string;
+  grade: number;
+  shots: number;
+  comments: string;
+  type: string;
+  rating: number;
+  more_id: string;
+  created: string;
+  updated: string;
+  __v: number;
+};
+
 export type GetCardResponseType = {
   cards: CardType[];
   packUserId: string;
@@ -42,18 +59,6 @@ export type GetCardResponseType = {
   tokenDeathTime: number;
 };
 
-export type CardType = {
-  answer: string;
-  question: string;
-  cardsPack_id: string;
-  grade: number;
-  shots: number;
-  user_id: string;
-  created: string;
-  updated: string;
-  _id: string;
-};
-
 export type AddNewCardsType = {
   cardsPack_id: string;
   question?: string;
@@ -66,22 +71,7 @@ export type AddNewCardsType = {
   answerVideo?: string;
 };
 
-export type NewCard = {
-  _id: string;
-  cardsPack_id: string;
-  user_id: string;
-  answer: string;
-  question: string;
-  grade: number;
-  shots: number;
-  comments: string;
-  type: string;
-  rating: number;
-  more_id: string;
-  created: string;
-  updated: string;
-  __v: number;
-};
+export type NewCard = CardType;
 
 export type AddNewCardResponseType = {
   newCard: NewCard;
@@ -94,21 +84,7 @@ export type RenameCardQuestionType = {
   question?: string;
 };
 
-export type Updated_DeletedCardType = {
-  _id: string;
-  cardsPack_id: string;
-  user_id: string;
-  answer: string;
-  question: string;
-  grade: number;
-  shots: number;
-  comments: string;
-  type: string;
-  rating: number;
-  more_id: string;
-  created: string;
-  updated: string;
-  __v: number;
+export type Updated_DeletedCardType = CardType & {
   answerImg: string;
   answerVideo: string;
   questionImg: string;
