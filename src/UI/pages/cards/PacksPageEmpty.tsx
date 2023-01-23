@@ -5,7 +5,13 @@ import s from "./packList.module.css";
 import { PATH } from "bll/Path";
 import { addNewCardTC } from "bll/reducers/cards-reducer";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { cardsTotalCountSelector, isLoggedInSelector, packNameSelector } from "bll/selectors";
+import {
+  cardsTotalCountSelector,
+  isLoggedInSelector,
+  packNameSelector,
+  packUserIdSelector,
+  user_idSelector,
+} from "bll/selectors";
 import back from "assets/icon/back.svg";
 import { AddNewCardModal } from "components/modal/AddNewCardModal";
 
@@ -15,6 +21,8 @@ export const PackPageEmpty = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const packName = useAppSelector(packNameSelector);
   const totalCardsCount = useAppSelector(cardsTotalCountSelector);
+  const packUserID = useAppSelector(packUserIdSelector);
+  const meID = useAppSelector(user_idSelector);
 
   const navigate = useNavigate();
 
@@ -39,6 +47,8 @@ export const PackPageEmpty = () => {
     navigate(PATH.PACK_LIST);
   };
 
+  const viewButton = meID === packUserID;
+
   return (
     <div className={s.page}>
       <div className={s.backBlock} onClick={BackToPackList}>
@@ -51,10 +61,15 @@ export const PackPageEmpty = () => {
         </div>
       </div>
       <div className={s.emptyCenterBlock}>
-        <span>This pack is empty. Click add new card to fill this pack</span>
-        <Button variant="outlined" onClick={() => addNewCard("New question")}>
-          Add New Card
-        </Button>
+        <span>This pack is empty.</span>
+        {viewButton && (
+          <>
+            <span>Click add new card to fill this pack</span>
+            <Button variant="outlined" onClick={() => addNewCard("New question")}>
+              Add New Card
+            </Button>
+          </>
+        )}
         эта кнопка для модалки
         <AddNewCardModal />
       </div>
