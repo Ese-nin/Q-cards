@@ -18,7 +18,7 @@ import { PATH } from "bll/Path";
 import { cardPacksSelector, user_idSelector } from "bll/selectors";
 import { SuperButton, SuperSort } from "UI/common";
 
-export default function TablesPackList() {
+export function TablesPackList() {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();

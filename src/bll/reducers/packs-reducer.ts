@@ -2,20 +2,16 @@ import { AppThunk } from "../store";
 import { setAppStatusAC } from "./app-reducer";
 import { AxiosError } from "axios";
 import { handleServerNetworkError } from "utils/error-utils";
-import { AddNewCardPackType, CardPacksType, GetPacksParamsType, packsAPI } from "dal/packsAPI";
+import {
+  AddNewCardPackType,
+  CardPacksType,
+  GetCardsPackResponseType,
+  GetPacksParamsType,
+  packsAPI,
+} from "dal/packsAPI";
 
 const initialState = {
-  cardPacks: [
-    {
-      _id: "",
-      user_id: "",
-      name: "",
-      cardsCount: 0,
-      created: "",
-      updated: "",
-      user_name: "",
-    },
-  ],
+  cardPacks: [],
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
@@ -47,7 +43,7 @@ export const packsReducer = (
     case "ADD_NEW_CARD_PACK":
       return {
         ...state,
-        ...action,
+        ...action.data,
       };
     default:
       return state;
@@ -55,39 +51,43 @@ export const packsReducer = (
 };
 
 export const getCardsPackAC = (
-  cardPacks: Array<CardPacksType>,
-  cardPacksTotalCount: number, // количество колод
-  maxCardsCount: number,
-  minCardsCount: number,
-  page: number, // выбранная страница
-  pageCount: number
+  data: GetCardsPackResponseType
+  // cardPacks: Array<CardPacksType>,
+  // cardPacksTotalCount: number, // количество колод
+  // maxCardsCount: number,
+  // minCardsCount: number,
+  // page: number, // выбранная страница
+  // pageCount: number
 ) =>
   ({
     type: "GET_CARDS_PACK",
-    cardPacks: cardPacks,
-    cardPacksTotalCount,
-    maxCardsCount,
-    minCardsCount,
-    page,
-    pageCount,
+    data,
+    // cardPacks: cardPacks,
+    // cardPacksTotalCount,
+    // maxCardsCount,
+    // minCardsCount,
+    // page,
+    // pageCount,
   } as const);
 
 export const addNewCardPackAC = (
-  cardPacks: Array<CardPacksType>,
-  cardPacksTotalCount: number, // количество колод
-  maxCardsCount: number,
-  minCardsCount: number,
-  page: number, // выбранная страница
-  pageCount: number
+  data: GetCardsPackResponseType
+  // cardPacks: Array<CardPacksType>,
+  // cardPacksTotalCount: number, // количество колод
+  // maxCardsCount: number,
+  // minCardsCount: number,
+  // page: number, // выбранная страница
+  // pageCount: number
 ) =>
   ({
     type: "ADD_NEW_CARD_PACK",
-    cardPacks: cardPacks,
-    cardPacksTotalCount,
-    maxCardsCount,
-    minCardsCount,
-    page,
-    pageCount,
+    data,
+    // cardPacks: cardPacks,
+    // cardPacksTotalCount,
+    // maxCardsCount,
+    // minCardsCount,
+    // page,
+    // pageCount,
   } as const);
 export const deleteCardPackAC = (cardPackID: string) =>
   ({
@@ -114,17 +114,7 @@ export const getCardsPackTC =
     packsAPI
       .getCardsPack(params)
       .then((res) => {
-        const data = res.data;
-        dispatch(
-          getCardsPackAC(
-            data.cardPacks,
-            data.cardPacksTotalCount,
-            data.maxCardsCount,
-            data.minCardsCount,
-            data.page,
-            data.pageCount
-          )
-        );
+        dispatch(getCardsPackAC(res.data));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {

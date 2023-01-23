@@ -1,4 +1,9 @@
-import { applyMiddleware, combineReducers, legacy_createStore as createStore } from "redux";
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  legacy_createStore as createStore,
+} from "redux";
 import { AuthActionsType, authReducer } from "./reducers/auth-reducer";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
@@ -15,7 +20,14 @@ const rootReducer = combineReducers({
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
 type RootActionsType = AuthActionsType | AppActionsType | CardsActionType | CardsPageActionType;
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+
+const composeEnhancers =
+  // @ts-ignore
+  (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
+    // @ts-ignore
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) ||
+  compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, RootActionsType>;
 

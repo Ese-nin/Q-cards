@@ -55,13 +55,7 @@ export type GetCardsPackResponseType = {
   pageCount: number; // количество элементов на странице
 };
 
-export type AddNewCardPackType = {
-  name?: string;
-  deckCover?: string;
-  privatePack?: boolean;
-};
-
-export type DeletedCardsPack = {
+export type CardPacksType = {
   _id: string;
   user_id: string;
   user_name: string;
@@ -79,8 +73,14 @@ export type DeletedCardsPack = {
   __v: number;
 };
 
+export type AddNewCardPackType = {
+  name?: string;
+  deckCover?: string;
+  privatePack?: boolean;
+};
+
 export type DeletePackResponseType = {
-  deletedCardsPack: DeletedCardsPack;
+  deletedCardsPack: CardPacksType;
   token: string;
   tokenDeathTime: number;
 };
@@ -88,14 +88,4 @@ export type DeletePackResponseType = {
 export type RenameCardPackType = {
   cardPackID: string;
   newNameCardPack?: string;
-};
-
-export type CardPacksType = {
-  _id: string;
-  user_id: string;
-  name: string;
-  cardsCount: number;
-  created: string;
-  updated: string;
-  user_name: string;
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
@@ -11,7 +11,6 @@ import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import SchoolIcon from "@mui/icons-material/School";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { useDebounce } from "utils/hooks/useDebounce";
 import {
   cardsTotalCountSelector,
   isLoggedInSelector,
@@ -30,7 +29,6 @@ export const PackPage = () => {
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector);
   const packName = useAppSelector(packNameSelector);
   const navigate = useNavigate();
-  const [find, setFind] = useState("");
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
@@ -48,8 +46,6 @@ export const PackPage = () => {
     setSearchParams({ ...params, cardsPack_id, cardQuestion: question });
   };
 
-  const searchDebouncedValue = useDebounce<string>(find, 600);
-
   const onChangePagination = (page: number, pageCount: number) => {
     dispatch(getCardsPageTC({ ...params, cardsPack_id, page, pageCount }));
     setSearchParams({ ...params, page, pageCount });
@@ -58,15 +54,6 @@ export const PackPage = () => {
   const buttonClickHandler = () => {
     // some handle
   };
-
-  const onChangeText = (value: string) => {
-    setFind(value);
-  };
-
-  useEffect(() => {
-    // dispatch(getCardsPageTC({...params, cardsPack_id, cardQuestion: find}))
-    setSearchParams({ ...params, cardQuestion: find });
-  }, [searchDebouncedValue]);
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
@@ -141,7 +128,7 @@ export const PackPage = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchFieldCards}>
-          <SearchInput value={find} onChangeText={onChangeText} placeholder={"Search"} />
+          <SearchInput type={"cards"} />
         </div>
         <div>
           <Button variant="outlined" onClick={() => addNewCard("New question")}>

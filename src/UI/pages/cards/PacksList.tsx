@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
@@ -10,13 +10,10 @@ import { ChoiceCards } from "./ChoiceCards/ChoiceCards";
 import { RangeSlider } from "./RangeSlider/RangeSlider";
 import { SearchInput } from "./SearchInput/SearchInput";
 import { PATH } from "bll/Path";
-import TablesPackList from "./tables/TablesPackList";
-import { useDebounce } from "utils/hooks/useDebounce";
+import { TablesPackList } from "./tables/TablesPackList";
 import {
   cardPacksTotalCountSelector,
   isLoggedInSelector,
-  maxCardsCountSelector,
-  minCardsCountSelector,
   pageCountPacksSelector,
   pagePacksSelector,
   user_idSelector,
@@ -30,51 +27,27 @@ export const PackList = () => {
   const page = useAppSelector(pagePacksSelector);
   const pageCount = useAppSelector(pageCountPacksSelector);
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector);
-  const minCardsCount = useAppSelector(minCardsCountSelector);
-  const maxCardsCount = useAppSelector(maxCardsCountSelector);
+
   const userID = useAppSelector(user_idSelector);
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
-  const params = Object.fromEntries(searchParams);
-  const minSlider = searchParams.get("min");
-  const maxSlider = searchParams.get("max");
-  const packName = searchParams.get("packName");
-
-  const [values, setValues] = useState([minCardsCount, maxCardsCount]);
-  const [find, setFind] = useState("");
-
-  const sliderDebouncedValue = useDebounce<number[]>(values, 600);
-  const searchDebouncedValue = useDebounce<string>(find, 600);
-
-  const changeSliderValues = (event: Event, value: number | number[]) => {
-    if (Array.isArray(value)) {
-      setValues(value);
-    }
-  };
-
-  useEffect(() => {
-    setSearchParams({ min: values[0], max: values[1], packName: find });
-  }, [sliderDebouncedValue, searchDebouncedValue]);
-
-  useEffect(() => {
-    // dispatch(getCardsPackTC({ ...params }));
-  }, [minSlider, maxSlider, packName]);
-
-  const onChangeText = (value: string) => {
-    setFind(value);
-  };
+  const user_id = searchParams.get("user_id");
+  const minCards = searchParams.get("min");
+  const maxCards = searchParams.get("max");
 
   const addNewCardsPack = () => {
-    params.user_id ? dispatch(addNewCardPackTC({}, userID)) : dispatch(addNewCardPackTC({}));
+    user_id ? dispatch(addNewCardPackTC({}, user_id)) : dispatch(addNewCardPackTC({}));
   };
 
   const onChangePagination = (newPage: number, newCount: number) => {
-    dispatch(getCardsPackTC({ ...params, page: newPage, pageCount: newCount }));
-    setSearchParams({ ...params, page: newPage, pageCount: newCount });
+    const params = { page: newPage, pageCount: newCount };
+    dispatch(getCardsPackTC(params));
+    setSearchParams({ ...params, user_id, min: minCards, max: maxCards });
   };
 
   const resetFilter = () => {
     dispatch(getCardsPackTC({}));
+    setSearchParams({});
   };
 
   if (!isLoggedIn) {
@@ -93,20 +66,13 @@ export const PackList = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchField}>
-          <SearchInput value={find} onChangeText={onChangeText} placeholder={"Search"} />
+          <SearchInput type={"packs"} />
         </div>
         <div>
           <ChoiceCards userID={userID} />
         </div>
-        <div className={s.slider}>
-          <span>{values[0]}</span>
-          <RangeSlider
-            min={minCardsCount}
-            max={maxCardsCount}
-            value={values}
-            onChange={changeSliderValues}
-          />
-          <span>{values[1]}</span>
+        <div>
+          <RangeSlider />
         </div>
         <SuperButton className={s2.button_style} onClick={resetFilter}>
           <FilterAltOffIcon />
