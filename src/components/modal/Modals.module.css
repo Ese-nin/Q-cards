@@ -15,13 +15,16 @@
     display: flex;
 }
 
-.firstBlock button {
+.closeButton {
     padding: 0;
     border: none;
     font: inherit;
     color: inherit;
     background-color: transparent;
     cursor: pointer;
+    position: absolute;
+    top: 45px;
+    left: 357px;
 }
 
 .inputBlock {
@@ -30,11 +33,12 @@
     /*margin-bottom: 25px;*/
 }
 
-.checkBoxBlock{
+.checkBoxBlock {
     display: flex;
+    align-items: center;
 }
 
-.checkBoxBlock span{
+.checkBoxBlock span {
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -43,7 +47,7 @@
     letter-spacing: 0.01em;
 }
 
-.saveBlock{
+.saveBlock {
     display: flex;
     justify-content: space-between;
 }
