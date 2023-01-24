@@ -13,7 +13,6 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import s from "./TablesPackList.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { PATH } from "bll/Path";
 import { cardPacksSelector, user_idSelector } from "bll/selectors";
 import { SuperButton } from "UI/common";
@@ -41,7 +40,6 @@ export function TablesPackList() {
   };
 
   const getPackPage = (cardsPack_id: string) => {
-    dispatch(getCardsPageTC({ cardsPack_id }));
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 

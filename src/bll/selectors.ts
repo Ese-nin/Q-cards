@@ -31,3 +31,4 @@ export const packNameSelector = (state: AppRootStateType) => state.cards.packNam
 export const minGradeSelector = (state: AppRootStateType) => state.cards.minGrade;
 export const maxGradeSelector = (state: AppRootStateType) => state.cards.maxGrade;
 export const packUserIdSelector = (state: AppRootStateType) => state.cards.packUserId;
+export const cardsStatusSelector = (state: AppRootStateType) => state.cards.entityStatus;

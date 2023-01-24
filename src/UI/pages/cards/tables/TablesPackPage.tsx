@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,8 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Rating } from "@mui/material";
-import { cardsSelector, packUserIdSelector, user_idSelector } from "bll/selectors";
-import { Navigate, useSearchParams } from "react-router-dom";
+import {
+  cardsSelector,
+  cardsStatusSelector,
+  packUserIdSelector,
+  user_idSelector,
+} from "bll/selectors";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { deleteCardTC, getCardsPageTC, renameCardQuestionTC } from "bll/reducers/cards-reducer";
 import s from "./TablesPackList.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
@@ -22,7 +27,9 @@ import iconUp from "assets/icon/iconUp.png";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cards = useAppSelector(cardsSelector);
+  const cardsStatus = useAppSelector(cardsStatusSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
 
@@ -30,6 +37,10 @@ export default function TablesPackPage() {
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
+
+  useEffect(() => {
+    dispatch(getCardsPageTC({ cardsPack_id }));
+  }, []);
 
   const changeCardQuestion = (card_id: string, newQuestion: string) => {
     dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
@@ -50,8 +61,8 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
-  if (cards.length < 1) {
-    return <Navigate to={PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id} />;
+  if (!cards.length && cardsStatus !== "loading") {
+    navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
 
   return (
