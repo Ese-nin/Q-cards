@@ -51,3 +51,26 @@
     display: flex;
     justify-content: space-between;
 }
+
+.button_style {
+    margin: 5px;
+    min-width: 20px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.icon_style {
+    display: flex;
+}
+
+.button_style:disabled {
+    background: darkgrey;
+}
+
+.button_style:hover {
+    background: cadetblue;
+}

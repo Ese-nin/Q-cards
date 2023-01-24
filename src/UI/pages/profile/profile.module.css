@@ -45,3 +45,11 @@
   margin-left: 142px;
   cursor: pointer;
 }
+
+.backBlock span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  margin-left: 12px;
+}
