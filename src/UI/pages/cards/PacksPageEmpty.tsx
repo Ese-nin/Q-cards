@@ -1,24 +1,8 @@
-import React from "react";
-import { Button } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../bll/store";
-import s from "./packList.module.css";
-import { PATH } from "../../../bll/Path";
-import { addNewCardTC } from "../../../bll/reducers/cards-reducer";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import { isLoggedInSelector, packNameSelector } from "../../../bll/selectors";
-import back from "../../../assets/icon/back.svg";
-import {AddNewCardModal} from '../../../components/modal/AddNewCardModal';
-
-export const PackPageEmpty = () => {
-  const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector(isLoggedInSelector);
-  const packName = useAppSelector(packNameSelector);
-  const navigate = useNavigate();
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
 import { PATH } from "bll/Path";
 import { addNewCardTC } from "bll/reducers/cards-reducer";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
   cardsTotalCountSelector,
   isLoggedInSelector,
@@ -28,6 +12,7 @@ import {
 } from "bll/selectors";
 import back from "assets/icon/back.svg";
 import { AddNewCardModal } from "components/modal/AddNewCardModal";
+import { Button } from "@mui/material";
 
 export const PackPageEmpty = () => {
   const dispatch = useAppDispatch();
@@ -51,8 +36,7 @@ export const PackPageEmpty = () => {
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
-    setSearchParams({ ...params, cardsPack_id });
-  };
+  }
 
   if (!isLoggedIn) {
     navigate(PATH.LOGIN);
@@ -80,10 +64,6 @@ export const PackPageEmpty = () => {
         </div>
       </div>
       <div className={s.emptyCenterBlock}>
-        <span>This pack is empty. Click add new card to fill this pack</span>
-        <Button variant="outlined" onClick={() => addNewCard("New question")}>
-          Add New Card
-        </Button>
         <span>This pack is empty.</span>
         {viewButton && (
           <>
@@ -91,10 +71,9 @@ export const PackPageEmpty = () => {
             <Button variant="outlined" onClick={() => addNewCard("New question")}>
               Add New Card
             </Button>
+            <AddNewCardModal /> {/*какая-то из кнопок лишняя*/}
           </>
         )}
-        эта кнопка для модалки
-        <AddNewCardModal/>
       </div>
     </div>
   );

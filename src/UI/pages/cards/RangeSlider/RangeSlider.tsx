@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-import Slider, { SliderProps } from "@mui/material/Slider";
+import Slider from "@mui/material/Slider";
 import s from "./RangeSlider.module.css";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { maxCardsCountSelector, minCardsCountSelector } from "bll/selectors";
@@ -8,7 +8,7 @@ import { useDebounce } from "utils/hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
 
-export const RangeSlider: React.FC<SliderProps> = () => {
+export const RangeSlider = () => {
   const minCardsCount = useAppSelector(minCardsCountSelector);
   const maxCardsCount = useAppSelector(maxCardsCountSelector);
 

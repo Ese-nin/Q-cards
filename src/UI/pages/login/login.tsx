@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "bll/store";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 
 import { useFormik } from "formik";
@@ -65,7 +65,7 @@ export const LoginPage = () => {
   };
 
   if (isLoggedIn) {
-    navigate(PATH.PROFILE);
+    return <Navigate to={PATH.PROFILE} />;
   }
 
   return (
