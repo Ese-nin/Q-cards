@@ -45,8 +45,8 @@ export const PackList = () => {
   };
 
   const resetFilter = () => {
-    dispatch(getCardsPackTC({}));
-    setSearchParams({});
+    dispatch(getCardsPackTC(user_id ? { user_id } : {}));
+    setSearchParams(user_id ? { user_id } : {});
   };
 
   if (!isLoggedIn) {
