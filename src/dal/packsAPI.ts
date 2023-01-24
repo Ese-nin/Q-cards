@@ -7,9 +7,7 @@ export const packsAPI = {
 
   addNewCardPack(params: AddNewCardPackType) {
     const data = {
-      cardsPack: {
-        params,
-      },
+      cardsPack: params
     };
     return instance.post<GetCardsPackResponseType>("cards/pack", data);
   },

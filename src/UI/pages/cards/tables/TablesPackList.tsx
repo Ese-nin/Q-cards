@@ -122,7 +122,7 @@ export function TablesPackList() {
                                             // onClick={() => removePack(row._id, row.user_id)}
                                             className={s.button_style}
                                         >
-                                            <DeletePackModal/>
+                                            {/*<DeletePackModal/>*/}
                                             <DeleteOutlineIcon className={s.icon_style}/>
                                         </SuperButton>
                                     </div>

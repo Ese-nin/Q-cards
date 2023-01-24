@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import {FC, ReactNode} from 'react';
 import {Button} from '@mui/material';
+import s from './Modals.module.css';
+import closeBtn from '../../assets/icon/closeBtn.svg';
 
 
 const style = {
@@ -33,8 +35,6 @@ export const BasicModal: FC<PropsType> = ({children}) => {
     const handleClose = () => setOpen(false);
 
 
-
-
     return (
         <div>
             <Button onClick={handleOpen} variant="contained">Add new pack</Button>
@@ -43,6 +43,9 @@ export const BasicModal: FC<PropsType> = ({children}) => {
                 onClose={handleClose}
             >
                 <Box sx={style}>
+                    <button className={s.closeButton}>
+                        <img src={closeBtn} alt="close" onClick={handleClose}/>
+                    </button>
                     {children}
                 </Box>
             </Modal>
