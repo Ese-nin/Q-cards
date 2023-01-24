@@ -56,7 +56,7 @@ export const PackPage = () => {
   };
 
   const buttonClickHandler = () => {
-    // some handle
+    return navigate(PATH.LEARN_PAGE) ;
   };
 
   const onChangeText = (value: string) => {

@@ -24,7 +24,7 @@ const initialState = {
 };
 
 export type InitialPacksStateType = {
-  cardPacks: Array<CardPacksType>;
+  cardPacks: CardPacksType[];
   cardPacksTotalCount: number; // количество колод
   maxCardsCount: number;
   minCardsCount: number;

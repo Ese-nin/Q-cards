@@ -9,4 +9,5 @@ export const PATH = {
   PACK_LIST: "/packList",
   PACK_PAGE: "/packPage",
   PACK_PAGE_EMPTY: "/packPageEmpty",
+  LEARN_PAGE:"/learnPage"
 } as const;
