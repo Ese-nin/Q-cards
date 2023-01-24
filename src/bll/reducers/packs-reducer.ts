@@ -11,7 +11,7 @@ import {
 } from "dal/packsAPI";
 
 const initialState = {
-  cardPacks: [],
+  cardPacks: [] as CardPacksType[],
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
@@ -19,28 +19,15 @@ const initialState = {
   pageCount: 1, // количество элементов на странице
 };
 
-export type InitialPacksStateType = {
-  cardPacks: Array<CardPacksType>;
-  cardPacksTotalCount: number; // количество колод
-  maxCardsCount: number;
-  minCardsCount: number;
-  page: number; // выбранная страница
-  pageCount: number; // количество элементов на странице
-};
-
-export type CardsActionType =
-  | GetCardsPackACType
-  | AddNewCardPackACType
-  | DeleteCardPackACType
-  | RenameCardPackACType;
+export type InitialPacksStateType = typeof initialState;
 
 export const packsReducer = (
   state: InitialPacksStateType = initialState,
   action: CardsActionType
 ): InitialPacksStateType => {
   switch (action.type) {
-    case "GET_CARDS_PACK":
-    case "ADD_NEW_CARD_PACK":
+    case "PACK/GET_CARDS_PACK":
+      // case "ADD_NEW_CARD_PACK":
       return {
         ...state,
         ...action.data,
@@ -50,62 +37,16 @@ export const packsReducer = (
   }
 };
 
-export const getCardsPackAC = (
-  data: GetCardsPackResponseType
-  // cardPacks: Array<CardPacksType>,
-  // cardPacksTotalCount: number, // количество колод
-  // maxCardsCount: number,
-  // minCardsCount: number,
-  // page: number, // выбранная страница
-  // pageCount: number
-) =>
-  ({
-    type: "GET_CARDS_PACK",
-    data,
-    // cardPacks: cardPacks,
-    // cardPacksTotalCount,
-    // maxCardsCount,
-    // minCardsCount,
-    // page,
-    // pageCount,
-  } as const);
+export const getCardsPackAC = (data: GetCardsPackResponseType) =>
+  ({ type: "PACK/GET_CARDS_PACK", data } as const);
 
-export const addNewCardPackAC = (
-  data: GetCardsPackResponseType
-  // cardPacks: Array<CardPacksType>,
-  // cardPacksTotalCount: number, // количество колод
-  // maxCardsCount: number,
-  // minCardsCount: number,
-  // page: number, // выбранная страница
-  // pageCount: number
-) =>
-  ({
-    type: "ADD_NEW_CARD_PACK",
-    data,
-    // cardPacks: cardPacks,
-    // cardPacksTotalCount,
-    // maxCardsCount,
-    // minCardsCount,
-    // page,
-    // pageCount,
-  } as const);
-export const deleteCardPackAC = (cardPackID: string) =>
-  ({
-    type: "DELETE_CARS_PACK",
-    cardPackID,
-  } as const);
-
-export const renameCardPackAC = (cardPackID: string, newNameCardPack: string) =>
-  ({
-    type: "RENAME_CARD_PACK",
-    cardPackID,
-    newNameCardPack,
-  } as const);
-
-export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>;
-export type AddNewCardPackACType = ReturnType<typeof addNewCardPackAC>;
-export type DeleteCardPackACType = ReturnType<typeof deleteCardPackAC>;
-export type RenameCardPackACType = ReturnType<typeof renameCardPackAC>;
+// export const addNewCardPackAC = (data: GetCardsPackResponseType) =>
+//   ({ type: "PACK/ADD_NEW_CARD_PACK", data } as const);
+// export const deleteCardPackAC = (cardPackID: string) =>
+//   ({ type: "PACK/DELETE_CARS_PACK", cardPackID } as const);
+//
+// export const renameCardPackAC = (cardPackID: string, newNameCardPack: string) =>
+//   ({ type: "PACK/RENAME_CARD_PACK", cardPackID, newNameCardPack } as const);
 
 export const getCardsPackTC =
   (params: GetPacksParamsType): AppThunk =>
@@ -129,7 +70,7 @@ export const addNewCardPackTC =
     packsAPI
       .addNewCardPack(params)
       .then((res) => {
-        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
+        dispatch(getCardsPackTC(user_id ? { user_id } : {}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
@@ -144,7 +85,7 @@ export const deleteCardPackTC =
     packsAPI
       .deleteCardPack(cardPackID)
       .then((res) => {
-        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
+        dispatch(getCardsPackTC(user_id ? { user_id } : {}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
@@ -159,10 +100,22 @@ export const renameCardPackTC =
     packsAPI
       .renameCardPack(pack_id, newName)
       .then((res) => {
-        user_id ? dispatch(getCardsPackTC({ user_id })) : dispatch(getCardsPackTC({}));
+        dispatch(getCardsPackTC(user_id ? { user_id } : {}));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
         handleServerNetworkError(err, dispatch);
       });
   };
+
+// types
+
+export type CardsActionType = GetCardsPackACType;
+// | AddNewCardPackACType
+// | DeleteCardPackACType
+// | RenameCardPackACType;
+
+export type GetCardsPackACType = ReturnType<typeof getCardsPackAC>;
+// export type AddNewCardPackACType = ReturnType<typeof addNewCardPackAC>;
+// export type DeleteCardPackACType = ReturnType<typeof deleteCardPackAC>;
+// export type RenameCardPackACType = ReturnType<typeof renameCardPackAC>;
