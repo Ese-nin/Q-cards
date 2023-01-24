@@ -37,36 +37,47 @@ export const AddNewPackModal = () => {
     };
 
 
-    return (
-        <BasicModal>
-            <div className={s.firstBlock}>
-                <span>{Title}</span>
-            </div>
-            <div>
-                <TextField
-                    id="standard-basic"
-                    label="Name pack"
-                    variant="standard"
-                    sx={{width: '347px'}}
-                    onChange={handleChangeInput}
-                />
-            </div>
-            <div className={s.checkBoxBlock}>
-                <Checkbox
-                    checked={checked}
-                    onChange={handleChangeCheckbox}
-                    inputProps={{'aria-label': 'controlled'}}
-                />
-                <span>Private pack</span>
-            </div>
-            <div className={s.saveBlock}>
-                <Button variant="outlined">Cancel</Button>
-                <Button variant="contained"
-                        onClick={() => addNewCardsPack(namePack, checked)}
-                >
-                    Save
-                </Button>
-            </div>
-        </BasicModal>
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
+    return (<>
+            <Button onClick={handleOpen} variant="contained">
+                Add new pack
+            </Button>
+
+
+            <BasicModal open={open} handleClose={handleClose}>
+                <div className={s.firstBlock}>
+                    <span>{Title}</span>
+                </div>
+                <div>
+                    <TextField
+                        id="standard-basic"
+                        label="Name pack"
+                        variant="standard"
+                        sx={{width: '347px'}}
+                        onChange={handleChangeInput}
+                    />
+                </div>
+                <div className={s.checkBoxBlock}>
+                    <Checkbox
+                        checked={checked}
+                        onChange={handleChangeCheckbox}
+                        inputProps={{'aria-label': 'controlled'}}
+                    />
+                    <span>Private pack</span>
+                </div>
+                <div className={s.saveBlock}>
+                    <Button variant="outlined" onClick={handleClose}>Cancel</Button>
+                    <Button variant="contained"
+                            onClick={() => addNewCardsPack(namePack, checked)}
+                    >
+                        Save
+                    </Button>
+                </div>
+            </BasicModal>
+        </>
     )
 }

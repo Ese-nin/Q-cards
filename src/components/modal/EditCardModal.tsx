@@ -1,9 +1,9 @@
 import {BasicModal} from './BasicModals';
-import {SuperCheckbox, SuperSelect} from '../../UI/common';
+import {SuperSelect} from '../../UI/common';
 import closeBtn from '../../assets/icon/closeBtn.svg'
 import s from './Modals.module.css'
 import TextField from '@mui/material/TextField';
-import {Button} from '@mui/material';
+import * as React from 'react';
 
 
 export const EditCardModal = () => {
@@ -13,8 +13,14 @@ export const EditCardModal = () => {
         {id: 2, value: 'Image'},
     ]
 
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+
     return (
-        <BasicModal>
+        <BasicModal open={open} handleClose={handleClose}>
             <div className={s.firstBlock}>
                 <span>Edit card</span>
                 <button>
@@ -24,9 +30,9 @@ export const EditCardModal = () => {
 
             <div>
                 <span>Choose a question format</span>
-            <SuperSelect
-                options={TextOrImg}
-            />
+                <SuperSelect
+                    options={TextOrImg}
+                />
 
             </div>
 

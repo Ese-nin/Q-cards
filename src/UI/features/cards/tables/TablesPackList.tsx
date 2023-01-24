@@ -6,11 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {deleteCardPackTC, getCardsPackTC, renameCardPackTC} from 'bll/reducers/packs-reducer';
+import {getCardsPackTC} from 'bll/reducers/packs-reducer';
 import {useAppDispatch, useAppSelector} from 'bll/store';
 import SchoolIcon from '@mui/icons-material/School';
-import BorderColorIcon from '@mui/icons-material/BorderColor';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import s from './TablesPackList.module.css';
 import {useNavigate, useSearchParams} from 'react-router-dom';
 import {getCardsPageTC} from 'bll/reducers/cards-reducer';
@@ -44,17 +42,6 @@ export default function TablesPackList() {
         navigate(PATH.PACK_PAGE + '?cardsPack_id=' + cardsPack_id);
     };
 
-    const renamePack = (cardPackID: string, newNameCardPack: string, user_id: string) => {
-        user_id === meID
-            ? dispatch(renameCardPackTC(cardPackID, newNameCardPack, user_id))
-            : dispatch(renameCardPackTC(cardPackID, newNameCardPack));
-    };
-
-    const removePack = (pack_id: string, user_id: string) => {
-        user_id === meID
-            ? dispatch(deleteCardPackTC(pack_id, user_id))
-            : dispatch(deleteCardPackTC(pack_id));
-    };
 
     const onChangeSort = (newSort: string) => {
         setSort(newSort);
@@ -113,19 +100,11 @@ export default function TablesPackList() {
                                 </SuperButton>
                                 {meID === row.user_id && (
                                     <div>
+                                        <EditPackModal name={row.name} id={row._id} userId={row.user_id}/>
                                         <SuperButton
-                                            // onClick={() => renamePack(row._id, 'Updated name', row.user_id)}
                                             className={s.button_style}
                                         >
-                                            <BorderColorIcon className={s.icon_style}/>
-                                            <EditPackModal name={row.name} id={row._id} userId={row.user_id}/>
-                                        </SuperButton>
-                                        <SuperButton
-                                            // onClick={() => removePack(row._id, row.user_id)}
-                                            className={s.button_style}
-                                        >
-                                            {/*<DeletePackModal/>*/}
-                                            <DeleteOutlineIcon className={s.icon_style}/>
+                                            <DeletePackModal name={row.name} id={row._id} userId={row.user_id}/>
                                         </SuperButton>
                                     </div>
                                 )}

@@ -3,10 +3,11 @@ import s from './Modals.module.css'
 import TextField from '@mui/material/TextField';
 import {Button} from '@mui/material';
 import * as React from 'react';
-import {getCardsPackTC, renameCardPackTC} from '../../bll/reducers/packs-reducer';
+import {useEffect} from 'react';
+import {renameCardPackTC} from '../../bll/reducers/packs-reducer';
 import {useAppDispatch, useAppSelector} from '../../bll/store';
 import {user_idSelector} from '../../bll/selectors';
-import {useEffect} from 'react';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 
 type PropsType = {
@@ -41,9 +42,16 @@ export const EditPackModal = (props: PropsType) => {
             ? dispatch(renameCardPackTC(PackId, namePack, UserId))
             : dispatch(renameCardPackTC(PackId, namePack));
     };
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    return (
-        <BasicModal>
+    return (<>
+            <Button onClick={handleOpen} variant="contained" className={s.button_style}>
+                <BorderColorIcon className={s.icon_style}/>
+            </Button>
+
+        <BasicModal open={open} handleClose={handleClose}>
             <div className={s.firstBlock}>
                 <span>{Title}</span>
             </div>
@@ -54,14 +62,14 @@ export const EditPackModal = (props: PropsType) => {
                            sx={{width: '347px'}}
                            onChange={handleChangeInput}
                            value={namePack}
-                           autoFocus={true}
+                          autoFocus={true}
                 />
             </div>
             <div className={s.saveBlock}>
-                <Button variant="outlined">Cancel</Button>
+                <Button variant="outlined" onClick={handleClose}>Cancel</Button>
                 <Button variant="contained" onClick={() => renamePack(PackId, namePack, UserId)}>Save</Button>
             </div>
         </BasicModal>
-
+        </>
     )
 }
