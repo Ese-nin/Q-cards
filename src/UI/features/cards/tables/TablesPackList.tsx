@@ -33,6 +33,7 @@ export default function TablesPackList() {
         dispatch(getCardsPackTC({}));
     }, []);
 
+
     const learnCards = () => {
         alert('функция в разработке');
     };
