@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+# Чудо чудное а не верстка
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+использовали все широты и вершины
 
-## Available Scripts
+## Чилдрен тоже присутствует
 
-In the project directory, you can run:
+это было не просто
 
 ### `yarn start`
 
