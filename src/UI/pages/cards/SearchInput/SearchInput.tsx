@@ -8,8 +8,8 @@ import React, {
 import { SuperInputText } from "UI/common";
 import { useDebounce } from "utils/hooks/useDebounce";
 import { useAppDispatch } from "bll/store";
-import { getCardsPackTC } from "../../../../bll/reducers/packs-reducer";
-import { getCardsPageTC } from "../../../../bll/reducers/cards-reducer";
+import { getCardsPackTC } from "bll/reducers/packs-reducer";
+import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { useSearchParams } from "react-router-dom";
 
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -36,14 +36,14 @@ export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const [searchParams]: [URLSearchParams, Function] = useSearchParams();
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const searchParamsObject = Object.fromEntries(searchParams);
   const cardsPack_id = searchParamsObject.cardsPack_id;
 
   const [find, setFind] = useState("");
   const [isFirstLoad, setFirstLoad] = useState(true);
 
-  const searchDebouncedValue = useDebounce<string>(find, 600);
+  const searchDebouncedValue = useDebounce<string>(find, 800);
 
   const onChangeHandler = (value: string) => {
     setFind(value);
@@ -53,8 +53,10 @@ export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
     if (!isFirstLoad) {
       if (type === "packs") {
         dispatch(getCardsPackTC({ ...searchParamsObject, packName: find }));
+        setSearchParams({ ...searchParamsObject, packName: find });
       } else if (type === "cards") {
         cardsPack_id && dispatch(getCardsPageTC({ cardsPack_id, cardQuestion: find }));
+        setSearchParams({ ...searchParamsObject, cardQuestion: find });
       }
     }
 

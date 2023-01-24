@@ -22,7 +22,7 @@ export const RangeSlider: React.FC<SliderProps> = () => {
   const [isFirstLoad, setFirstLoad] = useState(true);
   const [isSecondLoad, setSecondLoad] = useState(true);
 
-  const sliderDebouncedValue = useDebounce<number[]>(values, 600);
+  const sliderDebouncedValue = useDebounce<number[]>(values, 800);
 
   useEffect(() => {
     setValues([minCardsCount, maxCardsCount]);
