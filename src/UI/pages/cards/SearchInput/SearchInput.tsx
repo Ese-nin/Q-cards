@@ -24,13 +24,13 @@ export type SuperDebouncedInputPropsType = Omit<DefaultInputPropsType, "type"> &
   spanClassName?: string;
 } & {
   onDebouncedChange?: (value: string) => void;
-  type: "packs" | "cards";
+  from: "packs" | "cards";
 };
 
 export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
   onChangeText,
   onDebouncedChange,
-  type,
+  from,
 
   ...restProps
 }) => {
@@ -51,10 +51,10 @@ export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
 
   useEffect(() => {
     if (!isFirstLoad) {
-      if (type === "packs") {
+      if (from === "packs") {
         dispatch(getCardsPackTC({ ...searchParamsObject, packName: find }));
         setSearchParams({ ...searchParamsObject, packName: find });
-      } else if (type === "cards") {
+      } else if (from === "cards") {
         cardsPack_id && dispatch(getCardsPageTC({ cardsPack_id, cardQuestion: find }));
         setSearchParams({ ...searchParamsObject, cardQuestion: find });
       }

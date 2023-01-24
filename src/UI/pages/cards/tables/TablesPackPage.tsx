@@ -16,7 +16,9 @@ import s from "./TablesPackList.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { PATH } from "bll/Path";
-import { SuperButton, SuperSort } from "UI/common";
+import { SuperButton } from "UI/common";
+import iconDown from "assets/icon/iconDown.png";
+import iconUp from "assets/icon/iconUp.png";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
@@ -37,7 +39,10 @@ export default function TablesPackPage() {
     dispatch(deleteCardTC(cardsPack_id, card_id));
   };
 
-  const onChangeSort = (newSort: string) => {
+  const sortIcon = sort[0] === "0" ? iconDown : iconUp;
+
+  const onChangeSort = (column: string) => {
+    const newSort = sort === "1" + column ? "0" + column : "1" + column;
     setSort(newSort);
 
     dispatch(getCardsPageTC({ cardsPack_id, sortCards: newSort, page: 1 }));
@@ -57,8 +62,10 @@ export default function TablesPackPage() {
             <TableCell>Question</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">
-              Last Updated
-              <SuperSort sort={sort} value={"updated"} onChange={onChangeSort} />
+              <button className={s.btnNamePagePack} onClick={() => onChangeSort("updated")}>
+                Last Updated
+                {sort.slice(1) === "updated" && <img src={sortIcon} alt="sort icon" />}
+              </button>
             </TableCell>
             <TableCell align="left">Grade</TableCell>
             {meID === packUserID && <TableCell align="left">Actions</TableCell>}
@@ -81,6 +88,7 @@ export default function TablesPackPage() {
               <TableCell align="left">
                 <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
               </TableCell>
+
               {meID === row.user_id && (
                 <TableCell align="left">
                   <div

@@ -63,7 +63,7 @@ export const PackList = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchField}>
-          <SearchInput type={"packs"} />
+          <SearchInput from={"packs"} />
         </div>
         <div>
           <ChoiceCards userID={userID} />

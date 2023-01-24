@@ -87,7 +87,7 @@ export const PackPage = () => {
       </div>
       <div className={s.formLine}>
         <div className={s.searchFieldCards}>
-          <SearchInput type={"cards"} />
+          <SearchInput from={"cards"} />
         </div>
         <div>
           {meID === packUserID && (
