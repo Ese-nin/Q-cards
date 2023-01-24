@@ -3,9 +3,17 @@ import s from './Modals.module.css'
 import TextField from '@mui/material/TextField';
 import {Button, Checkbox} from '@mui/material';
 import * as React from 'react';
+import {addNewCardPackTC} from '../../bll/reducers/packs-reducer';
+import {useAppDispatch, useAppSelector} from '../../bll/store';
+import {useSearchParams} from 'react-router-dom';
+import {user_idSelector} from '../../bll/selectors';
 
 
 export const AddNewPackModal = () => {
+    const dispatch = useAppDispatch();
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+    const params = Object.fromEntries(searchParams);
+    const userID = useAppSelector(user_idSelector);
 
     const Title = 'Add new pack'
 
@@ -22,7 +30,11 @@ export const AddNewPackModal = () => {
         setChecked(event.target.checked);
     };
 
-
+    const addNewCardsPack = (namePack: string, checked: boolean) => {
+        params.user_id
+            ? dispatch(addNewCardPackTC({name: namePack, privatePack: checked}, userID))
+            : dispatch(addNewCardPackTC({name: namePack, privatePack: checked}));
+    };
 
 
     return (
@@ -36,7 +48,7 @@ export const AddNewPackModal = () => {
                     label="Name pack"
                     variant="standard"
                     sx={{width: '347px'}}
-                    onChange={handleChangeCheckbox}
+                    onChange={handleChangeInput}
                 />
             </div>
             <div className={s.checkBoxBlock}>
@@ -49,7 +61,9 @@ export const AddNewPackModal = () => {
             </div>
             <div className={s.saveBlock}>
                 <Button variant="outlined">Cancel</Button>
-                <Button variant="contained">Save</Button>
+                <Button variant="contained"
+                        onClick={() => addNewCardsPack(namePack, checked)}
+                >Save</Button>
             </div>
         </BasicModal>
     )
