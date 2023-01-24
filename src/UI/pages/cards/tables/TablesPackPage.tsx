@@ -67,7 +67,12 @@ export default function TablesPackPage() {
                 {sort.slice(1) === "updated" && <img src={sortIcon} alt="sort icon" />}
               </button>
             </TableCell>
-            <TableCell align="left">Grade</TableCell>
+            <TableCell align="left">
+              <button className={s.btnNamePagePack} onClick={() => onChangeSort("grade")}>
+                Grade
+                {sort.slice(1) === "grade" && <img src={sortIcon} alt="sort icon" />}
+              </button>
+            </TableCell>
             {meID === packUserID && <TableCell align="left">Actions</TableCell>}
           </TableRow>
         </TableHead>
