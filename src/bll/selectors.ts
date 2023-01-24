@@ -14,20 +14,20 @@ export const errorSelector = (state: AppRootStateType) => state.app.error;
 export const isInitializedSelector = (state: AppRootStateType) => state.app.isInitialized;
 
 // packs-reducer
-export const cardPacksSelector = (state: AppRootStateType) => state.cards.cardPacks;
-export const pagePacksSelector = (state: AppRootStateType) => state.cards.page;
-export const pageCountPacksSelector = (state: AppRootStateType) => state.cards.pageCount;
-export const minCardsCountSelector = (state: AppRootStateType) => state.cards.minCardsCount;
-export const maxCardsCountSelector = (state: AppRootStateType) => state.cards.maxCardsCount;
+export const cardPacksSelector = (state: AppRootStateType) => state.packs.cardPacks;
+export const pagePacksSelector = (state: AppRootStateType) => state.packs.page;
+export const pageCountPacksSelector = (state: AppRootStateType) => state.packs.pageCount;
+export const minCardsCountSelector = (state: AppRootStateType) => state.packs.minCardsCount;
+export const maxCardsCountSelector = (state: AppRootStateType) => state.packs.maxCardsCount;
 export const cardPacksTotalCountSelector = (state: AppRootStateType) =>
-  state.cards.cardPacksTotalCount;
+  state.packs.cardPacksTotalCount;
 
 // cards-reducer
-export const cardsSelector = (state: AppRootStateType) => state.cardPage.cards;
-export const cardsTotalCountSelector = (state: AppRootStateType) => state.cardPage.cardsTotalCount;
-export const pageCardsSelector = (state: AppRootStateType) => state.cardPage.page;
-export const pageCountCardsSelector = (state: AppRootStateType) => state.cardPage.pageCount;
-export const packNameSelector = (state: AppRootStateType) => state.cardPage.packName;
-export const minGradeSelector = (state: AppRootStateType) => state.cardPage.minGrade;
-export const maxGradeSelector = (state: AppRootStateType) => state.cardPage.maxGrade;
-export const packUserIdSelector = (state: AppRootStateType) => state.cardPage.packUserId;
+export const cardsSelector = (state: AppRootStateType) => state.cards.cards;
+export const cardsTotalCountSelector = (state: AppRootStateType) => state.cards.cardsTotalCount;
+export const pageCardsSelector = (state: AppRootStateType) => state.cards.page;
+export const pageCountCardsSelector = (state: AppRootStateType) => state.cards.pageCount;
+export const packNameSelector = (state: AppRootStateType) => state.cards.packName;
+export const minGradeSelector = (state: AppRootStateType) => state.cards.minGrade;
+export const maxGradeSelector = (state: AppRootStateType) => state.cards.maxGrade;
+export const packUserIdSelector = (state: AppRootStateType) => state.cards.packUserId;
