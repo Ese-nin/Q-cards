@@ -1,37 +1,70 @@
 import {BasicModal} from './BasicModals';
-import {SuperCheckbox} from '../../UI/common';
-import closeBtn from '../../assets/icon/closeBtn.svg'
 import s from './Modals.module.css'
 import TextField from '@mui/material/TextField';
-import {Button} from '@mui/material';
+import {Button, Checkbox} from '@mui/material';
+import * as React from 'react';
+import {addNewCardPackTC} from '../../bll/reducers/packs-reducer';
+import {useAppDispatch, useAppSelector} from '../../bll/store';
+import {useSearchParams} from 'react-router-dom';
+import {user_idSelector} from '../../bll/selectors';
+
 
 export const AddNewPackModal = () => {
+    const dispatch = useAppDispatch();
+    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+    const params = Object.fromEntries(searchParams);
+    const userID = useAppSelector(user_idSelector);
 
+    const Title = 'Add new pack'
+
+// для инпута
+    const [namePack, setNamePack] = React.useState<string>('')
+    const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNamePack(e.target.value)
+    }
+
+// для чекбокса
+    const [checked, setChecked] = React.useState(false);
+
+    const handleChangeCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+    };
+
+    const addNewCardsPack = (namePack: string, checked: boolean) => {
+        params.user_id
+            ? dispatch(addNewCardPackTC({name: namePack, privatePack: checked}, userID))
+            : dispatch(addNewCardPackTC({name: namePack, privatePack: checked}));
+    };
 
 
     return (
         <BasicModal>
             <div className={s.firstBlock}>
-                <span>Add new pack</span>
-                <button >
-                    <img src={closeBtn} alt="close"/>
-                </button>
+                <span>{Title}</span>
             </div>
-            {/*<hr/>*/}
             <div>
-                <TextField id="standard-basic" label="Name pack" variant="standard" sx={{width: '347px'}}/>
+                <TextField
+                    id="standard-basic"
+                    label="Name pack"
+                    variant="standard"
+                    sx={{width: '347px'}}
+                    onChange={handleChangeInput}
+                />
             </div>
             <div className={s.checkBoxBlock}>
-                <SuperCheckbox/>
+                <Checkbox
+                    checked={checked}
+                    onChange={handleChangeCheckbox}
+                    inputProps={{'aria-label': 'controlled'}}
+                />
                 <span>Private pack</span>
             </div>
             <div className={s.saveBlock}>
                 <Button variant="outlined">Cancel</Button>
-                <Button variant="contained">Save</Button>
+                <Button variant="contained"
+                        onClick={() => addNewCardsPack(namePack, checked)}
+                >Save</Button>
             </div>
-
-
         </BasicModal>
-
     )
 }
