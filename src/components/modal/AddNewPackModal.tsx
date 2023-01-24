@@ -63,7 +63,9 @@ export const AddNewPackModal = () => {
                 <Button variant="outlined">Cancel</Button>
                 <Button variant="contained"
                         onClick={() => addNewCardsPack(namePack, checked)}
-                >Save</Button>
+                >
+                    Save
+                </Button>
             </div>
         </BasicModal>
     )

@@ -166,6 +166,7 @@ export const renameCardPackTC =
   (pack_id: string, newName: string, user_id?: string): AppThunk =>
   (dispatch) => {
     dispatch(setAppStatusAC("loading"));
+      console.log(newName)
     packsAPI
       .renameCardPack(pack_id, newName)
       .then((res) => {

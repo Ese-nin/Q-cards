@@ -18,6 +18,7 @@ import {PATH} from 'bll/Path';
 import {cardPacksSelector, user_idSelector} from 'bll/selectors';
 import {SuperButton, SuperSort} from 'UI/common';
 import {DeletePackModal} from '../../../../components/modal/DeletePackModal';
+import {EditPackModal} from '../../../../components/modal/EditPackModal';
 
 export default function TablesPackList() {
     const navigate = useNavigate();
@@ -113,10 +114,11 @@ export default function TablesPackList() {
                                 {meID === row.user_id && (
                                     <div>
                                         <SuperButton
-                                            onClick={() => renamePack(row._id, 'Updated name', row.user_id)}
+                                            // onClick={() => renamePack(row._id, 'Updated name', row.user_id)}
                                             className={s.button_style}
                                         >
                                             <BorderColorIcon className={s.icon_style}/>
+                                            <EditPackModal name={row.name} id={row._id} userId={row.user_id}/>
                                         </SuperButton>
                                         <SuperButton
                                             // onClick={() => removePack(row._id, row.user_id)}
