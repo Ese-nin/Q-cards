@@ -1,5 +1,4 @@
 export { Loading } from "./loading/loading";
-export { SuperSort } from "./SuperSort/SuperSort";
 export { Header } from "./header/header";
 export { ErrorAlert } from "./ErrorAlert/ErrorAlert";
 export { EditableSpan } from "./EditableSpan/EditableSpan";
