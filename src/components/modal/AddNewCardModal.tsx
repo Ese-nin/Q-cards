@@ -1,6 +1,5 @@
 import {BasicModal} from './BasicModals';
 import {SuperSelect} from '../../UI/common';
-import closeBtn from '../../assets/icon/closeBtn.svg'
 import s from './Modals.module.css'
 import TextField from '@mui/material/TextField';
 import {Button} from '@mui/material';
@@ -8,6 +7,10 @@ import * as React from 'react';
 
 
 export const AddNewCardModal = () => {
+
+    const Title = 'Edit card'
+
+
 
     const TextOrImg = [
         {id: 1, value: 'Text'},
@@ -19,21 +22,15 @@ export const AddNewCardModal = () => {
     const handleClose = () => setOpen(false);
 
 
-
     return (
         <>
             <Button onClick={handleOpen} variant="contained">
-                Add new card
+                {Title}
             </Button>
-
-
 
             <BasicModal open={open} handleClose={handleClose}>
                 <div className={s.firstBlock}>
-                    <span>Edit card</span>
-                    <button>
-                        <img src={closeBtn} alt="close"/>
-                    </button>
+                    <span>{Title}</span>
                 </div>
 
                 <div>
@@ -41,7 +38,6 @@ export const AddNewCardModal = () => {
                     <SuperSelect
                         options={TextOrImg}
                     />
-
                 </div>
 
                 <div>
@@ -50,7 +46,6 @@ export const AddNewCardModal = () => {
                 </div>
             </BasicModal>
         </>
-
 
 
     )
