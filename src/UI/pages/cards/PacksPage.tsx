@@ -5,7 +5,7 @@ import s from "./packList.module.css";
 import { deleteCardPackTC, renameCardPackTC } from "bll/reducers/packs-reducer";
 import TablesPackPage from "./tables/TablesPackPage";
 import { PATH } from "bll/Path";
-import { addNewCardTC, getCardsPageTC } from "bll/reducers/cards-reducer";
+import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { SearchInput } from "./SearchInput/SearchInput";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -31,19 +31,13 @@ export const PackPage = () => {
   const packName = useAppSelector(packNameSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
-
   const navigate = useNavigate();
-
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
   const BackToPackList = () => {
     navigate(PATH.PACK_LIST);
-  };
-  const addNewCard = (question: string) => {
-    dispatch(addNewCardTC({ cardsPack_id, question }));
-    setSearchParams({ ...params, cardsPack_id, cardQuestion: question });
   };
 
   const onChangePagination = (page: number, pageCount: number) => {
@@ -72,41 +66,42 @@ export const PackPage = () => {
   };
 
   return (
-    <div className={s.page}>
-      <div className={s.backBlock} onClick={BackToPackList}>
-        <img src={back} alt="back" />
-        <span>Back to Packs List</span>
-      </div>
-      <div className={s.addNewPackLine}>
-        <div className={s.nameAndBurger}>
-          <h2>{packName}</h2>
-          <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
+    <>
+      <div className={s.page}>
+        <div className={s.backBlock} onClick={BackToPackList}>
+          <img src={back} alt="back" />
+          <span>Back to Packs List</span>
         </div>
-        {meID !== packUserID && (
-          <Button variant="contained" onClick={buttonClickHandler}>
-            Learn to pack
-          </Button>
-        )}
-        {meID === packUserID && <AddNewCardModal cardsPackId={cardsPack_id} />}
-      </div>
-      <div className={s.formLine}>
-        <div className={s.searchFieldCards}>
-          <SearchInput from={"cards"} />
+        <div className={s.addNewPackLine}>
+          <div className={s.nameAndBurger}>
+            <h2>{packName}</h2>
+            <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
+          </div>
+
+          {meID !== packUserID && (
+            <Button variant="contained" onClick={buttonClickHandler}>
+              Learn to pack
+            </Button>
+          )}
+          {meID === packUserID && <AddNewCardModal cardsPackId={cardsPack_id} />}
+        </div>
+        <div className={s.formLine}>
+          <div className={s.searchFieldCards}>
+            <SearchInput from={"cards"} />
+          </div>
+        </div>
+        <div className={s.tableBlock}>
+          <TablesPackPage />
+        </div>
+        <div className={s.pagination}>
+          <SuperPagination
+            page={page}
+            itemsCountForPage={pageCount}
+            totalCount={cardsTotalCount}
+            onChange={onChangePagination}
+          />
         </div>
       </div>
-
-      <div className={s.tableBlock}>
-        <TablesPackPage />
-      </div>
-
-      <div className={s.pagination}>
-        <SuperPagination
-          page={page}
-          itemsCountForPage={pageCount}
-          totalCount={cardsTotalCount}
-          onChange={onChangePagination}
-        />
-      </div>
-    </div>
+    </>
   );
 };

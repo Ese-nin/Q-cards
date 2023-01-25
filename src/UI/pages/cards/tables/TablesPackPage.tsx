@@ -16,14 +16,13 @@ import {
   user_idSelector,
 } from "bll/selectors";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { deleteCardTC, getCardsPageTC, renameCardQuestionTC } from "bll/reducers/cards-reducer";
+import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import s from "./TablesPackList.module.css";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { PATH } from "bll/Path";
-import { SuperButton } from "UI/common";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
+import { EditCardModal } from "../../../../components/modal/EditCardModal";
+import { DeleteCardModal } from "../../../../components/modal/DeleteCardModal";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
@@ -42,13 +41,13 @@ export default function TablesPackPage() {
     dispatch(getCardsPageTC({ cardsPack_id }));
   }, []);
 
-  const changeCardQuestion = (card_id: string, newQuestion: string) => {
-    dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
-  };
+  // const changeCardQuestion = (card_id: string, newQuestion: string) => {
+  //   dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
+  // };
 
-  const removeCard = (card_id: string) => {
-    dispatch(deleteCardTC(cardsPack_id, card_id));
-  };
+  // const removeCard = (card_id: string) => {
+  //   dispatch(deleteCardTC(cardsPack_id, card_id));
+  // };
 
   const sortIcon = sort[0] === "0" ? iconDown : iconUp;
 
@@ -116,15 +115,13 @@ export default function TablesPackPage() {
                       marginBottom: "5px",
                     }}
                   >
-                    <SuperButton
-                      onClick={() => changeCardQuestion(row._id, "Updated question")}
-                      className={s.button_style}
-                    >
-                      <BorderColorIcon className={s.icon_style} />
-                    </SuperButton>
-                    <SuperButton onClick={() => removeCard(row._id)} className={s.button_style}>
-                      <DeleteOutlineIcon className={s.icon_style} />
-                    </SuperButton>
+                    <EditCardModal
+                      cardId={row._id}
+                      question={row.question}
+                      answer={row.answer}
+                      cardsPackId={cardsPack_id}
+                    />
+                    <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
                   </div>
                 </TableCell>
               )}

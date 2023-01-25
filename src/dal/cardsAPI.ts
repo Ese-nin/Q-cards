@@ -82,6 +82,7 @@ export type AddNewCardResponseType = {
 export type RenameCardQuestionType = {
   _id: string;
   question?: string;
+  answer?: string;
 };
 
 export type Updated_DeletedCardType = CardType & {
