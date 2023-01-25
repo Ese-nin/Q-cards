@@ -16,6 +16,7 @@ import { PackPage } from "./pages/cards/PacksPage";
 import { PATH } from "bll/Path";
 import { PackPageEmpty } from "./pages/cards/PacksPageEmpty";
 import { appStatusSelector, isInitializedSelector } from "../bll/selectors";
+import { Learn } from "./pages/learn/learn";
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -58,6 +59,7 @@ export const App = () => {
         <Route path={PATH.PACK_LIST} element={<PackList />} />
         <Route path={PATH.PACK_PAGE} element={<PackPage />} />
         <Route path={PATH.PACK_PAGE_EMPTY} element={<PackPageEmpty />} />
+        <Route path={PATH.LEARN_PAGE} element={<Learn />} />
         <Route path={"*"} element={<Navigate to="/404" />} />
       </Routes>
     </div>

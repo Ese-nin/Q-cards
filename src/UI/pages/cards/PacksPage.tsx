@@ -46,7 +46,7 @@ export const PackPage = () => {
   };
 
   const buttonClickHandler = () => {
-    // some handle
+    return navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
   if (!isLoggedIn) {
