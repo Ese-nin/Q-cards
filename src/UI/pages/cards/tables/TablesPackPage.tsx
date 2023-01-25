@@ -61,6 +61,8 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
+  console.log(cards);
+
   if (!cards.length && cardsStatus !== "loading") {
     navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
