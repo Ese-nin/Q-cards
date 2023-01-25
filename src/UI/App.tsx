@@ -58,6 +58,7 @@ export const App = () => {
         <Route path={PATH.PACK_LIST} element={<PackList />} />
         <Route path={PATH.PACK_PAGE} element={<PackPage />} />
         <Route path={PATH.PACK_PAGE_EMPTY} element={<PackPageEmpty />} />
+        <Route path={PATH.LEARN_PAGE} element={<Learn />} />
         <Route path={"*"} element={<Navigate to="/404" />} />
       </Routes>
     </div>
