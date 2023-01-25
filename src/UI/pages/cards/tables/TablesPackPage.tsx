@@ -33,10 +33,10 @@ export default function TablesPackPage() {
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
 
-    const [sort, setSort] = useState('');
-    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
-    const params = Object.fromEntries(searchParams);
-    const cardsPack_id = params.cardsPack_id;
+  const [sort, setSort] = useState("");
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
+  const cardsPack_id = params.cardsPack_id;
 
   useEffect(() => {
     dispatch(getCardsPageTC({ cardsPack_id }));
@@ -61,10 +61,8 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
-    console.log(cards);
-    if (cards.length < 1) {
-        return <Navigate to={PATH.PACK_PAGE_EMPTY + '?cardsPack_id=' + cardsPack_id}/>;
-    }
+  console.log(cards);
+
   if (!cards.length && cardsStatus !== "loading") {
     navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
