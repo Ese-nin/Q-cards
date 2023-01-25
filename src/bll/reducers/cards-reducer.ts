@@ -10,6 +10,7 @@ import {
   RenameCardQuestionType,
 } from "dal/cardsAPI";
 import { AppThunk } from "../store";
+import { learnAPI } from "../../dal/learnAPI";
 
 const initialState = {
   cards: [] as CardType[],
@@ -116,6 +117,17 @@ export const renameCardQuestionTC =
         console.log("сломалось");
         handleServerNetworkError(err, dispatch);
       });
+  };
+
+export const putAGradeTC =
+  (grade: number, card_id: string): AppThunk =>
+  (dispatch) => {
+    dispatch(setAppStatusAC("loading"));
+    learnAPI.putAGrade(grade, card_id).then((res) => {
+      /*dispatch(putAGradeAC(res.data));*/
+      console.log(res.data);
+      dispatch(setAppStatusAC("succeeded"));
+    });
   };
 
 // types

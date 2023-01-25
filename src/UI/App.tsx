@@ -16,6 +16,7 @@ import { PackPage } from "./pages/cards/PacksPage";
 import { PATH } from "bll/Path";
 import { PackPageEmpty } from "./pages/cards/PacksPageEmpty";
 import { appStatusSelector, isInitializedSelector } from "../bll/selectors";
+import { Learn } from "./pages/learn/learn";
 
 export const App = () => {
   const dispatch = useAppDispatch();

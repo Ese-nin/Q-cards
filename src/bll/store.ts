@@ -5,23 +5,16 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppActionsType, appReducer } from "./reducers/app-reducer";
 import { CardsActionType, packsReducer } from "./reducers/packs-reducer";
 import { cardsReducer, CardsPageActionType } from "./reducers/cards-reducer";
-import { LearnActionType /*learnReducer*/ } from "./reducers/learn-reducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   app: appReducer,
   packs: packsReducer,
   cards: cardsReducer,
-  /*learn: learnReducer*/
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>;
-type RootActionsType =
-  | AuthActionsType
-  | AppActionsType
-  | CardsActionType
-  | CardsPageActionType
-  | LearnActionType;
+type RootActionsType = AuthActionsType | AppActionsType | CardsActionType | CardsPageActionType;
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, RootActionsType>;

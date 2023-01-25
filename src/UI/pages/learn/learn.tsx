@@ -1,13 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { SuperButton, SuperCheckbox } from "../../common";
-import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
+import React, { useEffect, useState } from "react";
+import { SuperButton } from "../../common";
 import s from "./learn.module.css";
 import { CardType } from "../../../dal/cardsAPI";
-import { AppRootStateType, useAppDispatch, useAppSelector } from "../../../bll/store";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { getCardsPageTC } from "../../../bll/reducers/cards-reducer";
-import { putAGradeTC } from "../../../bll/reducers/learn-reducer";
-import { cardPacksSelector } from "../../../bll/selectors";
+import { useAppDispatch, useAppSelector } from "../../../bll/store";
+import { useSearchParams } from "react-router-dom";
+import { getCardsPageTC, putAGradeTC } from "../../../bll/reducers/cards-reducer";
+import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
 
 type LearnPropsType = {
   namePack?: string;
@@ -37,23 +35,13 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
   const [valueRadio, onChangeOption] = useState(grades[0]);
   const [grade, setGrade] = useState<number>(0);
-  const { cards } = useAppSelector(cardPacksSelector);
+  const { cards } = useAppSelector((state) => state.cards);
   const [first, setFirst] = useState<boolean>(true);
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
-  const [card, setCard] = useState<CardType>({
-    answer: "",
-    question: "",
-    cardsPack_id: "",
-    grade: 0,
-    shots: 1,
-    user_id: "",
-    created: "",
-    updated: "",
-    _id: "",
-  });
+  const [card, setCard] = useState<CardType>({} as CardType);
 
   console.log(card);
 
