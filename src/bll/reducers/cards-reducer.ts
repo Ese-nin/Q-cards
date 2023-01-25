@@ -1,119 +1,68 @@
-import { setAppStatusAC } from "./app-reducer";
+import { AppStatusType, setAppStatusAC } from "./app-reducer";
 import { AxiosError } from "axios";
 import { handleServerNetworkError } from "utils/error-utils";
 import {
   AddNewCardsType,
   cardsAPI,
   CardType,
+  GetCardResponseType,
   GetCardsParamsType,
   RenameCardQuestionType,
 } from "dal/cardsAPI";
 import { AppThunk } from "../store";
 
 const initialState = {
-  cards: [
-    {
-      answer: "",
-      question: "",
-      cardsPack_id: "",
-      grade: 0,
-      shots: 1,
-      user_id: "",
-      created: "",
-      updated: "",
-      _id: "",
-    },
-  ],
+  cards: [] as CardType[],
   cardsTotalCount: 3,
   maxGrade: 5,
   minGrade: 2,
-  page: 1, // выбранная страница
-  pageCount: 1, // количество элементов на странице
+  page: 1,
+  pageCount: 1,
   packUserId: "",
   packName: "",
+  entityStatus: "idle" as AppStatusType,
 };
 
-export type InitialCardsStateType = {
-  cards: Array<CardType>;
-  cardsTotalCount: number;
-  maxGrade: number;
-  minGrade: number;
-  page: number; // выбранная страница
-  pageCount: number; // количество элементов на странице
-  packUserId: string;
-  packName: string;
-};
-
-export type CardsPageActionType = GetCardsPackACType;
+export type InitialCardsStateType = typeof initialState;
 
 export const cardsReducer = (
   state: InitialCardsStateType = initialState,
   action: CardsPageActionType
 ): InitialCardsStateType => {
   switch (action.type) {
-    case "GET_CARDS_PAGE":
+    case "CARDS/GET_CARDS_PAGE":
       return {
         ...state,
-        ...action,
+        ...action.data,
       };
+    case "CARDS/SET_STATUS":
+      return { ...state, entityStatus: action.entityStatus };
     default:
       return state;
   }
 };
 
-export const getCardsPageAC = (
-  cards: Array<CardType>,
-  cardsTotalCount: number, // количество колод
-  maxGrade: number,
-  minGrade: number,
-  page: number, // выбранная страница
-  pageCount: number,
-  packUserId: string,
-  packName: string
-) =>
-  ({
-    type: "GET_CARDS_PAGE",
-    cards,
-    cardsTotalCount,
-    maxGrade,
-    minGrade,
-    page,
-    pageCount,
-    packUserId,
-    packName,
-  } as const);
+// actions
 
-// cardAnswer: string = 'english ',
-// cardQuestion: string = 'english ',
-// cardsPack_id: string = '634dc6dd4e2e6c50ec5a1369', // тестовый айди 3ей карточки
-// min: number = 1,  // для кол-ва отображаемых паков
-// max: number = 4, // для кол-ва отображаемых паков
-// sortCards: string = '0grade', // для сортировки по возрастанию или убыванию
-// page: number = 1, // какая страница открыта
-// pageCount: number = 4, //кол-во паков на страницу
+export const getCardsPageAC = (data: GetCardResponseType) =>
+  ({ type: "CARDS/GET_CARDS_PAGE", data } as const);
 
-export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>;
+export const setCardsStatusAC = (newStatus: AppStatusType) =>
+  ({ type: "CARDS/SET_STATUS", entityStatus: newStatus } as const);
+
+// thunks
+
 export const getCardsPageTC =
   (params: GetCardsParamsType): AppThunk =>
   (dispatch) => {
     dispatch(setAppStatusAC("loading"));
+    dispatch(setCardsStatusAC("loading"));
     cardsAPI
       .getCardsPage(params)
       .then((res) => {
-        const data = res.data;
-        dispatch(
-          getCardsPageAC(
-            data.cards,
-            data.cardsTotalCount,
-            data.maxGrade,
-            data.minGrade,
-            data.page,
-            data.pageCount,
-            data.packUserId,
-            data.packName
-          )
-        );
+        dispatch(getCardsPageAC(res.data));
         dispatch(setAppStatusAC("succeeded"));
+        dispatch(setCardsStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
         console.log("сломалось");
@@ -168,3 +117,10 @@ export const renameCardQuestionTC =
         handleServerNetworkError(err, dispatch);
       });
   };
+
+// types
+
+export type CardsPageActionType = GetCardsPackACType | setCardsStatusACType;
+
+export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>;
+export type setCardsStatusACType = ReturnType<typeof setCardsStatusAC>;

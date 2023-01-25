@@ -1,48 +1,76 @@
 .firstBlock {
-  /*width: 347px;*/
-  height: 60px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid gray;
+    /*width: 347px;*/
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+
 }
 
 .firstBlock span {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  display: flex;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
 }
 
-.firstBlock button {
-  padding: 0;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
+.closeButton {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    position: absolute;
+    top: 45px;
+    left: 357px;
 }
 
 .inputBlock {
-  display: flex;
-  /*margin-top: 35px;*/
-  /*margin-bottom: 25px;*/
+    display: flex;
+    /*margin-top: 35px;*/
+    /*margin-bottom: 25px;*/
 }
 
 .checkBoxBlock {
-  display: flex;
+    display: flex;
+    align-items: center;
 }
 
 .checkBoxBlock span {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 0.01em;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0.01em;
 }
 
 .saveBlock {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button_style {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    margin: 5px;
+    min-width: 20px;
+    cursor: pointer;
+}
+
+.icon_style {
+    display: flex;
+}
+
+.button_style:disabled {
+    background: darkgrey;
+}
+
+.button_style:hover {
+    background: cadetblue;
 }

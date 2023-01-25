@@ -16,7 +16,7 @@ export const handleServerNetworkError = (
 };
 
 type ErrorUtilsDispatchType = Dispatch<AppActionsType>;
-// //
+//
 // import { setAppErrorAC, SetAppErrorActionType } from '../../app/app-reducer';
 // import { Dispatch } from 'redux';
 // import axios, { AxiosError } from 'axios';

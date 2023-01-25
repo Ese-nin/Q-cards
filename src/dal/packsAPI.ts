@@ -1,25 +1,19 @@
-import { instance } from "./authAPI";
-import { AxiosResponse } from "axios";
+import { instance } from "./instance";
 
 export const packsAPI = {
   getCardsPack(params: GetPacksParamsType) {
-    return instance.get<"", AxiosResponse<GetCardsPackResponseType>>("cards/pack", { params });
+    return instance.get<GetCardsPackResponseType>("cards/pack", { params });
   },
 
   addNewCardPack(params: AddNewCardPackType) {
     const data = {
-      cardsPack: {
-        params,
-      },
+      cardsPack: params
     };
-    return instance.post<
-      { cardsPack: AddNewCardPackType },
-      AxiosResponse<GetCardsPackResponseType>
-    >("cards/pack", data);
+    return instance.post<GetCardsPackResponseType>("cards/pack", data);
   },
 
   deleteCardPack(cardPackID: string) {
-    return instance.delete<"", AxiosResponse<DeletePackResponseType>>("cards/pack", {
+    return instance.delete<DeletePackResponseType>("cards/pack", {
       params: {
         id: cardPackID,
       },
@@ -33,10 +27,7 @@ export const packsAPI = {
         name,
       },
     };
-    return instance.put<{ _id: string; name: string }, AxiosResponse<RenameCardPackType>>(
-      "cards/pack",
-      data
-    );
+    return instance.put<RenameCardPackType>("cards/pack", data);
   },
 };
 
@@ -62,13 +53,7 @@ export type GetCardsPackResponseType = {
   pageCount: number; // количество элементов на странице
 };
 
-export type AddNewCardPackType = {
-  name?: string;
-  deckCover?: string;
-  privatePack?: boolean;
-};
-
-export type DeletedCardsPack = {
+export type CardPacksType = {
   _id: string;
   user_id: string;
   user_name: string;
@@ -86,8 +71,14 @@ export type DeletedCardsPack = {
   __v: number;
 };
 
+export type AddNewCardPackType = {
+  name?: string;
+  deckCover?: string;
+  privatePack?: boolean;
+};
+
 export type DeletePackResponseType = {
-  deletedCardsPack: DeletedCardsPack;
+  deletedCardsPack: CardPacksType;
   token: string;
   tokenDeathTime: number;
 };
@@ -95,14 +86,4 @@ export type DeletePackResponseType = {
 export type RenameCardPackType = {
   cardPackID: string;
   newNameCardPack?: string;
-};
-
-export type CardPacksType = {
-  _id: string;
-  user_id: string;
-  name: string;
-  cardsCount: number;
-  created: string;
-  updated: string;
-  user_name: string;
 };

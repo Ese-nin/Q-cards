@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../bll/store";
-import { Navigate, NavLink } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "bll/store";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 
 import { useFormik } from "formik";
-import { loginTC, setHaveAccountAC } from "../../../bll/reducers/auth-reducer";
+import { loginTC, setHaveAccountAC } from "bll/reducers/auth-reducer";
 import s from "../register/register.module.css";
+import s2 from "../cards/tables/TablesPackList.module.css";
 
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -15,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { InputWithEyeIcon } from "../register/InputWithEyeIcon/InputWithEyeIcon";
 import { PATH } from "../../../bll/Path";
-import { isLoggedInSelector } from "../../../bll/selectors";
+import { isLoggedInSelector } from "bll/selectors";
 
 type LoginFormikErrorsType = {
   email?: string;
@@ -40,6 +41,7 @@ const validate = (values: LoginFormikErrorsType) => {
 export const LoginPage = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -59,6 +61,7 @@ export const LoginPage = () => {
 
   const haveAccountHandler = () => {
     dispatch(setHaveAccountAC(false));
+    navigate(PATH.REG);
   };
 
   if (isLoggedIn) {
@@ -121,9 +124,9 @@ export const LoginPage = () => {
       <div>
         <span>Don't have an account?</span>
       </div>
-      <NavLink onClick={haveAccountHandler} to={"/register"}>
+      <button className={s2.btnNamePagePack} onClick={haveAccountHandler}>
         Sign Up
-      </NavLink>
+      </button>
     </div>
   );
 };

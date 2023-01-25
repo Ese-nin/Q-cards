@@ -1,0 +1,62 @@
+.page {
+    display: flex;
+    max-width: 1010px;
+    margin: 0 auto;
+    justify-content: space-between;
+    flex-direction: column;
+
+}
+
+.addNewPackLine {
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.formLine {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pagination {
+    margin-top: 10px;
+}
+
+.searchField {
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.searchFieldCards {
+    width: 500px;
+    margin-bottom: 10px;
+}
+
+
+.nameAndBurger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.emptyCenterBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    padding-top: 86px;
+}
+
+.backBlock {
+    padding-top: 25px;
+    cursor: pointer;
+}
+
+.backBlock span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    margin-left: 12px;
+}

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -9,18 +9,26 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Rating } from "@mui/material";
-import { cardsSelector, packUserIdSelector, user_idSelector } from "bll/selectors";
-import { Navigate, useSearchParams } from "react-router-dom";
-import { deleteCardTC, getCardsPageTC, renameCardQuestionTC } from "bll/reducers/cards-reducer";
+import {
+  cardsSelector,
+  cardsStatusSelector,
+  packUserIdSelector,
+  user_idSelector,
+} from "bll/selectors";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import s from "./TablesPackList.module.css";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { PATH } from "bll/Path";
-import { SuperButton, SuperSort } from "UI/common";
+import iconDown from "assets/icon/iconDown.png";
+import iconUp from "assets/icon/iconUp.png";
+import { EditCardModal } from "../../../../components/modal/EditCardModal";
+import { DeleteCardModal } from "../../../../components/modal/DeleteCardModal";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const cards = useAppSelector(cardsSelector);
+  const cardsStatus = useAppSelector(cardsStatusSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
 
@@ -29,15 +37,22 @@ export default function TablesPackPage() {
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
-  const changeCardQuestion = (card_id: string, newQuestion: string) => {
-    dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
-  };
+  useEffect(() => {
+    dispatch(getCardsPageTC({ cardsPack_id }));
+  }, []);
 
-  const removeCard = (card_id: string) => {
-    dispatch(deleteCardTC(cardsPack_id, card_id));
-  };
+  // const changeCardQuestion = (card_id: string, newQuestion: string) => {
+  //   dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
+  // };
 
-  const onChangeSort = (newSort: string) => {
+  // const removeCard = (card_id: string) => {
+  //   dispatch(deleteCardTC(cardsPack_id, card_id));
+  // };
+
+  const sortIcon = sort[0] === "0" ? iconDown : iconUp;
+
+  const onChangeSort = (column: string) => {
+    const newSort = sort === "1" + column ? "0" + column : "1" + column;
     setSort(newSort);
 
     dispatch(getCardsPageTC({ cardsPack_id, sortCards: newSort, page: 1 }));
@@ -46,8 +61,9 @@ export default function TablesPackPage() {
   };
 
   console.log(cards);
-  if (cards.length < 1) {
-    return <Navigate to={PATH.PACK_PAGE_EMPTY} />;
+
+  if (!cards.length && cardsStatus !== "loading") {
+    navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
 
   return (
@@ -58,10 +74,17 @@ export default function TablesPackPage() {
             <TableCell>Question</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">
-              Last Updated
-              <SuperSort sort={sort} value={"updated"} onChange={onChangeSort} />
+              <button className={s.btnNamePagePack} onClick={() => onChangeSort("updated")}>
+                Last Updated
+                {sort.slice(1) === "updated" && <img src={sortIcon} alt="sort icon" />}
+              </button>
             </TableCell>
-            <TableCell align="left">Grade</TableCell>
+            <TableCell align="left">
+              <button className={s.btnNamePagePack} onClick={() => onChangeSort("grade")}>
+                Grade
+                {sort.slice(1) === "grade" && <img src={sortIcon} alt="sort icon" />}
+              </button>
+            </TableCell>
             {meID === packUserID && <TableCell align="left">Actions</TableCell>}
           </TableRow>
         </TableHead>
@@ -82,6 +105,7 @@ export default function TablesPackPage() {
               <TableCell align="left">
                 <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
               </TableCell>
+
               {meID === row.user_id && (
                 <TableCell align="left">
                   <div
@@ -91,15 +115,13 @@ export default function TablesPackPage() {
                       marginBottom: "5px",
                     }}
                   >
-                    <SuperButton
-                      onClick={() => changeCardQuestion(row._id, "Updated question")}
-                      className={s.button_style}
-                    >
-                      <BorderColorIcon className={s.icon_style} />
-                    </SuperButton>
-                    <SuperButton onClick={() => removeCard(row._id)} className={s.button_style}>
-                      <DeleteOutlineIcon className={s.icon_style} />
-                    </SuperButton>
+                    <EditCardModal
+                      cardId={row._id}
+                      question={row.question}
+                      answer={row.answer}
+                      cardsPackId={cardsPack_id}
+                    />
+                    <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
                   </div>
                 </TableCell>
               )}

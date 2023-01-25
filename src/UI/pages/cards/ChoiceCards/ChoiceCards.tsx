@@ -14,9 +14,9 @@ export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
   const dispatch = useAppDispatch();
 
   const chooseCards = useCallback((user_id: string) => {
-    dispatch(getCardsPackTC({ ...params, user_id }));
+    dispatch(getCardsPackTC({ user_id }));
 
-    setSearchParams({ ...params, user_id });
+    setSearchParams({ user_id });
   }, []);
 
   return (
