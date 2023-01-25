@@ -41,14 +41,6 @@ export default function TablesPackPage() {
     dispatch(getCardsPageTC({ cardsPack_id }));
   }, []);
 
-  // const changeCardQuestion = (card_id: string, newQuestion: string) => {
-  //   dispatch(renameCardQuestionTC({ _id: card_id, question: newQuestion }, cardsPack_id));
-  // };
-
-  // const removeCard = (card_id: string) => {
-  //   dispatch(deleteCardTC(cardsPack_id, card_id));
-  // };
-
   const sortIcon = sort[0] === "0" ? iconDown : iconUp;
 
   const onChangeSort = (column: string) => {
@@ -119,7 +111,7 @@ export default function TablesPackPage() {
                       cardId={row._id}
                       question={row.question}
                       answer={row.answer}
-                      cardsPackId={cardsPack_id}
+                      cardsPackId={row.cardsPack_id}
                     />
                     <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
                   </div>

@@ -20,7 +20,7 @@ import {
 import back from "assets/icon/back.svg";
 import { SuperPagination } from "UI/common";
 import { BurgerMenu } from "./BurgerMenu/BurgerMenu";
-import { AddNewCardModal } from "../../../components/modal/AddNewCardModal";
+import { AddNewCardModal } from "components/modal/AddNewCardModal";
 
 export const PackPage = () => {
   const dispatch = useAppDispatch();

@@ -14,43 +14,43 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "bll/Path";
 import { cardPacksSelector, user_idSelector } from "bll/selectors";
 import { SuperButton } from "UI/common";
-import { DeletePackModal } from "../../../../components/modal/DeletePackModal";
-import { EditPackModal } from "../../../../components/modal/EditPackModal";
-import iconDown from "../../../../assets/icon/iconDown.png";
-import iconUp from "../../../../assets/icon/iconUp.png";
+import { DeletePackModal } from "components/modal/DeletePackModal";
+import { EditPackModal } from "components/modal/EditPackModal";
+import iconDown from "assets/icon/iconDown.png";
+import iconUp from "assets/icon/iconUp.png";
 
 export function TablesPackList() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const dispatch = useAppDispatch();
-    const cardPacks = useAppSelector(cardPacksSelector);
-    const meID = useAppSelector(user_idSelector);
+  const dispatch = useAppDispatch();
+  const cardPacks = useAppSelector(cardPacksSelector);
+  const meID = useAppSelector(user_idSelector);
 
-    const [sort, setSort] = useState("");
-    const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
-    const params = Object.fromEntries(searchParams);
+  const [sort, setSort] = useState("");
+  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+  const params = Object.fromEntries(searchParams);
 
-    useEffect(() => {
-      dispatch(getCardsPackTC({}));
-    }, []);
+  useEffect(() => {
+    dispatch(getCardsPackTC({}));
+  }, []);
 
-    const learnCards = () => {
-      alert("функция в разработке");
-    };
+  const learnCards = () => {
+    alert("функция в разработке");
+  };
 
-    const getPackPage = (cardsPack_id: string) => {
-      navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
-    };
+  const getPackPage = (cardsPack_id: string) => {
+    navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
+  };
 
   const sortIcon = sort[0] === "0" ? iconDown : iconUp;
   const onChangeSort = (column: string) => {
     const newSort = sort === "1" + column ? "0" + column : "1" + column;
 
-      setSort(newSort);
+    setSort(newSort);
 
-      dispatch(getCardsPackTC({ ...params, sortPacks: newSort, page: 1 }));
-      setSearchParams({ ...params, sortPacks: newSort, page: 1 });
-    };
+    dispatch(getCardsPackTC({ ...params, sortPacks: newSort, page: 1 }));
+    setSearchParams({ ...params, sortPacks: newSort, page: 1 });
+  };
 
   return (
     <TableContainer component={Paper}>

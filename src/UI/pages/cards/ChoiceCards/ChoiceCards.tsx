@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "bll/store";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
 import { useSearchParams } from "react-router-dom";
 import { SuperButton } from "UI/common";
-import { appStatusSelector } from "../../../../bll/selectors";
+import { appStatusSelector } from "bll/selectors";
 
 type ChoiceCardsPropsType = {
   userID: string;
