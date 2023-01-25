@@ -100,14 +100,10 @@ export default function TablesPackList() {
                                     <SchoolIcon className={s.icon_style}/>
                                 </SuperButton>
                                 {meID === row.user_id && (
-                                    <div>
+                                    <>
                                         <EditPackModal name={row.name} id={row._id} userId={row.user_id}/>
-                                        <SuperButton
-                                            className={s.button_style}
-                                        >
-                                            <DeletePackModal name={row.name} id={row._id} userId={row.user_id}/>
-                                        </SuperButton>
-                                    </div>
+                                        <DeletePackModal name={row.name} id={row._id} userId={row.user_id}/>
+                                    </>
                                 )}
                             </div>
                         </TableRow>
