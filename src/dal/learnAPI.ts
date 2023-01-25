@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { instance } from "./instance";
+import { instance, UserDataResponseType } from "./authAPI";
 
 export const learnAPI = {
   putAGrade(grade: number, card_id: string) {

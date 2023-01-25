@@ -32,7 +32,7 @@ export const putAGradeTC =
   (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     learnAPI.putAGrade(grade, card_id).then((res) => {
-      /*dispatch(putAGradeAC(res.data));*/
+      dispatch(putAGradeAC(res.data));
       dispatch(setAppStatusAC("succeeded"));
     });
   };
