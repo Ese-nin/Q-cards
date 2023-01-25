@@ -13,8 +13,8 @@ export const learnReducer = (
   switch (action.type) {
     case "PUT_A_GRAGE":
       return {
-        ...state,
-        ...action,
+        ...state /*,
+        ...action,*/,
       };
   }
 };

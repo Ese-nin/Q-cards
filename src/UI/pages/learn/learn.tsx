@@ -7,6 +7,7 @@ import { AppRootStateType, useAppDispatch, useAppSelector } from "../../../bll/s
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getCardsPageTC } from "../../../bll/reducers/cards-reducer";
 import { putAGradeTC } from "../../../bll/reducers/learn-reducer";
+import { cardPacksSelector } from "../../../bll/selectors";
 
 type LearnPropsType = {
   namePack?: string;
@@ -36,7 +37,7 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
   const [valueRadio, onChangeOption] = useState(grades[0]);
   const [grade, setGrade] = useState<number>(0);
-  const { cards } = useAppSelector((store: AppRootStateType) => store.cardPage);
+  const { cards } = useAppSelector(cardPacksSelector);
   const [first, setFirst] = useState<boolean>(true);
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
