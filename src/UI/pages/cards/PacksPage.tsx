@@ -98,18 +98,18 @@ export const PackPage = () => {
         </div>
       </div>
 
-      <div className={s.tableBlock}>
-        <TablesPackPage />
-      </div>
+            <div className={s.tableBlock}>
+                <TablesPackPage />
+            </div>
 
-      <div className={s.pagination}>
-        <SuperPagination
-          page={page}
-          itemsCountForPage={pageCount}
-          totalCount={cardsTotalCount}
-          onChange={onChangePagination}
-        />
-      </div>
-    </div>
-  );
+            <div className={s.pagination}>
+                <SuperPagination
+                    page={page}
+                    itemsCountForPage={pageCount}
+                    totalCount={cardsTotalCount}
+                    onChange={onChangePagination}
+                />
+            </div>
+        </div>
+    );
 };

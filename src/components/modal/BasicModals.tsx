@@ -26,13 +26,13 @@ const style = {
 type PropsType = {
     children: ReactNode
     open: boolean
-    handleClose: ()=>void
+    handleClose: () => void
 }
 
 
 export const BasicModal: FC<PropsType> = ({children, open, handleClose}) => {
     return (
-        <div>
+        <>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -41,9 +41,9 @@ export const BasicModal: FC<PropsType> = ({children, open, handleClose}) => {
                     <button className={s.closeButton}>
                         <img src={closeBtn} alt="close" onClick={handleClose}/>
                     </button>
-                    {children }
+                    {children}
                 </Box>
             </Modal>
-        </div>
+        </>
     );
 }

@@ -29,14 +29,14 @@ export const PackPageEmpty = () => {
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
-  const addNewCard = (question: string) => {
-    dispatch(addNewCardTC({ cardsPack_id, question }));
-    setSearchParams({ ...params, cardsPack_id, cardQuestion: question });
-  };
+    const addNewCard = (question: string) => {
+        dispatch(addNewCardTC({cardsPack_id, question}));
+        setSearchParams({...params, cardsPack_id, cardQuestion: question});
+    };
 
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} />;
-  }
+    if (!isLoggedIn) {
+        return <Navigate to={PATH.LOGIN}/>;
+    }
 
   if (!isLoggedIn) {
     navigate(PATH.LOGIN);
@@ -52,29 +52,26 @@ export const PackPageEmpty = () => {
 
   const viewButton = meID === packUserID;
 
-  return (
-    <div className={s.page}>
-      <div className={s.backBlock} onClick={BackToPackList}>
-        <img src={back} alt="back" />
-        <span>Back to Packs List</span>
-      </div>
-      <div className={s.addNewPackLine}>
-        <div className={s.nameAndBurger}>
-          <h2>{packName}</h2>
+
+    return (
+        <div className={s.page}>
+            <div className={s.backBlock} onClick={BackToPackList}>
+                <img src={back} alt="back"/>
+                <span>Back to Packs List</span>
+            </div>
+            <div className={s.addNewPackLine}>
+                <div className={s.nameAndBurger}>
+                    <h2>{packName}</h2>
+                </div>
+            </div>
+            <div className={s.emptyCenterBlock}>
+                <span>This pack is empty. Click add new card to fill this pack</span>
+                <Button variant="outlined" onClick={() => addNewCard('New question')}>
+                    Add New Card
+                </Button>
+                эта кнопка для модалки
+                <AddNewCardModal cardsPackId={cardsPack_id}/>
+            </div>
         </div>
-      </div>
-      <div className={s.emptyCenterBlock}>
-        <span>This pack is empty.</span>
-        {viewButton && (
-          <>
-            <span>Click add new card to fill this pack</span>
-            <Button variant="outlined" onClick={() => addNewCard("New question")}>
-              Add New Card
-            </Button>
-            <AddNewCardModal /> {/*какая-то из кнопок лишняя*/}
-          </>
-        )}
-      </div>
-    </div>
-  );
+    );
 };

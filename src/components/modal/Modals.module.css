@@ -53,13 +53,13 @@
 }
 
 .button_style {
-    margin: 5px;
-    min-width: 20px;
     padding: 0;
     border: none;
     font: inherit;
     color: inherit;
     background-color: transparent;
+    margin: 5px;
+    min-width: 20px;
     cursor: pointer;
 }
 
