@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../bll/store";
 import { user_idSelector } from "../../bll/selectors";
 import * as React from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { useSearchParams } from "react-router-dom";
 
 type PropsType = {
   id: string;
@@ -16,9 +17,10 @@ type PropsType = {
 export const DeletePackModal = (props: PropsType) => {
   const meID = useAppSelector(user_idSelector);
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const userId = searchParams.get("user_id");
 
   const id = props.id;
-  const userId = props.userId;
   const Name = props.name;
 
   const Title = "Delete Pack";
