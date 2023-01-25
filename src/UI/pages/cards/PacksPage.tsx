@@ -77,12 +77,9 @@ export const PackPage = () => {
             <h2>{packName}</h2>
             <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
           </div>
-
-          {meID !== packUserID && (
-            <Button variant="contained" onClick={buttonClickHandler}>
-              Learn to pack
-            </Button>
-          )}
+          <Button variant="contained" onClick={buttonClickHandler}>
+            Learn to pack
+          </Button>
           {meID === packUserID && <AddNewCardModal cardsPackId={cardsPack_id} />}
         </div>
         <div className={s.formLine}>

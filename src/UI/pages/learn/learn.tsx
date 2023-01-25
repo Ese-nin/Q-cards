@@ -1,12 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { SuperButton, SuperCheckbox } from "../../common";
-import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
+import React, { useEffect, useState } from "react";
+import { SuperButton } from "../../common";
 import s from "./learn.module.css";
 import { CardType } from "../../../dal/cardsAPI";
-import { AppRootStateType, useAppDispatch, useAppSelector } from "../../../bll/store";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../bll/store";
+import { useSearchParams } from "react-router-dom";
 import { getCardsPageTC, putAGradeTC } from "../../../bll/reducers/cards-reducer";
-import { cardPacksSelector } from "../../../bll/selectors";
+import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
 
 type LearnPropsType = {
   namePack?: string;
