@@ -20,6 +20,7 @@ import {
 import back from "assets/icon/back.svg";
 import { SuperPagination } from "UI/common";
 import { BurgerMenu } from "./BurgerMenu/BurgerMenu";
+import { AddNewCardModal } from "../../../components/modal/AddNewCardModal";
 
 export const PackPage = () => {
   const dispatch = useAppDispatch();
@@ -81,35 +82,31 @@ export const PackPage = () => {
           <h2>{packName}</h2>
           <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
         </div>
-        <Button variant="contained" onClick={buttonClickHandler}>
-          Learn to pack
-        </Button>
+        {meID !== packUserID && (
+          <Button variant="contained" onClick={buttonClickHandler}>
+            Learn to pack
+          </Button>
+        )}
+        {meID === packUserID && <AddNewCardModal cardsPackId={cardsPack_id} />}
       </div>
       <div className={s.formLine}>
         <div className={s.searchFieldCards}>
           <SearchInput from={"cards"} />
         </div>
-        <div>
-          {meID === packUserID && (
-            <Button variant="outlined" onClick={() => addNewCard("New question")}>
-              Add New Card
-            </Button>
-          )}
-        </div>
       </div>
 
-            <div className={s.tableBlock}>
-                <TablesPackPage />
-            </div>
+      <div className={s.tableBlock}>
+        <TablesPackPage />
+      </div>
 
-            <div className={s.pagination}>
-                <SuperPagination
-                    page={page}
-                    itemsCountForPage={pageCount}
-                    totalCount={cardsTotalCount}
-                    onChange={onChangePagination}
-                />
-            </div>
-        </div>
-    );
+      <div className={s.pagination}>
+        <SuperPagination
+          page={page}
+          itemsCountForPage={pageCount}
+          totalCount={cardsTotalCount}
+          onChange={onChangePagination}
+        />
+      </div>
+    </div>
+  );
 };
