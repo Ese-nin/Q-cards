@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function AlternativeSuperRadio() {
-    return (
-        <input/>
-    )
+  return <input />;
 }
 
-export default AlternativeSuperRadio
+export default AlternativeSuperRadio;

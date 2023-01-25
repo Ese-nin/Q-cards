@@ -7,7 +7,7 @@ import { addNewCardTC } from "../../../bll/reducers/cards-reducer";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { isLoggedInSelector, packNameSelector } from "../../../bll/selectors";
 import back from "../../../assets/icon/back.svg";
-import {AddNewCardModal} from '../../../components/modal/AddNewCardModal';
+import { AddNewCardModal } from "../../../components/modal/AddNewCardModal";
 
 export const PackPageEmpty = () => {
   const dispatch = useAppDispatch();
@@ -48,7 +48,7 @@ export const PackPageEmpty = () => {
           Add New Card
         </Button>
         эта кнопка для модалки
-        <AddNewCardModal/>
+        <AddNewCardModal />
       </div>
     </div>
   );
