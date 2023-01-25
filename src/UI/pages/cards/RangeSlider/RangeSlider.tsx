@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import s from "./RangeSlider.module.css";
 import { useAppDispatch, useAppSelector } from "bll/store";
-import { maxCardsCountSelector, minCardsCountSelector } from "bll/selectors";
+import { appStatusSelector, maxCardsCountSelector, minCardsCountSelector } from "bll/selectors";
 import { useDebounce } from "utils/hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
@@ -11,6 +11,7 @@ import { getCardsPackTC } from "bll/reducers/packs-reducer";
 export const RangeSlider = () => {
   const minCardsCount = useAppSelector(minCardsCountSelector);
   const maxCardsCount = useAppSelector(maxCardsCountSelector);
+  const appStatus = useAppSelector(appStatusSelector);
 
   const dispatch = useAppDispatch();
 
@@ -18,7 +19,7 @@ export const RangeSlider = () => {
   const searchParamsObject = Object.fromEntries(searchParams);
   const userID = searchParams.get("user_id");
 
-  const [values, setValues] = useState([minCardsCount || 0, maxCardsCount || 100]);
+  const [values, setValues] = useState<number[]>([0, 100]);
   const [isFirstLoad, setFirstLoad] = useState(true);
   const [isSecondLoad, setSecondLoad] = useState(true);
 
@@ -67,6 +68,7 @@ export const RangeSlider = () => {
         value={values}
         onChange={changeSliderValues}
         disableSwap
+        disabled={appStatus === "loading"}
       />
       <span>{values[1]}</span>
     </div>

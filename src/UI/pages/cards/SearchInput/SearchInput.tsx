@@ -7,10 +7,11 @@ import React, {
 } from "react";
 import { SuperInputText } from "UI/common";
 import { useDebounce } from "utils/hooks/useDebounce";
-import { useAppDispatch } from "bll/store";
+import { useAppDispatch, useAppSelector } from "bll/store";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
 import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { useSearchParams } from "react-router-dom";
+import { appStatusSelector } from "../../../../bll/selectors";
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -35,6 +36,8 @@ export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
   ...restProps
 }) => {
   const dispatch = useAppDispatch();
+
+  const appStatus = useAppSelector(appStatusSelector);
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const searchParamsObject = Object.fromEntries(searchParams);
@@ -67,6 +70,7 @@ export const SearchInput: React.FC<SuperDebouncedInputPropsType> = ({
 
   return (
     <SuperInputText
+      disabled={appStatus === "loading"}
       value={find}
       onChangeText={onChangeHandler}
       placeholder={"Search"}

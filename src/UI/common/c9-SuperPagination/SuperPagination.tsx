@@ -2,6 +2,8 @@ import React, { ChangeEvent, useState } from "react";
 import { Pagination } from "@mui/material";
 import s from "./SuperPagination.module.css";
 import { SuperSelect } from "../c5-SuperSelect/SuperSelect";
+import { useAppSelector } from "../../../bll/store";
+import { appStatusSelector } from "../../../bll/selectors";
 
 export type SuperPaginationPropsType = {
   id?: string;
@@ -20,6 +22,8 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
 }) => {
   const lastPage = Math.ceil(totalCount / itemsCountForPage);
 
+  const appStatus = useAppSelector(appStatusSelector);
+
   const [localPage, setLocalPage] = useState(page);
 
   const onChangeCallback = (event: ChangeEvent<unknown>, page: number) => {
@@ -32,9 +36,12 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
     setLocalPage(1);
   };
 
+  const disabled = appStatus === "loading";
+
   return (
     <div className={s.pagination}>
       <Pagination
+        disabled={disabled}
         id={id + "-pagination"}
         page={localPage}
         count={lastPage}
@@ -48,6 +55,7 @@ export const SuperPagination: React.FC<SuperPaginationPropsType> = ({
       <span className={s.text1}>Show</span>
 
       <SuperSelect
+        disabled={disabled}
         id={id + "-pagination-select"}
         value={itemsCountForPage}
         options={[
