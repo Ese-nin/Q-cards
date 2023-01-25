@@ -42,7 +42,7 @@ export const Learn = ({namePack, rating}: LearnPropsType) => {
     const [first, setFirst] = useState<boolean>(true);
     const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
     const params = Object.fromEntries(searchParams);
-
+    const cardsPack_id=params.cardsPack_id
 
 
     const [card, setCard] = useState<CardType>({
@@ -59,12 +59,13 @@ export const Learn = ({namePack, rating}: LearnPropsType) => {
 
     console.log(card)
 
+
     const dispatch = useAppDispatch();
     useEffect(() => {
         console.log('LearnContainer useEffect');
 
         if (first) {
-            dispatch(getCardsPageTC({...params,cardsPack_id:card.cardsPack_id})); // тут ошибка
+            dispatch(getCardsPageTC({...params,cardsPack_id})); // тут ошибка
             setFirst(false);
         }
 
@@ -76,16 +77,15 @@ export const Learn = ({namePack, rating}: LearnPropsType) => {
         }
     }, [dispatch, params.id, cards, first]);
 
-    const onNext = () => {
+    const onNext =  () => {
         setVisibleAnswer(false);
 
         if (cards.length > 0) {
-            // dispatch
-            grades.map((el, index) => el === valueRadio ? setGrade(index + 1) : el)
-            dispatch(putAGradeTC(grade,params.id))
+            grades.map((el, index) => el === valueRadio ?   setGrade(index + 1) : el)
+            dispatch(putAGradeTC(grade,card._id))
             setCard(getCard(cards));
         } else {
-
+            console.log("В колоде нету карточек")
         }
     }
 

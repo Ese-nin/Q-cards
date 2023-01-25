@@ -56,7 +56,7 @@ export const PackPage = () => {
   };
 
   const buttonClickHandler = () => {
-    return navigate(PATH.LEARN_PAGE) ;
+    return navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id) ;
   };
 
   const onChangeText = (value: string) => {
