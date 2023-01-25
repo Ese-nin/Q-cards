@@ -48,10 +48,10 @@ export const PackPage = () => {
     const BackToPackList = () => {
         navigate(PATH.PACK_LIST);
     };
-    const addNewCard = (question: string) => {
-        dispatch(addNewCardTC({cardsPack_id, question}));
-        setSearchParams({...params, cardsPack_id, cardQuestion: question});
-    };
+    // const addNewCard = (question: string) => {
+    //     dispatch(addNewCardTC({cardsPack_id, question}));
+    //     setSearchParams({...params, cardsPack_id, cardQuestion: question});
+    // };
 
     const searchDebouncedValue = useDebounce<string>(find, 600);
 
@@ -150,7 +150,7 @@ export const PackPage = () => {
                     Learn to pack
                 </Button>
 
-                <AddNewCardModal/>
+                <AddNewCardModal cardsPackId={cardsPack_id}/>
 
 
             </div>
@@ -161,7 +161,7 @@ export const PackPage = () => {
             </div>
 
             <div className={s.tableBlock}>
-                <TablesPackPage/>
+                <TablesPackPage />
             </div>
 
             <div className={s.pagination}>

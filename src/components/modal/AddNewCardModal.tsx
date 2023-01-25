@@ -7,9 +7,12 @@ import * as React from 'react';
 import {addNewCardTC} from '../../bll/reducers/cards-reducer';
 import {useAppDispatch} from '../../bll/store';
 
-
-export const AddNewCardModal = () => {
+type PropsType = {
+    cardsPackId: string
+}
+export const AddNewCardModal = (props: PropsType) => {
     const dispatch = useAppDispatch();
+    const cardsPack_id = props.cardsPackId
 
     const Title = 'Add new card'
 
@@ -24,11 +27,6 @@ export const AddNewCardModal = () => {
     const handleClose = () => setOpen(false);
 // -------------------------------------------------------------
 
-    const addNewCard = (question: string) => {
-        dispatch(addNewCardTC({cardsPack_id, question}));
-        setSearchParams({...params, cardsPack_id, cardQuestion: question});
-    };
-
 
     // для инпута---------------------------------------------------------
     const [Question, setQuestion] = React.useState<string>('')
@@ -41,6 +39,13 @@ export const AddNewCardModal = () => {
         setAnswer(e.target.value)
     }
     //-----------------------------------------------------------
+
+    const addNewCard = (Question: string, Answer: string) => {
+        dispatch(addNewCardTC({cardsPack_id, question: Question, answer: Answer}));
+        // setSearchParams({...params, cardsPack_id, cardQuestion: Question});
+        console.log(cardsPack_id)
+    };
+
 
     return (
         <>
@@ -79,7 +84,7 @@ export const AddNewCardModal = () => {
                 <div className={s.saveBlock}>
                     <Button variant="outlined" onClick={handleClose}>Cancel</Button>
                     <Button variant="contained"
-                            onClick={() => addNewCard('New question')}
+                            onClick={() => addNewCard(Question, Answer)}
                     >
                         Save
                     </Button>
