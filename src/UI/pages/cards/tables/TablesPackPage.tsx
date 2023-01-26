@@ -10,8 +10,8 @@ import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Rating } from "@mui/material";
 import {
+  appStatusSelector,
   cardsSelector,
-  cardsStatusSelector,
   packUserIdSelector,
   user_idSelector,
 } from "bll/selectors";
@@ -28,7 +28,7 @@ export default function TablesPackPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const cards = useAppSelector(cardsSelector);
-  const cardsStatus = useAppSelector(cardsStatusSelector);
+  const appStatus = useAppSelector(appStatusSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
 
@@ -36,6 +36,7 @@ export default function TablesPackPage() {
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
+  const cardQuestion = params.cardQuestion;
 
   useEffect(() => {
     dispatch(getCardsPageTC({ cardsPack_id }));
@@ -52,9 +53,53 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
-  if (!cards.length && cardsStatus !== "loading") {
+  if (!cards.length && appStatus !== "loading" && !cardQuestion) {
     navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
+
+  const tableBody =
+    !cards.length && cardQuestion && appStatus !== "loading" ? (
+      <div>Cards not found. Choose other search parameters</div>
+    ) : (
+      cards.map((row) => (
+        <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+          <TableCell component="th" scope="row">
+            {row.question}{" "}
+          </TableCell>
+          <TableCell align="left">{row.answer}</TableCell>
+          <TableCell align="left">
+            {new Date(row.updated).getDate()}.
+            {new Date(row.updated).getMonth() < 10
+              ? new Date(row.updated).getMonth() + "1"
+              : new Date(row.updated).getMonth() + 1}
+            .{new Date(row.updated).getFullYear()}
+          </TableCell>
+          <TableCell align="left">
+            <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
+          </TableCell>
+
+          {meID === row.user_id && (
+            <TableCell align="left">
+              <div
+                style={{
+                  display: "flex",
+                  // marginTop: "15px",
+                  // marginBottom: "5px",
+                }}
+              >
+                <EditCardModal
+                  cardId={row._id}
+                  question={row.question}
+                  answer={row.answer}
+                  cardsPackId={row.cardsPack_id}
+                />
+                <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
+              </div>
+            </TableCell>
+          )}
+        </TableRow>
+      ))
+    );
 
   return (
     <TableContainer component={Paper}>
@@ -78,46 +123,7 @@ export default function TablesPackPage() {
             {meID === packUserID && <TableCell align="left">Actions</TableCell>}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {cards.map((row) => (
-            <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                {row.question}{" "}
-              </TableCell>
-              <TableCell align="left">{row.answer}</TableCell>
-              <TableCell align="left">
-                {new Date(row.updated).getDate()}.
-                {new Date(row.updated).getMonth() < 10
-                  ? new Date(row.updated).getMonth() + "1"
-                  : new Date(row.updated).getMonth() + 1}
-                .{new Date(row.updated).getFullYear()}
-              </TableCell>
-              <TableCell align="left">
-                <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
-              </TableCell>
-
-              {meID === row.user_id && (
-                <TableCell align="left">
-                  <div
-                    style={{
-                      display: "flex",
-                      // marginTop: "15px",
-                      // marginBottom: "5px",
-                    }}
-                  >
-                    <EditCardModal
-                      cardId={row._id}
-                      question={row.question}
-                      answer={row.answer}
-                      cardsPackId={row.cardsPack_id}
-                    />
-                    <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
-                  </div>
-                </TableCell>
-              )}
-            </TableRow>
-          ))}
-        </TableBody>
+        <TableBody>{tableBody}</TableBody>
       </Table>
     </TableContainer>
   );

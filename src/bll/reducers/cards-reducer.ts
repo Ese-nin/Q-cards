@@ -1,4 +1,4 @@
-import { AppStatusType, setAppStatusAC } from "./app-reducer";
+import { setAppStatusAC } from "./app-reducer";
 import { AxiosError } from "axios";
 import { handleServerNetworkError } from "utils/error-utils";
 import {
@@ -21,7 +21,6 @@ const initialState = {
   pageCount: 1,
   packUserId: "",
   packName: "",
-  entityStatus: "idle" as AppStatusType,
 };
 
 export type InitialCardsStateType = typeof initialState;
@@ -36,8 +35,6 @@ export const cardsReducer = (
         ...state,
         ...action.data,
       };
-    case "CARDS/SET_STATUS":
-      return { ...state, entityStatus: action.entityStatus };
     default:
       return state;
   }
@@ -48,22 +45,17 @@ export const cardsReducer = (
 export const getCardsPageAC = (data: GetCardResponseType) =>
   ({ type: "CARDS/GET_CARDS_PAGE", data } as const);
 
-export const setCardsStatusAC = (newStatus: AppStatusType) =>
-  ({ type: "CARDS/SET_STATUS", entityStatus: newStatus } as const);
-
 // thunks
 
 export const getCardsPageTC =
   (params: GetCardsParamsType): AppThunk =>
   (dispatch) => {
     dispatch(setAppStatusAC("loading"));
-    dispatch(setCardsStatusAC("loading"));
     cardsAPI
       .getCardsPage(params)
       .then((res) => {
         dispatch(getCardsPageAC(res.data));
         dispatch(setAppStatusAC("succeeded"));
-        dispatch(setCardsStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
         console.log("сломалось");
@@ -132,7 +124,6 @@ export const putAGradeTC =
 
 // types
 
-export type CardsPageActionType = GetCardsPackACType | setCardsStatusACType;
+export type CardsPageActionType = GetCardsPackACType;
 
 export type GetCardsPackACType = ReturnType<typeof getCardsPageAC>;
-export type setCardsStatusACType = ReturnType<typeof setCardsStatusAC>;

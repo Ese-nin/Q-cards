@@ -42,6 +42,7 @@ export const getCardsPackAC = (data: GetCardsPackResponseType) =>
 
 export const addNewCardPackAC = (data: GetCardsPackResponseType) =>
   ({ type: "PACK/ADD_NEW_CARD_PACK", data } as const);
+
 export const deleteCardPackAC = (cardPackID: string) =>
   ({ type: "PACK/DELETE_CARS_PACK", cardPackID } as const);
 

@@ -29,10 +29,7 @@ export const setInitializeAC = () => ({ type: "APP/SET_INITIALIZE", isInitialize
 export const changeAppErrorAC = (errorMessage: string | null) =>
   ({ type: "APP/SET_ERROR", error: errorMessage } as const);
 export const setAppStatusAC = (newStatus: AppStatusType) =>
-  ({
-    type: "APP/SET_APP_STATUS",
-    appStatus: newStatus,
-  } as const);
+  ({ type: "APP/SET_APP_STATUS", appStatus: newStatus } as const);
 
 // types
 

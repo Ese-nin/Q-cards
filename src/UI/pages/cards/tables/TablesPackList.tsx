@@ -53,6 +53,51 @@ export function TablesPackList() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
+  const tableBody = cardPacks.length ? (
+    cardPacks.map((row) => (
+      <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+        <TableCell component="th" scope="row">
+          <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
+            {row.name}
+          </button>
+        </TableCell>
+        <TableCell align="left">{row.cardsCount}</TableCell>
+        <TableCell align="left">
+          {new Date(row.updated).getDate()}.
+          {new Date(row.updated).getMonth() < 10
+            ? new Date(row.updated).getMonth() + "1"
+            : new Date(row.updated).getMonth() + 1}
+          .{new Date(row.updated).getFullYear()}
+        </TableCell>
+        <TableCell align="left">{row.user_name}</TableCell>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+          }}
+        >
+          <button
+            onClick={() => learnCards(row._id)}
+            className={s.button_style}
+            disabled={row.cardsCount === 0}
+          >
+            <SchoolIcon className={s.icon_style} />
+          </button>
+          {meID === row.user_id && (
+            <>
+              <EditPackModal name={row.name} id={row._id} userId={row.user_id} />
+              <SuperButton className={s.button_style}>
+                <DeletePackModal name={row.name} id={row._id} userId={row.user_id} />
+              </SuperButton>
+            </>
+          )}
+        </div>
+      </TableRow>
+    ))
+  ) : (
+    <div>Packs not found. Choose other search parameters.</div>
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -82,50 +127,7 @@ export function TablesPackList() {
             <TableCell align="left">Actions</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {cardPacks.map((row) => (
-            <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-              <TableCell component="th" scope="row">
-                <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
-                  {row.name}
-                </button>
-              </TableCell>
-              <TableCell align="left">{row.cardsCount}</TableCell>
-              <TableCell align="left">
-                {new Date(row.updated).getDate()}.
-                {new Date(row.updated).getMonth() < 10
-                  ? new Date(row.updated).getMonth() + "1"
-                  : new Date(row.updated).getMonth() + 1}
-                .{new Date(row.updated).getFullYear()}
-              </TableCell>
-              <TableCell align="left">{row.user_name}</TableCell>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  // marginTop: "15px",
-                  // marginBottom: "5px",
-                }}
-              >
-                <button
-                  onClick={() => learnCards(row._id)}
-                  className={s.button_style}
-                  disabled={row.cardsCount === 0}
-                >
-                  <SchoolIcon className={s.icon_style} />
-                </button>
-                {meID === row.user_id && (
-                  <>
-                    <EditPackModal name={row.name} id={row._id} userId={row.user_id} />
-                    <SuperButton className={s.button_style}>
-                      <DeletePackModal name={row.name} id={row._id} userId={row.user_id} />
-                    </SuperButton>
-                  </>
-                )}
-              </div>
-            </TableRow>
-          ))}
-        </TableBody>
+        <TableBody>{tableBody}</TableBody>
       </Table>
     </TableContainer>
   );
