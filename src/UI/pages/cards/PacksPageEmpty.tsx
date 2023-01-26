@@ -29,16 +29,12 @@ export const PackPageEmpty = () => {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  if (!isLoggedIn) {
-    navigate(PATH.LOGIN);
-  }
-
   if (totalCardsCount) {
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   }
 
   const BackToPackList = () => {
-    navigate(PATH.PACK_LIST);
+    navigate(-2);
   };
 
   const viewButton = meID === packUserID;

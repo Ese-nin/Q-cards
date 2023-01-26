@@ -17,9 +17,10 @@ export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
   const appStatus = useAppSelector(appStatusSelector);
 
   const chooseCards = useCallback((user_id: string) => {
-    dispatch(getCardsPackTC({ user_id }));
+    const checkUserID = user_id.length ? { user_id } : {};
+    dispatch(getCardsPackTC(checkUserID));
 
-    setSearchParams({ user_id });
+    setSearchParams(checkUserID);
   }, []);
 
   const disabled = appStatus === "loading";

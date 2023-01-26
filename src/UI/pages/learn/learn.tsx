@@ -3,9 +3,11 @@ import { SuperButton } from "../../common";
 import s from "./learn.module.css";
 import { CardType } from "../../../dal/cardsAPI";
 import { useAppDispatch, useAppSelector } from "../../../bll/store";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCardsPageTC, putAGradeTC } from "../../../bll/reducers/cards-reducer";
 import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
+import back from "../../../assets/icon/back.svg";
+import { PATH } from "../../../bll/Path";
 
 type LearnPropsType = {
   namePack?: string;
@@ -34,14 +36,15 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   const [visibleAnswer, setVisibleAnswer] = useState<boolean>(false);
   const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
   const [valueRadio, onChangeOption] = useState(grades[0]);
-  const [grade, setGrade] = useState<number>(0);
+  const [grade, setGrade] = useState<number>(1);
   const { cards } = useAppSelector((state) => state.cards);
+  const cardsPack = useAppSelector((state) => state.cards);
   const [first, setFirst] = useState<boolean>(true);
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
-
   const [card, setCard] = useState<CardType>({} as CardType);
+  const navigate = useNavigate();
 
   console.log(card);
 
@@ -61,12 +64,11 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
       console.log("LearnContainer useEffect off");
     };
   }, [dispatch, params.id, cards, first]);
-
+  console.log(grade + " Grade");
   const onNext = () => {
     setVisibleAnswer(false);
 
     if (cards.length > 0) {
-      grades.map((el, index) => (el === valueRadio ? setGrade(index + 1) : el));
       dispatch(putAGradeTC(grade, card._id));
       setCard(getCard(cards));
     } else {
@@ -74,38 +76,80 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
     }
   };
 
+  const onChangeGrade = (value: string) => {
+    switch (value) {
+      case "не знал": {
+        setGrade(1);
+        onChangeOption(value);
+        break;
+      }
+      case "забыл": {
+        setGrade(2);
+        onChangeOption(value);
+        break;
+      }
+      case "долго думал": {
+        setGrade(3);
+        onChangeOption(value);
+        break;
+      }
+      case "перепутал": {
+        setGrade(4);
+        onChangeOption(value);
+        break;
+      }
+      case "знал": {
+        setGrade(5);
+        onChangeOption(value);
+        break;
+      }
+      default:
+        setGrade(0);
+    }
+  };
+
   const onClickButtonHandler = () => {
     setVisibleAnswer(!visibleAnswer);
   };
 
-  return (
-    <div className={s.learnPageContainer}>
-      <div className={s.learnContainer}>
-        <div className={s.namePack}>{namePack}Name Pack</div>
-        <div className={s.questionContainer}>
-          <div className={s.question}>Question: {card.question}</div>
-          <div className={s.rating}>Количество попыток ответить на этот вопрос: {rating}</div>
+  const BackToPackList = () => {
+    navigate(PATH.PACK_PAGE);
+  };
 
-          {visibleAnswer ? (
-            <div className={s.answerContainer}>
-              Answer: {card.answer}
-              <div className={s.valueAnswer}>
-                <div className={s.variantAnswer}> Варианты ответа:</div>
-                <SuperRadio options={grades} value={valueRadio} onChangeOption={onChangeOption} />
+  return (
+    <div>
+      <div className={s.backBlock} onClick={BackToPackList}>
+        <img src={back} alt="back" />
+        <span>Back to Packs List</span>
+      </div>
+      <div className={s.learnPageContainer}>
+        <div className={s.learnContainer}>
+          <div className={s.namePack}>{cardsPack.packName}</div>
+          <div className={s.questionContainer}>
+            <div className={s.question}>Question: {card.question}</div>
+            <div className={s.rating}>Количество попыток ответить на этот вопрос: {card.shots}</div>
+
+            {visibleAnswer ? (
+              <div className={s.answerContainer}>
+                Answer: {card.answer}
+                <div className={s.valueAnswer}>
+                  <div className={s.variantAnswer}> Варианты ответа:</div>
+                  <SuperRadio options={grades} value={valueRadio} onChangeOption={onChangeGrade} />
+                </div>
+                <div className={s.nextButton}>
+                  <SuperButton className={s.buttonStyle} onClick={onNext}>
+                    Следующий вопрос
+                  </SuperButton>
+                </div>
               </div>
-              <div className={s.nextButton}>
-                <SuperButton className={s.buttonStyle} onClick={onNext}>
-                  Следующий вопрос
+            ) : (
+              <div className={s.showAnswer}>
+                <SuperButton className={s.buttonStyle} onClick={onClickButtonHandler}>
+                  Показать ответ
                 </SuperButton>
               </div>
-            </div>
-          ) : (
-            <div className={s.showAnswer}>
-              <SuperButton className={s.buttonStyle} onClick={onClickButtonHandler}>
-                Показать ответ
-              </SuperButton>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </div>

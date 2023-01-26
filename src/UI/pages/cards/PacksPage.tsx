@@ -37,7 +37,7 @@ export const PackPage = () => {
   const cardsPack_id = params.cardsPack_id;
 
   const BackToPackList = () => {
-    navigate(PATH.PACK_LIST);
+    navigate(-1);
   };
 
   const onChangePagination = (page: number, pageCount: number) => {
@@ -59,6 +59,7 @@ export const PackPage = () => {
 
   const removePack = (pack_id: string) => {
     dispatch(deleteCardPackTC(pack_id));
+    navigate(-1);
   };
 
   const learnCards = () => {

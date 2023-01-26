@@ -29,9 +29,10 @@ export function TablesPackList() {
   const [sort, setSort] = useState("");
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
+  const user_id = params.user_id;
 
   useEffect(() => {
-    dispatch(getCardsPackTC({}));
+    dispatch(getCardsPackTC(user_id ? { user_id } : {}));
   }, []);
 
   const learnCards = () => {
