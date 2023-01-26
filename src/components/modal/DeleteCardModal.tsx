@@ -22,6 +22,7 @@ export const DeleteCardModal = (props: PropsType) => {
 
   const removeCard = (cardsPackId: string, card_id: string) => {
     dispatch(deleteCardTC(cardsPackId, card_id));
+    setOpen(false);
   };
 
   const [open, setOpen] = React.useState(false);

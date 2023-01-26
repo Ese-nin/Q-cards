@@ -37,6 +37,7 @@ export const EditPackModal = (props: PropsType) => {
     UserId === meID
       ? dispatch(renameCardPackTC(PackId, namePack, UserId))
       : dispatch(renameCardPackTC(PackId, namePack));
+    setOpen(false);
   };
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

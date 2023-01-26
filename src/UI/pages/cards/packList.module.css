@@ -51,6 +51,7 @@
 .backBlock {
     padding-top: 25px;
     cursor: pointer;
+    width: 150px;
 }
 
 .backBlock span {

@@ -35,8 +35,8 @@ export function TablesPackList() {
     dispatch(getCardsPackTC(user_id ? { user_id } : {}));
   }, []);
 
-  const learnCards = () => {
-    alert("функция в разработке");
+  const learnCards = (cardsPack_id: string) => {
+    navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
   const getPackPage = (cardsPack_id: string) => {
@@ -102,12 +102,13 @@ export function TablesPackList() {
               <div
                 style={{
                   display: "flex",
+                  alignItems: "baseline",
                   // marginTop: "15px",
                   // marginBottom: "5px",
                 }}
               >
                 <button
-                  onClick={learnCards}
+                  onClick={() => learnCards(row._id)}
                   className={s.button_style}
                   disabled={row.cardsCount === 0}
                 >

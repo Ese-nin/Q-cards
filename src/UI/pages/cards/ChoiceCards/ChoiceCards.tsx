@@ -26,7 +26,7 @@ export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
   const disabled = appStatus === "loading";
 
   return (
-    <div>
+    <div style={{ display: "flex", gap: "5px" }}>
       <SuperButton
         disabled={disabled}
         xType={params.user_id ? "" : "secondary"}

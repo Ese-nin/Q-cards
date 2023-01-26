@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import { SuperButton } from "../../common";
 import s from "./learn.module.css";
 import { CardType } from "../../../dal/cardsAPI";
-import { useAppDispatch, useAppSelector } from "../../../bll/store";
+import { useAppDispatch, useAppSelector } from "bll/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { getCardsPageTC, putAGradeTC } from "../../../bll/reducers/cards-reducer";
-import SuperRadio from "../../common/c6-SuperRadio/SuperRadio";
-import back from "../../../assets/icon/back.svg";
-import { PATH } from "../../../bll/Path";
+import { getCardsPageTC, putAGradeTC } from "bll/reducers/cards-reducer";
+import { SuperRadio } from "UI/common";
+import back from "assets/icon/back.svg";
+import { PATH } from "bll/Path";
 
 type LearnPropsType = {
   namePack?: string;
   question?: string;
   answer?: string;
 
-  rating?: number; //для показа кол-во повтора этого вароса
+  rating?: number; //для показа кол-во повтора этого вопроса
 };
 
 const getCard = (cards: CardType[]) => {
@@ -40,7 +40,7 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   const { cards } = useAppSelector((state) => state.cards);
   const cardsPack = useAppSelector((state) => state.cards);
   const [first, setFirst] = useState<boolean>(true);
-  const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
   const [card, setCard] = useState<CardType>({} as CardType);
@@ -77,30 +77,26 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   };
 
   const onChangeGrade = (value: string) => {
+    onChangeOption(value);
     switch (value) {
       case "не знал": {
         setGrade(1);
-        onChangeOption(value);
         break;
       }
       case "забыл": {
         setGrade(2);
-        onChangeOption(value);
         break;
       }
       case "долго думал": {
         setGrade(3);
-        onChangeOption(value);
         break;
       }
       case "перепутал": {
         setGrade(4);
-        onChangeOption(value);
         break;
       }
       case "знал": {
         setGrade(5);
-        onChangeOption(value);
         break;
       }
       default:
@@ -113,14 +109,14 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   };
 
   const BackToPackList = () => {
-    navigate(PATH.PACK_PAGE);
+    navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
   return (
     <div>
       <div className={s.backBlock} onClick={BackToPackList}>
         <img src={back} alt="back" />
-        <span>Back to Packs List</span>
+        <span>Back to Cards</span>
       </div>
       <div className={s.learnPageContainer}>
         <div className={s.learnContainer}>

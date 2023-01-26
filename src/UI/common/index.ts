@@ -7,3 +7,4 @@ export { SuperButton } from "./c2-SuperButton/SuperButton";
 export { SuperCheckbox } from "./c3-SuperCheckbox/SuperCheckbox";
 export { SuperSelect } from "./c5-SuperSelect/SuperSelect";
 export { SuperPagination } from "./c9-SuperPagination/SuperPagination";
+export { SuperRadio } from "./c6-SuperRadio/SuperRadio";

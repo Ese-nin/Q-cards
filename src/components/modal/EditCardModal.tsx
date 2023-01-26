@@ -58,6 +58,7 @@ export const EditCardModal = (props: PropsType) => {
     dispatch(
       renameCardQuestionTC({ _id: card_id, question: Question, answer: Answer }, cardsPackId)
     );
+    setOpen(false);
   };
 
   return (

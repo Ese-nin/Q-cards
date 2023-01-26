@@ -37,7 +37,8 @@ export const PackPage = () => {
   const cardsPack_id = params.cardsPack_id;
 
   const BackToPackList = () => {
-    navigate(-1);
+    // const totalPath = meID === packUserID ? PATH.PACK_LIST + "?user_id=" + meID : PATH.PACK_LIST;
+    navigate(PATH.PACK_LIST);
   };
 
   const onChangePagination = (page: number, pageCount: number) => {

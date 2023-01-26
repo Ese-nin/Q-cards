@@ -11,7 +11,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: "Montserrat";
     font-style: normal;
 }
 
@@ -53,7 +52,6 @@
 .nextButton {
     display: flex;
     margin-top: 20px;
-    margin-left: 25px;
 }
 
 .question {
@@ -64,8 +62,7 @@
 }
 
 .answerContainer {
-    margin: 10px;
-    font-family: "Montserrat";
+    margin: 10px auto;
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -85,7 +82,6 @@
 }
 
 .buttonStyle {
-    font-family: "Montserrat";
     font-style: normal;
     font-weight: 500;
     font-size: 16px;
@@ -95,9 +91,9 @@
     text-align: center;
     letter-spacing: 0.01em;
     color: #ececf9;
-    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
     background: #366eff;
-    box-shadow: 0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
     border-radius: 30px;
     width: 300px;
     cursor: pointer;

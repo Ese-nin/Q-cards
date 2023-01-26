@@ -30,7 +30,9 @@ export const AddNewCardModal = (props: PropsType) => {
   // для инпута---------------------------------------------------------
   const [Question, setQuestion] = React.useState<string>("");
   const handleChangeQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // if (e.target.value.trim().length) {
     setQuestion(e.target.value);
+    // }
   };
 
   const [Answer, setAnswer] = React.useState<string>("");
@@ -41,8 +43,7 @@ export const AddNewCardModal = (props: PropsType) => {
 
   const addNewCard = (Question: string, Answer: string) => {
     dispatch(addNewCardTC({ cardsPack_id, question: Question, answer: Answer }));
-    // setSearchParams({...params, cardsPack_id, cardQuestion: Question});
-    handleClose();
+    setOpen(false);
   };
 
   return (
