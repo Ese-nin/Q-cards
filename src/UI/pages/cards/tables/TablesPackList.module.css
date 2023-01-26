@@ -1,35 +1,38 @@
 .button_style {
-  margin: 5px;
-  min-width: 20px;
-  padding: 0;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
+    margin: 5px;
+    min-width: 20px;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 6px;
 }
 
 .icon_style {
-  display: flex;
+    display: flex;
 }
 
 .button_style:disabled {
-  background: darkgrey;
+    background: #ceb3b3;
+    cursor: default;
 }
 
-.button_style:hover {
-  background: cadetblue;
+.button_style:not([disabled]):hover {
+    background: cadetblue;
 }
 
 .btnNamePagePack {
-  padding: 0;
-  border: none;
-  font: inherit;
-  color: inherit;
-  background-color: transparent;
-  cursor: pointer;
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
 }
+
 .sortIcon {
-  width: 8px;
-  height: 6px;
+    width: 8px;
+    height: 6px;
 }
