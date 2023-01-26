@@ -61,6 +61,7 @@
     margin: 5px;
     min-width: 20px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .icon_style {

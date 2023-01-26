@@ -101,24 +101,24 @@ export function TablesPackList() {
               <div
                 style={{
                   display: "flex",
-                  marginTop: "15px",
-                  marginBottom: "5px",
+                  // marginTop: "15px",
+                  // marginBottom: "5px",
                 }}
               >
-                <SuperButton
+                <button
                   onClick={learnCards}
                   className={s.button_style}
                   disabled={row.cardsCount === 0}
                 >
                   <SchoolIcon className={s.icon_style} />
-                </SuperButton>
+                </button>
                 {meID === row.user_id && (
-                  <div>
+                  <>
                     <EditPackModal name={row.name} id={row._id} userId={row.user_id} />
                     <SuperButton className={s.button_style}>
                       <DeletePackModal name={row.name} id={row._id} userId={row.user_id} />
                     </SuperButton>
-                  </div>
+                  </>
                 )}
               </div>
             </TableRow>

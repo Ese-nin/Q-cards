@@ -30,9 +30,9 @@ export const DeleteCardModal = (props: PropsType) => {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="contained" className={s.button_style}>
+      <button onClick={handleOpen} className={s.button_style}>
         <DeleteOutlineIcon className={s.icon_style} />
-      </Button>
+      </button>
 
       <BasicModal open={open} handleClose={handleClose}>
         <div className={s.firstBlock}>

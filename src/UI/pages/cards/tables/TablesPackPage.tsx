@@ -52,8 +52,6 @@ export default function TablesPackPage() {
     setSearchParams({ ...params, sortPacks: newSort, page: 1 });
   };
 
-  console.log(cards);
-
   if (!cards.length && cardsStatus !== "loading") {
     navigate(PATH.PACK_PAGE_EMPTY + "?cardsPack_id=" + cardsPack_id);
   }
@@ -103,8 +101,8 @@ export default function TablesPackPage() {
                   <div
                     style={{
                       display: "flex",
-                      marginTop: "15px",
-                      marginBottom: "5px",
+                      // marginTop: "15px",
+                      // marginBottom: "5px",
                     }}
                   >
                     <EditCardModal

@@ -62,9 +62,9 @@ export const EditCardModal = (props: PropsType) => {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="contained">
+      <button onClick={handleOpen} className={s.button_style}>
         <BorderColorIcon className={s.icon_style} />
-      </Button>
+      </button>
 
       <BasicModal open={open} handleClose={handleClose}>
         <div className={s.firstBlock}>
