@@ -10,7 +10,7 @@ import {
   RenameCardQuestionType,
 } from "dal/cardsAPI";
 import { AppThunk } from "../store";
-import { learnAPI } from "../../dal/learnAPI";
+import { learnAPI } from "dal/learnAPI";
 
 const initialState = {
   cards: [] as CardType[],

@@ -21,8 +21,8 @@ import s from "./TablesPackList.module.css";
 import { PATH } from "bll/Path";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
-import { EditCardModal } from "../../../../components/modal/EditCardModal";
-import { DeleteCardModal } from "../../../../components/modal/DeleteCardModal";
+import { EditCardModal } from "components/modal/EditCardModal";
+import { DeleteCardModal } from "components/modal/DeleteCardModal";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
