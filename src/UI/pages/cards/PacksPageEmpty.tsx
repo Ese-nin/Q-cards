@@ -34,7 +34,7 @@ export const PackPageEmpty = () => {
   }
 
   const BackToPackList = () => {
-    navigate(-2);
+    navigate(PATH.PACK_LIST);
   };
 
   const viewButton = meID === packUserID;
