@@ -6,13 +6,14 @@ import logo from "./Group 753.png";
 import { useAppSelector } from "bll/store";
 import s from "./header.module.css";
 import { NavLink } from "react-router-dom";
-import { isLoggedInSelector, nameSelector } from "bll/selectors";
+import { avatarSelector, isLoggedInSelector, nameSelector } from "bll/selectors";
 import { PATH } from "bll/Path";
 import { SuperButton } from "../c2-SuperButton/SuperButton";
 
 export default function MenuAppBar() {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
   const Name = useAppSelector(nameSelector);
+  const Avatar = useAppSelector(avatarSelector);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -24,9 +25,6 @@ export default function MenuAppBar() {
         >
           <img src={logo} alt="logo" />
           <div className={s.tempDiv}>
-            <NavLink to={PATH.PROFILE} className={({ isActive }) => (isActive ? s.active : "")}>
-              Profile
-            </NavLink>
             <NavLink to={PATH.LOGIN} className={({ isActive }) => (isActive ? s.active : "")}>
               Login
             </NavLink>
@@ -56,7 +54,14 @@ export default function MenuAppBar() {
             </NavLink>
           </div>
 
-          {isLoggedIn && <span>{Name} photo</span>}
+          {isLoggedIn && (
+            <span style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+              <NavLink to={PATH.PROFILE} className={({ isActive }) => (isActive ? s.active : "")}>
+                {Name}
+              </NavLink>
+              <img src={Avatar} alt="avatar" className={s.imgAvatar} />
+            </span>
+          )}
           {isLoggedIn || (
             <>
               <NavLink to={PATH.LOGIN}>
