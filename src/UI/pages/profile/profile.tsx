@@ -8,7 +8,12 @@ import { Logout } from "@mui/icons-material";
 import { logoutTC, setNewNameTC } from "bll/reducers/auth-reducer";
 import { EditableSpan } from "UI/common";
 import { PATH } from "bll/Path";
-import { emailSelector, isLoggedInSelector, nameSelector } from "bll/selectors";
+import {
+  emailSelector,
+  isLoggedInSelector,
+  nameSelector,
+  publicCardPacksCount,
+} from "bll/selectors";
 import back from "../../../assets/icon/back.svg";
 
 export const Profile = () => {
@@ -17,6 +22,7 @@ export const Profile = () => {
   const Name = useAppSelector(nameSelector);
   const Email = useAppSelector(emailSelector);
   const navigate = useNavigate();
+  const totalPack = useAppSelector(publicCardPacksCount);
 
   const LogOutHandler = useCallback(() => {
     dispatch(logoutTC());
@@ -49,6 +55,7 @@ export const Profile = () => {
         <div>
           <EditableSpan value={Name} onChange={changeName} />
         </div>
+        <span>Количество созданных колод: {totalPack} </span>
         <span className={s.mailText}>{Email}</span>
         <Button variant="outlined" startIcon={<Logout />} onClick={LogOutHandler}>
           Log out

@@ -8,6 +8,8 @@ export const emailSelector = (state: AppRootStateType) => state.auth.email;
 export const isHaveAccountSelector = (state: AppRootStateType) => state.auth.isHaveAccount;
 export const isSentInstructionSelector = (state: AppRootStateType) => state.auth.isSentInstruction;
 
+export const publicCardPacksCount = (state: AppRootStateType) => state.auth.publicCardPacksCount;
+
 // app-reducer
 export const appStatusSelector = (state: AppRootStateType) => state.app.appStatus;
 export const errorSelector = (state: AppRootStateType) => state.app.error;

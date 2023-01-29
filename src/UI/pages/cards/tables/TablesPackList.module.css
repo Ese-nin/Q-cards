@@ -36,3 +36,8 @@
     width: 8px;
     height: 6px;
 }
+
+.tablesNotFound{
+    padding: 25px;
+    text-align: end;
+}

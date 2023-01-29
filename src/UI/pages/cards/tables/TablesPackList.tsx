@@ -95,7 +95,7 @@ export function TablesPackList() {
       </TableRow>
     ))
   ) : (
-    <div>Packs not found. Choose other search parameters.</div>
+    <div className={s.tablesNotFound}>Packs not found. Choose other search parameters.</div>
   );
 
   return (
