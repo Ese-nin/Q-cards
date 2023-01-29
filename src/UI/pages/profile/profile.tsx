@@ -1,7 +1,6 @@
 import React, { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { Navigate, useNavigate } from "react-router-dom";
-import avatar from "./Ellipse 45.png";
 import s from "./profile.module.css";
 import { Button } from "@mui/material";
 import { Logout } from "@mui/icons-material";
@@ -15,6 +14,7 @@ import {
   publicCardPacksCount,
 } from "bll/selectors";
 import back from "../../../assets/icon/back.svg";
+import { InputTypeFile } from "./inputTypeFile";
 
 export const Profile = () => {
   const dispatch = useAppDispatch();
@@ -51,7 +51,9 @@ export const Profile = () => {
       </div>
       <div className={s.profileBlock}>
         <span className={s.personalInfo}>Personal Information</span>
-        <img src={avatar} alt="avatar" className={s.imgAvatar} />
+        <div>
+          <InputTypeFile />
+        </div>
         <div>
           <EditableSpan value={Name} onChange={changeName} />
         </div>

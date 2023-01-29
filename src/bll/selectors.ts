@@ -4,6 +4,7 @@ import { AppRootStateType } from "./store";
 export const isLoggedInSelector = (state: AppRootStateType) => state.auth.isLoggedIn;
 export const user_idSelector = (state: AppRootStateType) => state.auth.user_id;
 export const nameSelector = (state: AppRootStateType) => state.auth.name;
+export const avatarSelector = (state: AppRootStateType) => state.auth.avatar;
 export const emailSelector = (state: AppRootStateType) => state.auth.email;
 export const isHaveAccountSelector = (state: AppRootStateType) => state.auth.isHaveAccount;
 export const isSentInstructionSelector = (state: AppRootStateType) => state.auth.isSentInstruction;

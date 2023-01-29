@@ -10,6 +10,7 @@ const initialState = {
   isHaveAccount: false,
   isSentInstruction: false,
   name: "",
+  avatar: "",
   email: "",
   user_id: "",
   publicCardPacksCount: 0,
@@ -37,6 +38,8 @@ export const authReducer = (
       return { ...state, isHaveAccount: action.isHaveAccount };
     case "AUTH/SET_NEW_NAME":
       return { ...state, name: action.name };
+    case "AUTH/SET_NEW_AVATAR":
+      return { ...state, avatar: action.avatar };
     case "AUTH/SENT_INSTRUCTION":
       return { ...state, isSentInstruction: action.isSent };
     default:
@@ -64,6 +67,8 @@ export const logOutAC = () => ({ type: "AUTH/SET_LOG_OUT", isLoggedIn: false } a
 export const setHaveAccountAC = (isHaveAccount: boolean) =>
   ({ type: "AUTH/SET_HAVE_ACC", isHaveAccount } as const);
 export const changeNameAC = (name: string) => ({ type: "AUTH/SET_NEW_NAME", name } as const);
+export const changeAvatarAC = (avatar: string) =>
+  ({ type: "AUTH/SET_NEW_AVATAR", avatar } as const);
 export const sentInstructionAC = (isSent: boolean) =>
   ({ type: "AUTH/SENT_INSTRUCTION", isSent } as const);
 
@@ -124,6 +129,7 @@ export const initializeProfileTC = (): AppThunk => (dispatch) => {
       if (res.data.name) {
         const { name, email, _id, publicCardPacksCount } = res.data;
         dispatch(logInAC(name, email, _id, publicCardPacksCount));
+        dispatch(changeAvatarAC(res.data.avatar));
         dispatch(setAppStatusAC("succeeded"));
       }
     })
@@ -136,12 +142,13 @@ export const initializeProfileTC = (): AppThunk => (dispatch) => {
     });
 };
 
-export const setNewNameTC = (name: string) => (dispatch: Dispatch) => {
+export const setNewNameTC = (name: string, avatar?: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC("loading"));
   authAPI
-    .changeName(name)
+    .changeName(name, avatar)
     .then((res) => {
       dispatch(changeNameAC(res.data.updatedUser.name));
+      dispatch(changeAvatarAC(res.data.updatedUser.avatar));
       dispatch(setAppStatusAC("succeeded"));
     })
     .catch((err: AxiosError<{ error: string }>) => {
@@ -185,10 +192,12 @@ export type AuthActionsType =
   | LogOutActionType
   | SetHaveAccountActionType
   | changeNameActionType
-  | SentInstructionActionType;
+  | SentInstructionActionType
+  | changeAvatarActionType;
 
 type LogInActionType = ReturnType<typeof logInAC>;
 type LogOutActionType = ReturnType<typeof logOutAC>;
 type SetHaveAccountActionType = ReturnType<typeof setHaveAccountAC>;
 type changeNameActionType = ReturnType<typeof changeNameAC>;
 type SentInstructionActionType = ReturnType<typeof sentInstructionAC>;
+type changeAvatarActionType = ReturnType<typeof changeAvatarAC>;

@@ -22,7 +22,7 @@ export const authAPI = {
   },
   changeName(name: string, avatar?: string) {
     // тут потом нужно будет допилить изменение аватара!!!!
-    return instance.put<ChangeNameResponseType>("/auth/me", { name });
+    return instance.put<ChangeNameResponseType>("/auth/me", { name, avatar });
   },
   forgotPass(email: string) {
     const data = {
