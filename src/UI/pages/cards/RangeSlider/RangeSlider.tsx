@@ -1,10 +1,9 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import s from "./RangeSlider.module.css";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { appStatusSelector, maxCardsCountSelector, minCardsCountSelector } from "bll/selectors";
-import { useDebounce } from "utils/hooks/useDebounce";
 import { useSearchParams } from "react-router-dom";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
 
@@ -20,42 +19,29 @@ export const RangeSlider = () => {
   const userID = searchParams.get("user_id");
 
   const [values, setValues] = useState<number[]>([0, 100]);
-  const [isFirstLoad, setFirstLoad] = useState(true);
-  const [isSecondLoad, setSecondLoad] = useState(true);
-
-  const sliderDebouncedValue = useDebounce<number[]>(values, 800);
 
   useEffect(() => {
     setValues([minCardsCount, maxCardsCount]);
-  }, [maxCardsCount, minCardsCount]);
+  }, [minCardsCount, maxCardsCount]);
 
-  useEffect(() => {
-    if (!isFirstLoad && !isSecondLoad) {
-      let min = values[0];
-      let max = values[1];
+  const minDistance = 3;
+  const changeSliderValues = (e: Event, value: number | number[], activeThumb: number) => {
+    if (Array.isArray(value)) {
+      if (activeThumb === 0) {
+        setValues([Math.min(value[0], values[1] - minDistance), values[1]]);
+      } else {
+        setValues([values[0], Math.max(value[1], values[0] + minDistance)]);
+      }
+    }
+  };
+
+  const onChangeCommittedHandler = (e: Event | SyntheticEvent, value: number | number[]) => {
+    if (Array.isArray(value)) {
+      let min = value[0];
+      let max = value[1];
       const params = userID ? { user_id: userID, min, max } : { min, max };
       dispatch(getCardsPackTC({ ...searchParamsObject, ...params }));
       setSearchParams({ ...searchParamsObject, ...params });
-    }
-
-    if (isFirstLoad) {
-      setFirstLoad(false);
-    }
-    if (!isFirstLoad && isSecondLoad) {
-      setSecondLoad(false);
-    }
-  }, [sliderDebouncedValue]);
-
-  const minDistance = 3;
-  const changeSliderValues = (event: Event, value: number | number[], activeThumb: number) => {
-    if (!Array.isArray(value)) {
-      return;
-    }
-
-    if (activeThumb === 0) {
-      setValues([Math.min(value[0], values[1] - minDistance), values[1]]);
-    } else {
-      setValues([values[0], Math.max(value[1], values[0] + minDistance)]);
     }
   };
 
@@ -67,6 +53,7 @@ export const RangeSlider = () => {
         max={maxCardsCount}
         value={values}
         onChange={changeSliderValues}
+        onChangeCommitted={onChangeCommittedHandler}
         disableSwap
         disabled={appStatus === "loading"}
       />
