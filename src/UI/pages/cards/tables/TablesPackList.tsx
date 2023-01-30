@@ -18,6 +18,7 @@ import { DeletePackModal } from "components/modal/DeletePackModal";
 import { EditPackModal } from "components/modal/EditPackModal";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
+import defaultCard from "assets/icon/defaultCard.jpg";
 
 export function TablesPackList() {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export function TablesPackList() {
       <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
         <TableCell component="th" scope="row">
           <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
+            <img src={defaultCard} alt="defaultCard" />
             {row.name}
           </button>
         </TableCell>
@@ -74,6 +76,7 @@ export function TablesPackList() {
           style={{
             display: "flex",
             alignItems: "baseline",
+            padding: "20px 10px",
           }}
         >
           <button

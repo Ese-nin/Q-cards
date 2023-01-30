@@ -30,7 +30,15 @@
     color: inherit;
     background-color: transparent;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
+
+.btnNamePagePack img{
+    max-width: 100px;
+    max-height: 75px;
+   }
 
 .sortIcon {
     width: 8px;
