@@ -1,11 +1,16 @@
 import { BasicModal } from "./BasicModals";
-import { SuperSelect } from "../../UI/common";
 import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import * as React from "react";
+import { useState } from "react";
 import { addNewCardTC } from "../../bll/reducers/cards-reducer";
 import { useAppDispatch } from "../../bll/store";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 type PropsType = {
   cardsPackId: string;
@@ -16,26 +21,28 @@ export const AddNewCardModal = (props: PropsType) => {
 
   const Title = "Add new card";
 
-  // чекбокс --------------------------------------------
-  const TextOrImg = [
-    { id: 1, value: "Text" },
-    { id: 2, value: "Image" },
-  ];
-
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  // чекбокс --------------------------------------------
+  const [chose, setChose] = useState("");
+  const handleChange = (event: SelectChangeEvent) => {
+    setChose(event.target.value as string);
+    console.log(typeof chose);
+  };
+
   // -------------------------------------------------------------
 
   // для инпута---------------------------------------------------------
-  const [Question, setQuestion] = React.useState<string>("");
+  const [Question, setQuestion] = useState<string>("");
   const handleChangeQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
     // if (e.target.value.trim().length) {
     setQuestion(e.target.value);
     // }
   };
 
-  const [Answer, setAnswer] = React.useState<string>("");
+  const [Answer, setAnswer] = useState<string>("");
   const handleChangeAnswer = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(e.target.value);
   };
@@ -59,18 +66,36 @@ export const AddNewCardModal = (props: PropsType) => {
 
         <div>
           <span>Choose a question format</span>
-          <SuperSelect options={TextOrImg} />
+
+          <Box sx={{ minWidth: 200, paddingTop: "15px" }}>
+            <FormControl fullWidth>
+              <InputLabel id="select-label">Выберете формат вопроса</InputLabel>
+              <Select
+                labelId="select-label1"
+                id="select-label"
+                value={chose}
+                label="Chose"
+                onChange={handleChange}
+              >
+                <MenuItem value={1}>Текстовый вопрос</MenuItem>
+                <MenuItem value={2}>Изображение</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </div>
 
         <div>
-          <TextField
-            id="Question"
-            label="Question"
-            variant="standard"
-            sx={{ width: "347px" }}
-            onChange={handleChangeQuestion}
-            value={Question}
-          />
+          {+chose === 1 && (
+            <TextField
+              id="Question"
+              label="Question"
+              variant="standard"
+              sx={{ width: "347px" }}
+              onChange={handleChangeQuestion}
+              value={Question}
+            />
+          )}
+          {+chose === 2 && <span>фото</span>}
           <TextField
             id="Answer"
             label="Answer"
@@ -80,6 +105,7 @@ export const AddNewCardModal = (props: PropsType) => {
             value={Answer}
           />
         </div>
+
         <div className={s.saveBlock}>
           <Button variant="outlined" onClick={handleClose}>
             Cancel
