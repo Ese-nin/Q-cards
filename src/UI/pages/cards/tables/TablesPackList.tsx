@@ -67,7 +67,7 @@ export function TablesPackList() {
         <TableCell align="left">
           {new Date(row.updated).getDate()}.
           {new Date(row.updated).getMonth() < 10
-            ? new Date(row.updated).getMonth() + "1"
+            ? "0" + (new Date(row.updated).getMonth() + 1)
             : new Date(row.updated).getMonth() + 1}
           .{new Date(row.updated).getFullYear()}
         </TableCell>
