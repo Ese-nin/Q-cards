@@ -7,7 +7,7 @@ export const packsAPI = {
 
   addNewCardPack(params: AddNewCardPackType) {
     const data = {
-      cardsPack: params
+      cardsPack: params,
     };
     return instance.post<GetCardsPackResponseType>("cards/pack", data);
   },
@@ -59,16 +59,11 @@ export type CardPacksType = {
   user_name: string;
   private: boolean;
   name: string;
-  path: string;
   grade: number;
-  shots: number;
   cardsCount: number;
-  type: string;
-  rating: number;
   created: string;
   updated: string;
-  more_id: string;
-  __v: number;
+  cover: string;
 };
 
 export type AddNewCardPackType = {

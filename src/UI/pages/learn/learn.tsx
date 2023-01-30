@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { SuperButton } from "../../common";
+import { SuperButton, SuperRadio } from "../../common";
 import s from "./learn.module.css";
 import { CardType } from "../../../dal/cardsAPI";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCardsPageTC, putAGradeTC } from "bll/reducers/cards-reducer";
-import { SuperRadio } from "UI/common";
+
 import back from "assets/icon/back.svg";
 import { PATH } from "bll/Path";
 

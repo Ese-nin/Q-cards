@@ -75,3 +75,17 @@
 .button_style:hover {
     background: cadetblue;
 }
+
+.coverContainer{
+
+}
+
+.coverMenu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.cover{
+
+}
