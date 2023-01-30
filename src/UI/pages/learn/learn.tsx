@@ -9,14 +9,6 @@ import { SuperRadio } from "UI/common";
 import back from "assets/icon/back.svg";
 import { PATH } from "bll/Path";
 
-type LearnPropsType = {
-  namePack?: string;
-  question?: string;
-  answer?: string;
-
-  rating?: number; //для показа кол-во повтора этого вопроса
-};
-
 const getCard = (cards: CardType[]) => {
   const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
   const rand = Math.random() * sum;
@@ -32,7 +24,7 @@ const getCard = (cards: CardType[]) => {
   return cards[res.id + 1];
 };
 
-export const Learn = ({ namePack, rating }: LearnPropsType) => {
+export const Learn = () => {
   const [visibleAnswer, setVisibleAnswer] = useState<boolean>(false);
   const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
   const [valueRadio, onChangeOption] = useState(grades[0]);
@@ -46,25 +38,14 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   const [card, setCard] = useState<CardType>({} as CardType);
   const navigate = useNavigate();
 
-  console.log(card);
-
   const dispatch = useAppDispatch();
   useEffect(() => {
-    console.log("LearnContainer useEffect");
-
     if (first) {
       dispatch(getCardsPageTC({ ...params, cardsPack_id })); // тут ошибка
       setFirst(false);
     }
-
-    console.log("cards", cards);
     if (cards.length > 0) setCard(getCard(cards));
-
-    return () => {
-      console.log("LearnContainer useEffect off");
-    };
   }, [dispatch, params.id, cards, first]);
-  console.log(grade + " Grade");
   const onNext = () => {
     setVisibleAnswer(false);
 
@@ -77,26 +58,30 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
   };
 
   const onChangeGrade = (value: string) => {
-    onChangeOption(value);
     switch (value) {
       case "не знал": {
         setGrade(1);
+        onChangeOption(value);
         break;
       }
       case "забыл": {
         setGrade(2);
+        onChangeOption(value);
         break;
       }
       case "долго думал": {
         setGrade(3);
+        onChangeOption(value);
         break;
       }
       case "перепутал": {
         setGrade(4);
+        onChangeOption(value);
         break;
       }
       case "знал": {
         setGrade(5);
+        onChangeOption(value);
         break;
       }
       default:
@@ -104,19 +89,19 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
     }
   };
 
-  const onClickButtonHandler = () => {
+  const onVisibleHandler = () => {
     setVisibleAnswer(!visibleAnswer);
   };
 
   const BackToPackList = () => {
-    navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
+    navigate(PATH.PACK_PAGE);
   };
 
   return (
     <div>
       <div className={s.backBlock} onClick={BackToPackList}>
         <img src={back} alt="back" />
-        <span>Back to Cards</span>
+        <span>Back to Packs List</span>
       </div>
       <div className={s.learnPageContainer}>
         <div className={s.learnContainer}>
@@ -140,7 +125,7 @@ export const Learn = ({ namePack, rating }: LearnPropsType) => {
               </div>
             ) : (
               <div className={s.showAnswer}>
-                <SuperButton className={s.buttonStyle} onClick={onClickButtonHandler}>
+                <SuperButton className={s.buttonStyle} onClick={onVisibleHandler}>
                   Показать ответ
                 </SuperButton>
               </div>
