@@ -6,6 +6,7 @@ import s from "./profile.module.css";
 import { setNewNameTC } from "../../../bll/reducers/auth-reducer";
 import { useAppDispatch, useAppSelector } from "../../../bll/store";
 import { avatarSelector, nameSelector } from "../../../bll/selectors";
+import { convertFileToBase64 } from "../../../bll/convertFileToBase64";
 
 export const InputTypeFile = () => {
   const dispatch = useAppDispatch();
@@ -32,15 +33,6 @@ export const InputTypeFile = () => {
     }
   };
   console.log({ Avatar });
-
-  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const file64 = reader.result as string;
-      callBack(file64);
-    };
-    reader.readAsDataURL(file);
-  };
 
   const wrongImg = () => {
     alert("ошибка с картинкой !!!");
