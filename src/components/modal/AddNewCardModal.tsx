@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { AddImageQuestion } from "../../UI/pages/cards/tables/AddImageQuestion";
 
 type PropsType = {
   cardsPackId: string;
@@ -84,7 +85,7 @@ export const AddNewCardModal = (props: PropsType) => {
           </Box>
         </div>
 
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           {+chose === 1 && (
             <TextField
               id="Question"
@@ -95,7 +96,11 @@ export const AddNewCardModal = (props: PropsType) => {
               value={Question}
             />
           )}
-          {+chose === 2 && <span>фото</span>}
+          {+chose === 2 && (
+            <div>
+              <AddImageQuestion />
+            </div>
+          )}
           <TextField
             id="Answer"
             label="Answer"
