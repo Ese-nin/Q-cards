@@ -52,6 +52,9 @@ export const AddNewCardModal = (props: PropsType) => {
   const addNewCard = (Question: string, Answer: string) => {
     dispatch(addNewCardTC({ cardsPack_id, question: Question, answer: Answer }));
     setOpen(false);
+    setQuestion("");
+    setAnswer("");
+    setChose("");
   };
 
   return (
@@ -98,7 +101,7 @@ export const AddNewCardModal = (props: PropsType) => {
           )}
           {+chose === 2 && (
             <div>
-              <AddImageQuestion />
+              <AddImageQuestion cardsPackId={cardsPack_id} answer={Answer} />
             </div>
           )}
           <TextField

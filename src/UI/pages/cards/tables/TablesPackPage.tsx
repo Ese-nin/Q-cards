@@ -106,6 +106,7 @@ export default function TablesPackPage() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#EFEFEF" }}>
+            {/*здесь добавить проверку на наличие questionImg - если его нет то отображается письменный вопрос*/}
             <TableCell>Question</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">
