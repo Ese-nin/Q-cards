@@ -24,6 +24,12 @@ export const RangeSlider = () => {
     setValues([minCardsCount, maxCardsCount]);
   }, [minCardsCount, maxCardsCount]);
 
+  useEffect(() => {
+    if (!searchParamsObject.min && !searchParamsObject.max) {
+      setValues([minCardsCount, maxCardsCount]);
+    }
+  }, [searchParams]);
+
   const minDistance = 3;
   const changeSliderValues = (e: Event, value: number | number[], activeThumb: number) => {
     if (Array.isArray(value)) {
