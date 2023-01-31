@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { SuperButton } from "../../common";
+import { SuperButton } from "UI/common";
 import s from "./learn.module.css";
-import { CardType } from "../../../dal/cardsAPI";
+import { CardType } from "dal/cardsAPI";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCardsPageTC, putAGradeTC } from "bll/reducers/cards-reducer";
@@ -19,14 +19,14 @@ const getCard = (cards: CardType[]) => {
     },
     { sum: 0, id: -1 }
   );
-  console.log("test: ", sum, rand, res);
 
   return cards[res.id + 1];
 };
 
+const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
+
 export const Learn = () => {
   const [visibleAnswer, setVisibleAnswer] = useState<boolean>(false);
-  const grades = ["не знал", "забыл", "долго думал", "перепутал", "знал"];
   const [valueRadio, onChangeOption] = useState(grades[0]);
   const [grade, setGrade] = useState<number>(1);
   const { cards } = useAppSelector((state) => state.cards);
@@ -58,30 +58,26 @@ export const Learn = () => {
   };
 
   const onChangeGrade = (value: string) => {
+    onChangeOption(value);
     switch (value) {
       case "не знал": {
         setGrade(1);
-        onChangeOption(value);
         break;
       }
       case "забыл": {
         setGrade(2);
-        onChangeOption(value);
         break;
       }
       case "долго думал": {
         setGrade(3);
-        onChangeOption(value);
         break;
       }
       case "перепутал": {
         setGrade(4);
-        onChangeOption(value);
         break;
       }
       case "знал": {
         setGrade(5);
-        onChangeOption(value);
         break;
       }
       default:
@@ -93,15 +89,15 @@ export const Learn = () => {
     setVisibleAnswer(!visibleAnswer);
   };
 
-  const BackToPackList = () => {
-    navigate(PATH.PACK_PAGE);
+  const backToCards = () => {
+    navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
   return (
     <div>
-      <div className={s.backBlock} onClick={BackToPackList}>
+      <div className={s.backBlock} onClick={backToCards}>
         <img src={back} alt="back" />
-        <span>Back to Packs List</span>
+        <span>Back to Cards</span>
       </div>
       <div className={s.learnPageContainer}>
         <div className={s.learnContainer}>
