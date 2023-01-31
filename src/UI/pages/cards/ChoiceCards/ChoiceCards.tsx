@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { getCardsPackTC } from "bll/reducers/packs-reducer";
 import { useSearchParams } from "react-router-dom";
-import { SuperButton } from "UI/common";
 import { appStatusSelector } from "bll/selectors";
+import Button from "@mui/material/Button";
 
 type ChoiceCardsPropsType = {
   userID: string;
@@ -27,20 +27,20 @@ export const ChoiceCards: React.FC<ChoiceCardsPropsType> = ({ userID }) => {
 
   return (
     <div style={{ display: "flex", gap: "5px" }}>
-      <SuperButton
+      <Button
         disabled={disabled}
-        xType={params.user_id ? "" : "secondary"}
+        variant={params.user_id ? "contained" : "outlined"}
         onClick={() => chooseCards(userID)}
       >
         My
-      </SuperButton>
-      <SuperButton
+      </Button>
+      <Button
         disabled={disabled}
-        xType={params.user_id ? "secondary" : ""}
+        variant={params.user_id ? "outlined" : "contained"}
         onClick={() => chooseCards("")}
       >
         All
-      </SuperButton>
+      </Button>
     </div>
   );
 };
