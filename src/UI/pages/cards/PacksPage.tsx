@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
@@ -37,7 +37,6 @@ export const PackPage = () => {
   const cardsPack_id = params.cardsPack_id;
 
   const BackToPackList = () => {
-    // const totalPath = meID === packUserID ? PATH.PACK_LIST + "?user_id=" + meID : PATH.PACK_LIST;
     navigate(PATH.PACK_LIST);
   };
 
@@ -46,9 +45,9 @@ export const PackPage = () => {
     setSearchParams({ ...params, page, pageCount });
   };
 
-  const buttonClickHandler = () => {
-    return navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
-  };
+  const learnCards = useCallback(() => {
+    navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
+  }, []);
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
@@ -63,10 +62,6 @@ export const PackPage = () => {
     navigate(-1);
   };
 
-  const learnCards = () => {
-    alert("функция в разработке");
-  };
-
   return (
     <>
       <div className={s.page}>
@@ -77,13 +72,18 @@ export const PackPage = () => {
         <div className={s.addNewPackLine}>
           <div className={s.nameAndBurger}>
             <h2>{packName}</h2>
-            <BurgerMenu renamePack={renamePack} removePack={removePack} learnCards={learnCards} />
+            <BurgerMenu
+              packName={packName}
+              renamePack={renamePack}
+              removePack={removePack}
+              learnCards={learnCards}
+            />
           </div>
 
           {meID === packUserID ? (
             <AddNewCardModal cardsPackId={cardsPack_id} />
           ) : (
-            <Button variant="contained" onClick={buttonClickHandler}>
+            <Button variant="contained" onClick={learnCards}>
               {" "}
               Learn to pack{" "}
             </Button>
