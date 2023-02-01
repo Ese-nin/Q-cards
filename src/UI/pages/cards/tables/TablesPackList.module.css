@@ -49,3 +49,8 @@
     padding: 25px;
     text-align: end;
 }
+
+.imgQuest{
+    max-height: 100px;
+    max-width: 200px;
+}
