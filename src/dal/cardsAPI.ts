@@ -30,6 +30,7 @@ export type CardType = {
   cardsPack_id: string;
   user_id: string;
   answer: string;
+  questionImg: string;
   question: string;
   grade: number;
   shots: number;
