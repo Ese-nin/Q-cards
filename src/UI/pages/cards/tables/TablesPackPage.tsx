@@ -64,7 +64,11 @@ export default function TablesPackPage() {
       cards.map((row) => (
         <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
           <TableCell component="th" scope="row">
-            {row.question}{" "}
+            {row.questionImg ? (
+              <img src={row.questionImg} alt="questionImg" className={s.imgQuest} />
+            ) : (
+              row.question
+            )}
           </TableCell>
           <TableCell align="left">{row.answer}</TableCell>
           <TableCell align="left">

@@ -19,9 +19,15 @@ type PropsType = {
 export const AddNewCardModal = (props: PropsType) => {
   const dispatch = useAppDispatch();
   const cardsPack_id = props.cardsPackId;
-
   const Title = "Add new card";
 
+  // отрисовка картинки в теле модалки==========================
+  const [questionImg, setquestionImg] = useState("");
+  const handlerChangeQuestImg = (file64: string) => {
+    setquestionImg(file64);
+  };
+
+  // открыть закрыть модалку---------------------------------
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -49,12 +55,15 @@ export const AddNewCardModal = (props: PropsType) => {
   };
   //-----------------------------------------------------------
 
-  const addNewCard = (Question: string, Answer: string) => {
-    dispatch(addNewCardTC({ cardsPack_id, question: Question, answer: Answer }));
+  const addNewCard = (Question: string, Answer: string, questionImg?: string) => {
+    dispatch(
+      addNewCardTC({ cardsPack_id, question: Question, answer: Answer, questionImg: questionImg })
+    );
     setOpen(false);
     setQuestion("");
     setAnswer("");
     setChose("");
+    setquestionImg("");
   };
 
   return (
@@ -101,7 +110,15 @@ export const AddNewCardModal = (props: PropsType) => {
           )}
           {+chose === 2 && (
             <div>
-              <AddImageQuestion cardsPackId={cardsPack_id} answer={Answer} />
+              <AddImageQuestion handlerChangeQuestImg={handlerChangeQuestImg} />
+              {questionImg! && (
+                <img
+                  src={questionImg}
+                  alt="questionImg"
+                  className={s.imgQuest}
+                  // onError={wrongImg}
+                />
+              )}
             </div>
           )}
           <TextField
@@ -118,7 +135,7 @@ export const AddNewCardModal = (props: PropsType) => {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => addNewCard(Question, Answer)}>
+          <Button variant="contained" onClick={() => addNewCard(Question, Answer, questionImg)}>
             Save
           </Button>
         </div>
