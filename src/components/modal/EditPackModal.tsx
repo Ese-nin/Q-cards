@@ -3,12 +3,13 @@ import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { renameCardPackTC } from "../../bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "../../bll/store";
 import { user_idSelector } from "../../bll/selectors";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { SuperButton } from "../../UI/common";
+import { InputTypeFileInModal } from "../../UI/common/inputTypeFileCover/inputTypeFileInModal";
 
 type PropsType = {
   name: string;
@@ -26,6 +27,8 @@ export const EditPackModal = (props: PropsType) => {
 
   // для инпута
   const [namePack, setNamePack] = React.useState<string>("");
+
+  const [cover, setCover] = useState<string>("");
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNamePack(e.target.value);
   };
@@ -34,7 +37,7 @@ export const EditPackModal = (props: PropsType) => {
     setNamePack(props.name);
   }, []);
 
-  const renamePack = (PackId: string, namePack: string, UserId: string) => {
+  const renamePack = (PackId: string, namePack: string, UserId: string, cover: string) => {
     UserId === meID
       ? dispatch(renameCardPackTC(PackId, namePack, UserId))
       : dispatch(renameCardPackTC(PackId, namePack));
@@ -43,9 +46,6 @@ export const EditPackModal = (props: PropsType) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const onAddCoverClick = () => {};
-  // тут подгружать картинку через inputTypeFile в setCover и потом диспачить addNewCardsPack
 
   return (
     <>
@@ -61,9 +61,12 @@ export const EditPackModal = (props: PropsType) => {
           <div className={s.coverContainer}>
             <div className={s.coverMenu}>
               <div>Cover</div>
-              <SuperButton onClick={onAddCoverClick}>Change cover</SuperButton>
             </div>
-            <div className={s.cover}>Картинка</div>
+            <div className={s.cover}>
+              <div className={s.cover}>
+                <InputTypeFileInModal cover={cover} setCover={setCover} />
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -81,7 +84,7 @@ export const EditPackModal = (props: PropsType) => {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => renamePack(PackId, namePack, UserId)}>
+          <Button variant="contained" onClick={() => renamePack(PackId, namePack, UserId, cover)}>
             Save
           </Button>
         </div>

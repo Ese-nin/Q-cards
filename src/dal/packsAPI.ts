@@ -63,7 +63,7 @@ export type CardPacksType = {
   cardsCount: number;
   created: string;
   updated: string;
-  cover: string;
+  deckCover: string;
 };
 
 export type AddNewCardPackType = {

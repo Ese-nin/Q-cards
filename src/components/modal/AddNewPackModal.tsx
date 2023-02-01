@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "bll/store";
 import { useSearchParams } from "react-router-dom";
 import { user_idSelector } from "bll/selectors";
 import { SuperButton } from "../../UI/common";
+import { InputTypeFileInModal } from "../../UI/common/inputTypeFileCover/inputTypeFileInModal";
 
 export const AddNewPackModal = () => {
   const dispatch = useAppDispatch();
@@ -31,10 +32,12 @@ export const AddNewPackModal = () => {
     setChecked(event.target.checked);
   };
 
-  const addNewCardsPack = (namePack: string, checked: boolean) => {
+  const addNewCardsPack = (namePack: string, checked: boolean, cover: string) => {
     params.user_id
-      ? dispatch(addNewCardPackTC({ name: namePack, privatePack: checked }, userID))
-      : dispatch(addNewCardPackTC({ name: namePack, privatePack: checked })); // надо еще диспачить и картинку Cover
+      ? dispatch(
+          addNewCardPackTC({ name: namePack, privatePack: checked, deckCover: cover }, userID)
+        )
+      : dispatch(addNewCardPackTC({ name: namePack, privatePack: checked, deckCover: cover })); // надо еще диспачить и картинку Cover
     setCover("");
     setOpen(false);
   };
@@ -58,9 +61,10 @@ export const AddNewPackModal = () => {
         <div className={s.coverContainer}>
           <div className={s.coverMenu}>
             <div>Cover</div>
-            <SuperButton onClick={onAddCoverClick}>Change cover</SuperButton>
           </div>
-          <div className={s.cover}>Картинка</div>
+          <div className={s.cover}>
+            <InputTypeFileInModal cover={cover} setCover={setCover} />
+          </div>
         </div>
         <div>
           <TextField
@@ -83,7 +87,7 @@ export const AddNewPackModal = () => {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => addNewCardsPack(namePack, checked)}>
+          <Button variant="contained" onClick={() => addNewCardsPack(namePack, checked, cover)}>
             Save
           </Button>
         </div>
