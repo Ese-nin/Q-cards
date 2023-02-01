@@ -20,11 +20,12 @@ export const packsAPI = {
     });
   },
 
-  renameCardPack(_id: string, name: string) {
+  renameCardPack(_id: string, name: string, deckCover: string) {
     const data = {
       cardsPack: {
         _id,
         name,
+        deckCover,
       },
     };
     return instance.put<RenameCardPackType>("cards/pack", data);
@@ -81,4 +82,6 @@ export type DeletePackResponseType = {
 export type RenameCardPackType = {
   cardPackID: string;
   newNameCardPack?: string;
+
+  newCover?: string;
 };

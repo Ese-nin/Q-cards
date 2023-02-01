@@ -8,7 +8,7 @@ import { useAppSelector } from "../../../../bll/store";
 import { packUserIdSelector, user_idSelector } from "../../../../bll/selectors";
 
 type BurgerPropsType = {
-  renamePack: (packID: string, packName: string) => void;
+  renamePack: (packID: string, packName: string, cover: string) => void;
   removePack: (packID: string) => void;
   learnCards: () => void;
 };
@@ -48,7 +48,7 @@ export const BurgerMenu: React.FC<BurgerPropsType> = ({ renamePack, removePack }
             <div className={s.buttonGroup}>
               <div
                 className={s.buttonAndName}
-                onClick={() => renamePack(cardsPack_id!, "Update Pack")}
+                onClick={() => renamePack(cardsPack_id!, "Update Pack", "")}
               >
                 <BorderColorIcon className={s.icon_style} />
                 <div className={s.name}>Edit</div>
