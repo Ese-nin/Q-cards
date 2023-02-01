@@ -41,7 +41,7 @@ export const Learn = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (first) {
-      dispatch(getCardsPageTC({ ...params, cardsPack_id })); // тут ошибка
+      dispatch(getCardsPageTC({ ...params, cardsPack_id }));
       setFirst(false);
     }
     if (cards.length > 0) setCard(getCard(cards));
