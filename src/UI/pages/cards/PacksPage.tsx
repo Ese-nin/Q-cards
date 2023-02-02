@@ -31,6 +31,7 @@ export const PackPage = () => {
   const packName = useAppSelector(packNameSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
+  const packs = useAppSelector((state) => state.packs.cardPacks);
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
@@ -40,6 +41,8 @@ export const PackPage = () => {
   const backToPackList = () => {
     navigate(PATH.PACK_LIST);
   };
+
+  const pack = packs.filter((p) => p._id === cardsPack_id)[0];
 
   const onChangePagination = (page: number, pageCount: number) => {
     dispatch(getCardsPageTC({ ...params, cardsPack_id, page, pageCount }));
@@ -74,14 +77,17 @@ export const PackPage = () => {
           <span>Back to Packs List</span>
         </div>
         <div className={s.addNewPackLine}>
-          <div className={s.nameAndBurger}>
-            <h2>{packName}</h2>
-            <BurgerMenu
-              packName={packName}
-              renamePack={renamePack}
-              removePack={removePack}
-              learnCards={learnCards}
-            />
+          <div>
+            <div className={s.nameAndBurger}>
+              <h2>{packName}</h2>
+              <BurgerMenu
+                packName={packName}
+                renamePack={renamePack}
+                removePack={removePack}
+                learnCards={learnCards}
+              />
+            </div>
+            <img className={s.packCover} src={pack.deckCover} alt="pack cover" />
           </div>
 
           {meID === packUserID ? (

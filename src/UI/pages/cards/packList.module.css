@@ -38,6 +38,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
+}
+
+.packCover {
+    width: 200px;
 }
 
 .emptyCenterBlock {
