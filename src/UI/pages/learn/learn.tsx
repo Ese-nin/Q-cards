@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { SuperButton } from "UI/common";
+import { SuperButton, SuperRadio } from "UI/common";
 import s from "./learn.module.css";
 import { CardType } from "dal/cardsAPI";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getCardsPageTC, putAGradeTC } from "bll/reducers/cards-reducer";
-import { SuperRadio } from "UI/common";
 import back from "assets/icon/back.svg";
 import { PATH } from "bll/Path";
 
@@ -40,6 +39,7 @@ export const Learn = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (first) {
       dispatch(getCardsPageTC({ ...params, cardsPack_id }));
@@ -47,6 +47,7 @@ export const Learn = () => {
     }
     if (cards.length > 0) setCard(getCard(cards));
   }, [dispatch, params.id, cards, first]);
+
   const onNext = () => {
     setVisibleAnswer(false);
 

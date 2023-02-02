@@ -23,6 +23,7 @@ import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
 import { EditCardModal } from "components/modal/EditCardModal";
 import { DeleteCardModal } from "components/modal/DeleteCardModal";
+import { dateToDMY } from "utils/dateToDMY";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
@@ -59,7 +60,7 @@ export default function TablesPackPage() {
 
   const tableBody =
     !cards.length && cardQuestion && appStatus !== "loading" ? (
-      <div>Cards not found. Choose other search parameters</div>
+      <div className={s.tablesNotFound}>Cards not found. Choose other search parameters</div>
     ) : (
       cards.map((row) => (
         <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
@@ -71,15 +72,9 @@ export default function TablesPackPage() {
             )}
           </TableCell>
           <TableCell align="left">{row.answer}</TableCell>
+          <TableCell align="left">{dateToDMY(row.updated)}</TableCell>
           <TableCell align="left">
-            {new Date(row.updated).getDate()}.
-            {new Date(row.updated).getMonth() < 10
-              ? new Date(row.updated).getMonth() + "1"
-              : new Date(row.updated).getMonth() + 1}
-            .{new Date(row.updated).getFullYear()}
-          </TableCell>
-          <TableCell align="left">
-            <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
+            <Rating name="half-rating" value={row.grade} readOnly precision={0.5} />
           </TableCell>
 
           {meID === row.user_id && (

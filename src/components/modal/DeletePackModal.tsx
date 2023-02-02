@@ -1,9 +1,9 @@
 import { BasicModal } from "./BasicModals";
 import s from "./Modals.module.css";
 import { Button } from "@mui/material";
-import { deleteCardPackTC } from "../../bll/reducers/packs-reducer";
-import { useAppDispatch, useAppSelector } from "../../bll/store";
-import { user_idSelector } from "../../bll/selectors";
+import { deleteCardPackTC } from "bll/reducers/packs-reducer";
+import { useAppDispatch, useAppSelector } from "bll/store";
+import { user_idSelector } from "bll/selectors";
 import * as React from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { useSearchParams } from "react-router-dom";
