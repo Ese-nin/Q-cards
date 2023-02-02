@@ -38,6 +38,7 @@ export const PackList = () => {
 
   const resetFilter = () => {
     dispatch(getCardsPackTC({}));
+    setSearchParams({});
   };
 
   if (!isLoggedIn) {

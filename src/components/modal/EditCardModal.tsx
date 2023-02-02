@@ -40,6 +40,8 @@ export const EditCardModal = (props: PropsType) => {
   //-----------------------------------------------------------
 
   const [open, setOpen] = React.useState(false);
+
+  const [cover, setCover] = useState<string>("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -60,7 +62,6 @@ export const EditCardModal = (props: PropsType) => {
         <div className={s.firstBlock}>
           <span>{Title}</span>
         </div>
-
         <div style={{ margin: "auto" }}>
           <img src={questionImg} alt="questionImg" className={s.imgQuest} />
         </div>

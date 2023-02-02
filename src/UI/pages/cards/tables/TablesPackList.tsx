@@ -58,7 +58,9 @@ export function TablesPackList() {
       <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
         <TableCell component="th" scope="row">
           <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
-            <img src={defaultCard} alt="defaultCard" />
+            <div className={s.coverContainer + " " + s.cover}>
+              <img src={row.deckCover ? row.deckCover : defaultCard} alt="defaultCard" />
+            </div>
             {row.name}
           </button>
         </TableCell>
