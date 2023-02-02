@@ -19,6 +19,7 @@ import { EditPackModal } from "components/modal/EditPackModal";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
 import defaultCard from "assets/icon/defaultCard.jpg";
+import { dateToDMY } from "utils/dateToDMY";
 
 export function TablesPackList() {
   const navigate = useNavigate();
@@ -64,13 +65,7 @@ export function TablesPackList() {
           </button>
         </TableCell>
         <TableCell align="left">{row.cardsCount}</TableCell>
-        <TableCell align="left">
-          {new Date(row.updated).getDate()}.
-          {new Date(row.updated).getMonth() < 10
-            ? "0" + (new Date(row.updated).getMonth() + 1)
-            : new Date(row.updated).getMonth() + 1}
-          .{new Date(row.updated).getFullYear()}
-        </TableCell>
+        <TableCell align="left">{dateToDMY(row.updated)}</TableCell>
         <TableCell align="left">{row.user_name}</TableCell>
         <div
           style={{
