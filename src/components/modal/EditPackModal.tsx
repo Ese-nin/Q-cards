@@ -24,7 +24,7 @@ export const EditPackModal = (props: PropsType) => {
 
   const Title = "Edit pack";
 
-  // для инпута
+  // для инпутаff
   const [namePack, setNamePack] = React.useState<string>("");
 
   const [cover, setCover] = useState<string>("");
