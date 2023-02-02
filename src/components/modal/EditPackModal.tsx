@@ -3,15 +3,11 @@ import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { renameCardPackTC } from "bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { user_idSelector } from "bll/selectors";
-import { useEffect, useState } from "react";
-import { renameCardPackTC } from "../../bll/reducers/packs-reducer";
-import { useAppDispatch, useAppSelector } from "../../bll/store";
-import { user_idSelector } from "../../bll/selectors";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import { SuperButton } from "../../UI/common";
 import { InputTypeFileInModal } from "../../UI/common/inputTypeFileCover/inputTypeFileInModal";
 
 type PropsType = {

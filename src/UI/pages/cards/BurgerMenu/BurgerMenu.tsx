@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import s from "./burgerMenu.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -6,8 +6,6 @@ import SchoolIcon from "@mui/icons-material/School";
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "bll/store";
 import { packUserIdSelector, user_idSelector } from "bll/selectors";
-import { EditPackModal } from "components/modal/EditPackModal";
-import { DeletePackModal } from "components/modal/DeletePackModal";
 
 type BurgerPropsType = {
   renamePack: (packID: string, packName: string, cover: string) => void;
@@ -52,7 +50,7 @@ export const BurgerMenu: React.FC<BurgerPropsType> = memo(
               <div className={s.buttonGroup}>
                 <div
                   className={s.buttonAndName}
-                  onClick={() => renamePack(cardsPack_id!, "Update Pack")}
+                  onClick={() => renamePack(cardsPack_id!, "Update Pack", "")}
                 >
                   <BorderColorIcon className={s.icon_style} />
 
