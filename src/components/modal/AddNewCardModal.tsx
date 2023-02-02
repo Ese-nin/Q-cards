@@ -36,7 +36,6 @@ export const AddNewCardModal = (props: PropsType) => {
   const [chose, setChose] = useState("");
   const handleChange = (event: SelectChangeEvent) => {
     setChose(event.target.value as string);
-    console.log(typeof chose);
   };
 
   // -------------------------------------------------------------
@@ -111,14 +110,7 @@ export const AddNewCardModal = (props: PropsType) => {
           {+chose === 2 && (
             <div>
               <AddImageQuestion handlerChangeQuestImg={handlerChangeQuestImg} />
-              {questionImg! && (
-                <img
-                  src={questionImg}
-                  alt="questionImg"
-                  className={s.imgQuest}
-                  // onError={wrongImg}
-                />
-              )}
+              {questionImg! && <img src={questionImg} alt="questionImg" className={s.imgQuest} />}
             </div>
           )}
           <TextField

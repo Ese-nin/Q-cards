@@ -84,6 +84,7 @@ export type RenameCardQuestionType = {
   _id: string;
   question?: string;
   answer?: string;
+  questionImg?: string;
 };
 
 export type Updated_DeletedCardType = CardType & {

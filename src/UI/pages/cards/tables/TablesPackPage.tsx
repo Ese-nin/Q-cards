@@ -93,9 +93,9 @@ export default function TablesPackPage() {
               >
                 <EditCardModal
                   cardId={row._id}
-                  question={row.question}
                   answer={row.answer}
                   cardsPackId={row.cardsPack_id}
+                  questionImg={row.questionImg}
                 />
                 <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
               </div>
