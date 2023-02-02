@@ -15,7 +15,6 @@ import { PATH } from "bll/Path";
 import { cardPacksSelector, user_idSelector } from "bll/selectors";
 import { SuperButton } from "UI/common";
 import { DeletePackModal } from "components/modal/DeletePackModal";
-import { EditPackModal } from "components/modal/EditPackModal";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
 import defaultCard from "assets/icon/defaultCard.jpg";
