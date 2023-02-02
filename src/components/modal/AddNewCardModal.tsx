@@ -4,14 +4,14 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import * as React from "react";
 import { useState } from "react";
-import { addNewCardTC } from "../../bll/reducers/cards-reducer";
-import { useAppDispatch } from "../../bll/store";
+import { addNewCardTC } from "bll/reducers/cards-reducer";
+import { useAppDispatch } from "bll/store";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { AddImageQuestion } from "../../UI/pages/cards/tables/AddImageQuestion";
+import { AddImageQuestion } from "UI/pages/cards/tables/AddImageQuestion";
 
 type PropsType = {
   cardsPackId: string;

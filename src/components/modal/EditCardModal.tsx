@@ -1,13 +1,13 @@
 import { BasicModal } from "./BasicModals";
-import { SuperSelect } from "../../UI/common";
+import { SuperSelect } from "UI/common";
 import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../bll/store";
+import { useAppDispatch } from "bll/store";
 import { Button } from "@mui/material";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import { renameCardQuestionTC } from "../../bll/reducers/cards-reducer";
+import { renameCardQuestionTC } from "bll/reducers/cards-reducer";
 
 type PropsType = {
   cardId: string;
