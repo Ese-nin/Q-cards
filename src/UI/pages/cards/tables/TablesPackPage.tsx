@@ -74,7 +74,7 @@ export default function TablesPackPage() {
           <TableCell align="left">{row.answer}</TableCell>
           <TableCell align="left">{dateToDMY(row.updated)}</TableCell>
           <TableCell align="left">
-            <Rating name="half-rating" defaultValue={row.grade} precision={0.5} />
+            <Rating name="half-rating" value={row.grade} readOnly precision={0.5} />
           </TableCell>
 
           {meID === row.user_id && (
