@@ -3,11 +3,10 @@ import s from "./burgerMenu.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import SchoolIcon from "@mui/icons-material/School";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { useAppSelector } from "bll/store";
 import { packUserIdSelector, user_idSelector } from "bll/selectors";
-import { EditPackModal } from "components/modal/EditPackModal";
-import { DeletePackModal } from "components/modal/DeletePackModal";
+import { PATH } from "bll/Path";
 
 type BurgerPropsType = {
   renamePack: (packID: string, packName: string) => void;
@@ -28,6 +27,11 @@ export const BurgerMenu: React.FC<BurgerPropsType> = memo(
 
     const onVisibleMenuBarHandler = () => {
       setVisibleMenuBar(!visibleMenuBar);
+    };
+
+    const deletePackHandler = () => {
+      removePack(cardsPack_id!);
+      return <Navigate to={PATH.PACK_LIST} />;
     };
 
     const viewBurger = meID === packUserID;
@@ -60,7 +64,7 @@ export const BurgerMenu: React.FC<BurgerPropsType> = memo(
 
                   <div className={s.name}>Edit</div>
                 </div>
-                <div className={s.buttonAndName} onClick={() => removePack(cardsPack_id!)}>
+                <div className={s.buttonAndName} onClick={deletePackHandler}>
                   <DeleteOutlineIcon className={s.icon_style} />
 
                   {/*<DeletePackModal name={packName} id={cardsPack_id!} userId={packUserID} />*/}
