@@ -53,8 +53,8 @@ export const PackPage = () => {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  const renamePack = (cardPackID: string, newNameCardPack: string) => {
-    dispatch(renameCardPackTC(cardPackID, newNameCardPack));
+  const renamePack = (cardPackID: string, newNameCardPack: string, cover: string) => {
+    dispatch(renameCardPackTC(cardPackID, newNameCardPack, cover));
   };
 
   const removePack = (pack_id: string) => {

@@ -2,6 +2,7 @@ import { BasicModal } from "./BasicModals";
 import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { useState } from "react";
 import { useAppDispatch } from "../../bll/store";
 import { Button } from "@mui/material";
@@ -40,6 +41,8 @@ export const EditCardModal = (props: PropsType) => {
   //-----------------------------------------------------------
 
   const [open, setOpen] = React.useState(false);
+
+  const [cover, setCover] = useState<string>("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -60,6 +63,9 @@ export const EditCardModal = (props: PropsType) => {
         <div className={s.firstBlock}>
           <span>{Title}</span>
         </div>
+        <div>
+          <span>Choose a question format</span>
+          <SuperSelect options={TextOrImg} />
 
         <div style={{ margin: "auto" }}>
           <img src={questionImg} alt="questionImg" className={s.imgQuest} />

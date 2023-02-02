@@ -96,11 +96,11 @@ export const deleteCardPackTC =
   };
 
 export const renameCardPackTC =
-  (pack_id: string, newName: string, user_id?: string): AppThunk =>
+  (pack_id: string, newName: string, deckCover: string, user_id?: string): AppThunk =>
   (dispatch) => {
     dispatch(setAppStatusAC("loading"));
     packsAPI
-      .renameCardPack(pack_id, newName)
+      .renameCardPack(pack_id, newName, deckCover)
       .then((res) => {
         dispatch(getCardsPackTC(user_id ? { user_id } : {}));
         dispatch(setAppStatusAC("succeeded"));

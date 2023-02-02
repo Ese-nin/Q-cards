@@ -7,7 +7,7 @@ export const packsAPI = {
 
   addNewCardPack(params: AddNewCardPackType) {
     const data = {
-      cardsPack: params
+      cardsPack: params,
     };
     return instance.post<GetCardsPackResponseType>("cards/pack", data);
   },
@@ -20,11 +20,12 @@ export const packsAPI = {
     });
   },
 
-  renameCardPack(_id: string, name: string) {
+  renameCardPack(_id: string, name: string, deckCover: string) {
     const data = {
       cardsPack: {
         _id,
         name,
+        deckCover,
       },
     };
     return instance.put<RenameCardPackType>("cards/pack", data);
@@ -59,16 +60,11 @@ export type CardPacksType = {
   user_name: string;
   private: boolean;
   name: string;
-  path: string;
   grade: number;
-  shots: number;
   cardsCount: number;
-  type: string;
-  rating: number;
   created: string;
   updated: string;
-  more_id: string;
-  __v: number;
+  deckCover: string;
 };
 
 export type AddNewCardPackType = {
@@ -86,4 +82,6 @@ export type DeletePackResponseType = {
 export type RenameCardPackType = {
   cardPackID: string;
   newNameCardPack?: string;
+
+  newCover?: string;
 };

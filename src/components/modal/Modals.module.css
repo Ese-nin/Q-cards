@@ -80,3 +80,19 @@
     max-height: 100px;
     max-width: 200px;
 }
+
+
+.coverContainer{
+
+}
+
+.coverMenu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cover{
+
+}

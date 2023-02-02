@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { useState } from "react";
 import s from "./burgerMenu.module.css";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -10,7 +10,7 @@ import { EditPackModal } from "components/modal/EditPackModal";
 import { DeletePackModal } from "components/modal/DeletePackModal";
 
 type BurgerPropsType = {
-  renamePack: (packID: string, packName: string) => void;
+  renamePack: (packID: string, packName: string, cover: string) => void;
   removePack: (packID: string) => void;
   learnCards: () => void;
   packName: string;
