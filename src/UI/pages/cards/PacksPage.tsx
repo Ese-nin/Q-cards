@@ -19,6 +19,7 @@ import {
   user_idSelector,
 } from "bll/selectors";
 import back from "assets/icon/back.svg";
+import defaultCover from "assets/icon/defaultCard.jpg";
 import { SuperPagination } from "UI/common";
 import { BurgerMenu } from "./BurgerMenu/BurgerMenu";
 import { AddNewCardModal } from "components/modal/AddNewCardModal";
@@ -88,7 +89,13 @@ export const PackPage = () => {
                 learnCards={learnCards}
               />
             </div>
-            <img className={s.packCover} src={pack!.deckCover} alt="pack cover" />
+            {pack && (
+              <img
+                className={s.packCover}
+                src={pack.deckCover ? pack.deckCover : defaultCover}
+                alt="pack cover"
+              />
+            )}
           </div>
 
           {meID === packUserID ? (
