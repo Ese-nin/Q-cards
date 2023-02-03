@@ -9,6 +9,7 @@ import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { SearchInput } from "./SearchInput/SearchInput";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
+  cardPacksSelector,
   cardsTotalCountSelector,
   isLoggedInSelector,
   packNameSelector,
@@ -31,7 +32,7 @@ export const PackPage = () => {
   const packName = useAppSelector(packNameSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
-  const packs = useAppSelector((state) => state.packs.cardPacks);
+  const packs = useAppSelector(cardPacksSelector);
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
@@ -42,7 +43,7 @@ export const PackPage = () => {
     navigate(PATH.PACK_LIST);
   };
 
-  const pack = packs.filter((p) => p._id === cardsPack_id)[0];
+  const pack = packs.find((p) => p._id === cardsPack_id);
 
   const onChangePagination = (page: number, pageCount: number) => {
     dispatch(getCardsPageTC({ ...params, cardsPack_id, page, pageCount }));
@@ -87,7 +88,7 @@ export const PackPage = () => {
                 learnCards={learnCards}
               />
             </div>
-            <img className={s.packCover} src={pack.deckCover} alt="pack cover" />
+            <img className={s.packCover} src={pack!.deckCover} alt="pack cover" />
           </div>
 
           {meID === packUserID ? (
