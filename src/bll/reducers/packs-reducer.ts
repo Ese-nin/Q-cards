@@ -17,6 +17,7 @@ const initialState = {
   minCardsCount: 0,
   page: 1,
   pageCount: 1,
+  deckCover: "",
 };
 
 export type InitialPacksStateType = typeof initialState;

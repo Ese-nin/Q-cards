@@ -3,7 +3,7 @@ import s from "./Modals.module.css";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { renameCardPackTC } from "bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { user_idSelector } from "bll/selectors";
@@ -25,16 +25,12 @@ export const EditPackModal = (props: PropsType) => {
   const Title = "Edit pack";
 
   // для инпутаff
-  const [namePack, setNamePack] = React.useState<string>("");
+  const [namePack, setNamePack] = React.useState<string>(props.name);
 
   const [cover, setCover] = useState<string>("");
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNamePack(e.target.value);
   };
-
-  useEffect(() => {
-    setNamePack(props.name);
-  }, []);
 
   const renamePack = (PackId: string, namePack: string, UserId: string, cover: string) => {
     UserId === meID
@@ -43,7 +39,10 @@ export const EditPackModal = (props: PropsType) => {
     setOpen(false);
   };
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    console.log("open");
+  };
   const handleClose = () => setOpen(false);
 
   return (

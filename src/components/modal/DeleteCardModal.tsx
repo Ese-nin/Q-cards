@@ -1,10 +1,10 @@
 import { BasicModal } from "./BasicModals";
 import s from "./Modals.module.css";
 import { Button } from "@mui/material";
-import { useAppDispatch } from "../../bll/store";
+import { useAppDispatch } from "bll/store";
 import * as React from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { deleteCardTC } from "../../bll/reducers/cards-reducer";
+import { deleteCardTC } from "bll/reducers/cards-reducer";
 
 type PropsType = {
   id: string;

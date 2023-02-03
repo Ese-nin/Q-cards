@@ -31,14 +31,18 @@ export const PackPage = () => {
   const packName = useAppSelector(packNameSelector);
   const meID = useAppSelector(user_idSelector);
   const packUserID = useAppSelector(packUserIdSelector);
+  const packs = useAppSelector((state) => state.packs.cardPacks);
   const navigate = useNavigate();
+
   const [searchParams, setSearchParams]: [URLSearchParams, Function] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
 
-  const BackToPackList = () => {
+  const backToPackList = () => {
     navigate(PATH.PACK_LIST);
   };
+
+  const pack = packs.filter((p) => p._id === cardsPack_id)[0];
 
   const onChangePagination = (page: number, pageCount: number) => {
     dispatch(getCardsPageTC({ ...params, cardsPack_id, page, pageCount }));
@@ -49,35 +53,41 @@ export const PackPage = () => {
     navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
   }, []);
 
+  const renamePack = useCallback(
+    (cardPackID: string, newNameCardPack: string, deckCover: string) => {
+      dispatch(renameCardPackTC(cardPackID, newNameCardPack, deckCover));
+    },
+    []
+  );
+
+  const removePack = useCallback((pack_id: string) => {
+    dispatch(deleteCardPackTC(pack_id));
+    navigate(-1);
+  }, []);
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  const renamePack = (cardPackID: string, newNameCardPack: string, cover: string) => {
-    dispatch(renameCardPackTC(cardPackID, newNameCardPack, cover));
-  };
-
-  const removePack = (pack_id: string) => {
-    dispatch(deleteCardPackTC(pack_id));
-    navigate(-1);
-  };
-
   return (
     <>
       <div className={s.page}>
-        <div className={s.backBlock} onClick={BackToPackList}>
+        <div className={s.backBlock} onClick={backToPackList}>
           <img src={back} alt="back" />
           <span>Back to Packs List</span>
         </div>
         <div className={s.addNewPackLine}>
-          <div className={s.nameAndBurger}>
-            <h2>{packName}</h2>
-            <BurgerMenu
-              packName={packName}
-              renamePack={renamePack}
-              removePack={removePack}
-              learnCards={learnCards}
-            />
+          <div>
+            <div className={s.nameAndBurger}>
+              <h2>{packName}</h2>
+              <BurgerMenu
+                packName={packName}
+                renamePack={renamePack}
+                removePack={removePack}
+                learnCards={learnCards}
+              />
+            </div>
+            <img className={s.packCover} src={pack.deckCover} alt="pack cover" />
           </div>
 
           {meID === packUserID ? (

@@ -49,7 +49,7 @@ export const App = () => {
       {status === "loading" && <Loading />}
       <Routes>
         <Route path={PATH.PROFILE} element={<Profile />} />
-        <Route path={"/"} element={<Navigate to={"/profile"} />} />
+        <Route path={"/"} element={<Navigate to={PATH.PROFILE} />} />
         <Route path={PATH.REG} element={<Register />} />
         <Route path={PATH.LOGIN} element={<LoginPage />} />
         <Route path={PATH["404"]} element={<h1>404: PAGE NOT FOUND</h1>} />
