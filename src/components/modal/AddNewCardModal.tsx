@@ -108,7 +108,7 @@ export const AddNewCardModal = (props: PropsType) => {
             />
           )}
           {+chose === 2 && (
-            <div>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <AddImageQuestion handlerChangeQuestImg={handlerChangeQuestImg} />
               {questionImg! && <img src={questionImg} alt="questionImg" className={s.imgQuest} />}
             </div>

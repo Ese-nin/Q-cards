@@ -18,6 +18,7 @@ import { DeletePackModal } from "components/modal/DeletePackModal";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
 import defaultCard from "assets/icon/defaultCard.jpg";
+import { EditPackModal } from "components/modal/EditPackModal";
 import { dateToDMY } from "utils/dateToDMY";
 
 export function TablesPackList() {
@@ -57,11 +58,17 @@ export function TablesPackList() {
   const tableBody = cardPacks.length ? (
     cardPacks.map((row) => (
       <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+        <TableCell>
+          <div className={s.coverContainer + " " + s.cover}>
+            <img
+              src={row.deckCover ? row.deckCover : defaultCard}
+              alt="defaultCard"
+              style={{ width: "100%" }}
+            />
+          </div>
+        </TableCell>
         <TableCell component="th" scope="row">
           <button onClick={() => getPackPage(row._id)} className={s.btnNamePagePack}>
-            <div className={s.coverContainer + " " + s.cover}>
-              <img src={row.deckCover ? row.deckCover : defaultCard} alt="defaultCard" />
-            </div>
             {row.name}
           </button>
         </TableCell>
@@ -102,6 +109,7 @@ export function TablesPackList() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#EFEFEF" }}>
+            <TableCell align="left">Cover</TableCell>
             <TableCell>
               <button className={s.btnNamePagePack}>Name</button>
             </TableCell>
