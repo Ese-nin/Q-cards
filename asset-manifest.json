@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/Q-cards/static/css/main.2b582f74.css",
-    "main.js": "/Q-cards/static/js/main.96062726.js",
+    "main.css": "/Q-cards/static/css/main.d5643082.css",
+    "main.js": "/Q-cards/static/js/main.6b52ef22.js",
     "static/js/787.8517b185.chunk.js": "/Q-cards/static/js/787.8517b185.chunk.js",
     "static/media/Ellipse 45.png": "/Q-cards/static/media/Ellipse 45.5974632cbf5d7edfaf82.png",
     "index.html": "/Q-cards/index.html",
     "static/media/checked.svg": "/Q-cards/static/media/checked.0b6a1bcf5d417ff0a947.svg",
     "static/media/closeBtn.svg": "/Q-cards/static/media/closeBtn.47159591103829ef3885caae41e0490f.svg",
     "static/media/back.svg": "/Q-cards/static/media/back.19c7bd8ee7d32ca8451f1de3f6803354.svg",
-    "main.2b582f74.css.map": "/Q-cards/static/css/main.2b582f74.css.map",
-    "main.96062726.js.map": "/Q-cards/static/js/main.96062726.js.map",
+    "main.d5643082.css.map": "/Q-cards/static/css/main.d5643082.css.map",
+    "main.6b52ef22.js.map": "/Q-cards/static/js/main.6b52ef22.js.map",
     "787.8517b185.chunk.js.map": "/Q-cards/static/js/787.8517b185.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2b582f74.css",
-    "static/js/main.96062726.js"
+    "static/css/main.d5643082.css",
+    "static/js/main.6b52ef22.js"
   ]
 }
