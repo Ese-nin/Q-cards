@@ -3,6 +3,7 @@ import s from "./packList.module.css";
 import { PATH } from "bll/Path";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import {
+  cardPacksSelector,
   cardsTotalCountSelector,
   isLoggedInSelector,
   packNameSelector,
@@ -11,6 +12,8 @@ import {
 } from "bll/selectors";
 import back from "assets/icon/back.svg";
 import { AddNewCardModal } from "components/modal/AddNewCardModal";
+import defaultCover from "assets/icon/defaultCard.jpg";
+import React from "react";
 
 export const PackPageEmpty = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector);
@@ -18,12 +21,15 @@ export const PackPageEmpty = () => {
   const totalCardsCount = useAppSelector(cardsTotalCountSelector);
   const packUserID = useAppSelector(packUserIdSelector);
   const meID = useAppSelector(user_idSelector);
+  const packs = useAppSelector(cardPacksSelector);
 
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
   const params = Object.fromEntries(searchParams);
   const cardsPack_id = params.cardsPack_id;
+
+  const pack = packs.find((p) => p._id === cardsPack_id);
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
@@ -33,7 +39,7 @@ export const PackPageEmpty = () => {
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   }
 
-  const BackToPackList = () => {
+  const backToPackList = () => {
     navigate(PATH.PACK_LIST);
   };
 
@@ -41,13 +47,22 @@ export const PackPageEmpty = () => {
 
   return (
     <div className={s.page}>
-      <div className={s.backBlock} onClick={BackToPackList}>
+      <div className={s.backBlock} onClick={backToPackList}>
         <img src={back} alt="back" />
         <span>Back to Packs List</span>
       </div>
       <div className={s.addNewPackLine}>
-        <div className={s.nameAndBurger}>
-          <h2>{packName}</h2>
+        <div>
+          <div className={s.nameAndBurger}>
+            <h2>{packName}</h2>
+          </div>
+          {pack && (
+            <img
+              className={s.packCover}
+              src={pack.deckCover ? pack.deckCover : defaultCover}
+              alt="pack cover"
+            />
+          )}
         </div>
       </div>
       <div className={s.emptyCenterBlock}>

@@ -1,5 +1,6 @@
 .burgerMenu {
     width: 20px;
+    z-index: 999;
 }
 
 .rectangleContainer {

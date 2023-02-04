@@ -61,9 +61,10 @@ export function TablesPackList() {
         <TableCell>
           <div className={s.coverContainer + " " + s.cover}>
             <img
+              onClick={() => getPackPage(row._id)}
               src={row.deckCover ? row.deckCover : defaultCard}
               alt="defaultCard"
-              style={{ width: "100%" }}
+              style={{ width: "100%", cursor: "pointer" }}
             />
           </div>
         </TableCell>
