@@ -2,7 +2,6 @@ import React, { useCallback } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
-import { deleteCardPackTC, renameCardPackTC } from "bll/reducers/packs-reducer";
 import TablesPackPage from "./tables/TablesPackPage";
 import { PATH } from "bll/Path";
 import { getCardsPageTC } from "bll/reducers/cards-reducer";
@@ -21,7 +20,6 @@ import {
 import back from "assets/icon/back.svg";
 import defaultCover from "assets/icon/defaultCard.jpg";
 import { SuperPagination } from "UI/common";
-import { BurgerMenu } from "./BurgerMenu/BurgerMenu";
 import { AddNewCardModal } from "components/modal/AddNewCardModal";
 
 export const PackPage = () => {
@@ -55,18 +53,6 @@ export const PackPage = () => {
     navigate(PATH.LEARN_PAGE + "?cardsPack_id=" + cardsPack_id);
   }, []);
 
-  const renamePack = useCallback(
-    (cardPackID: string, newNameCardPack: string, deckCover: string) => {
-      dispatch(renameCardPackTC(cardPackID, newNameCardPack, deckCover));
-    },
-    []
-  );
-
-  const removePack = useCallback((pack_id: string) => {
-    dispatch(deleteCardPackTC(pack_id));
-    navigate(-1);
-  }, []);
-
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />;
   }
@@ -78,16 +64,11 @@ export const PackPage = () => {
           <img src={back} alt="back" />
           <span>Back to Packs List</span>
         </div>
+
         <div className={s.addNewPackLine}>
           <div>
-            <div className={s.nameAndBurger}>
+            <div>
               <h2>{packName}</h2>
-              <BurgerMenu
-                packName={packName}
-                renamePack={renamePack}
-                removePack={removePack}
-                learnCards={learnCards}
-              />
             </div>
             {pack && (
               <img
@@ -99,7 +80,12 @@ export const PackPage = () => {
           </div>
 
           {meID === packUserID ? (
-            <AddNewCardModal cardsPackId={cardsPack_id} />
+            <div className={s.buttonsBlock}>
+              <AddNewCardModal cardsPackId={cardsPack_id} />
+              <Button variant="contained" onClick={learnCards}>
+                Learn to pack
+              </Button>
+            </div>
           ) : (
             <Button variant="contained" onClick={learnCards}>
               {" "}
@@ -107,6 +93,7 @@ export const PackPage = () => {
             </Button>
           )}
         </div>
+
         <div className={s.formLine}>
           <div className={s.searchFieldCards}>
             <SearchInput from={"cards"} />
