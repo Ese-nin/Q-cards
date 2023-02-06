@@ -7,8 +7,7 @@ import { addNewCardPackTC } from "bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { useSearchParams } from "react-router-dom";
 import { user_idSelector } from "bll/selectors";
-import { SuperButton } from "../../UI/common";
-import { InputTypeFileInModal } from "../../UI/common/inputTypeFileCover/inputTypeFileInModal";
+import { AddImageCover } from "../../UI/pages/cards/tables/AddImageCover";
 
 export const AddNewPackModal = () => {
   const dispatch = useAppDispatch();
@@ -45,8 +44,6 @@ export const AddNewPackModal = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const onAddCoverClick = () => {};
-  // тут подгружать картинку через inputTypeFile в setCover и потом диспачить addNewCardsPack
 
   return (
     <>
@@ -58,14 +55,6 @@ export const AddNewPackModal = () => {
         <div className={s.firstBlock}>
           <span>{Title}</span>
         </div>
-        <div className={s.coverContainer}>
-          <div className={s.coverMenu}>
-            <div>Cover</div>
-          </div>
-          <div className={s.cover}>
-            <InputTypeFileInModal cover={cover} setCover={setCover} />
-          </div>
-        </div>
         <div>
           <TextField
             id="standard-basic"
@@ -75,6 +64,13 @@ export const AddNewPackModal = () => {
             onChange={handleChangeInput}
           />
         </div>
+        <div className={s.coverContainer}>
+          <div className={s.cover}>
+            <AddImageCover setCover={setCover} />
+            {cover! && <img src={cover} alt="cover" className={s.cover} />}
+          </div>
+        </div>
+
         <div className={s.checkBoxBlock}>
           <Checkbox
             checked={checked}

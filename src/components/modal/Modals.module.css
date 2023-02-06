@@ -76,24 +76,31 @@
     background: cadetblue;
 }
 
-.imgQuest{
+.imgQuest {
     max-height: 200px;
     max-width: 300px;
     padding-top: 15px;
 }
 
 
-.coverContainer{
-
+.coverContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.coverMenu{
+.coverMenu {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.cover{
-
+.cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+    padding: 5px;
 }
