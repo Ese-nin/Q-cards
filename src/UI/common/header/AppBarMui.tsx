@@ -24,36 +24,6 @@ export default function MenuAppBar() {
           }}
         >
           <img src={logo} alt="logo" />
-          <div className={s.tempDiv}>
-            <NavLink to={PATH.LOGIN} className={({ isActive }) => (isActive ? s.active : "")}>
-              Login
-            </NavLink>
-            <NavLink to={PATH.REG} className={({ isActive }) => (isActive ? s.active : "")}>
-              Register
-            </NavLink>
-            <NavLink to={PATH.FORGOT} className={({ isActive }) => (isActive ? s.active : "")}>
-              ForgotPassPage
-            </NavLink>
-            <NavLink to={PATH.CHECK_MAIL} className={({ isActive }) => (isActive ? s.active : "")}>
-              checkMail
-            </NavLink>
-            <NavLink to={PATH.NEW_PASS} className={({ isActive }) => (isActive ? s.active : "")}>
-              CreateNewPass
-            </NavLink>
-            <NavLink to={PATH.PACK_LIST} className={({ isActive }) => (isActive ? s.active : "")}>
-              packlist
-            </NavLink>
-            <NavLink to={PATH.PACK_PAGE} className={({ isActive }) => (isActive ? s.active : "")}>
-              packPage
-            </NavLink>
-            <NavLink
-              to={PATH.PACK_PAGE_EMPTY}
-              className={({ isActive }) => (isActive ? s.active : "")}
-            >
-              Empty
-            </NavLink>
-          </div>
-
           {isLoggedIn && (
             <span style={{ display: "flex", alignItems: "center", gap: "3px" }}>
               <NavLink to={PATH.PROFILE} className={({ isActive }) => (isActive ? s.active : "")}>
