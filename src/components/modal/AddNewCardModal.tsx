@@ -67,7 +67,7 @@ export const AddNewCardModal = (props: PropsType) => {
 
   return (
     <>
-      <Button onClick={handleOpen} variant="contained">
+      <Button onClick={handleOpen} variant="outlined">
         {Title}
       </Button>
 

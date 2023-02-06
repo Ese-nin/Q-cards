@@ -36,7 +36,7 @@ export const DeletePackModal = (props: PropsType) => {
 
   return (
     <>
-      <button onClick={handleOpen} className={s.button_style}>
+      <button title={"delete"} onClick={handleOpen} className={s.button_style}>
         <DeleteOutlineIcon className={s.icon_style} />
       </button>
 

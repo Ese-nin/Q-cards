@@ -8,7 +8,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useAppDispatch, useAppSelector } from "bll/store";
-import { Rating } from "@mui/material";
 import {
   appStatusSelector,
   cardsSelector,
@@ -21,9 +20,7 @@ import s from "./TablesPackList.module.css";
 import { PATH } from "bll/Path";
 import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
-import { EditCardModal } from "components/modal/EditCardModal";
-import { DeleteCardModal } from "components/modal/DeleteCardModal";
-import { dateToDMY } from "utils/dateToDMY";
+import { CardRow } from "./tableBodies/CardRow";
 
 export default function TablesPackPage() {
   const dispatch = useAppDispatch();
@@ -63,40 +60,7 @@ export default function TablesPackPage() {
       <div className={s.tablesNotFound}>Cards not found. Choose other search parameters</div>
     ) : (
       cards.map((row) => (
-        <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
-          <TableCell component="th" scope="row">
-            {row.questionImg ? (
-              <img src={row.questionImg} alt="questionImg" className={s.imgQuest} />
-            ) : (
-              row.question
-            )}
-          </TableCell>
-          <TableCell align="left">{row.answer}</TableCell>
-          <TableCell align="left">{dateToDMY(row.updated)}</TableCell>
-          <TableCell align="left">
-            <Rating name="half-rating" value={row.grade} readOnly precision={0.5} />
-          </TableCell>
-
-          {meID === row.user_id && (
-            <TableCell align="left">
-              <div
-                style={{
-                  display: "flex",
-                  // marginTop: "15px",
-                  // marginBottom: "5px",
-                }}
-              >
-                <EditCardModal
-                  cardId={row._id}
-                  answer={row.answer}
-                  cardsPackId={row.cardsPack_id}
-                  questionImg={row.questionImg}
-                />
-                <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
-              </div>
-            </TableCell>
-          )}
-        </TableRow>
+        <CardRow key={row._id} row={row} cardsPack_id={cardsPack_id} meID={meID} />
       ))
     );
 
