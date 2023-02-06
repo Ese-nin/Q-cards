@@ -54,7 +54,7 @@ export const EditCardModal = (props: PropsType) => {
 
   return (
     <>
-      <button onClick={handleOpen} className={s.button_style}>
+      <button title={"edit"} onClick={handleOpen} className={s.button_style}>
         <BorderColorIcon className={s.icon_style} />
       </button>
 
