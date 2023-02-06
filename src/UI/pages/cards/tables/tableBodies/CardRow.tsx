@@ -16,7 +16,7 @@ type Props = {
 
 export const CardRow: FC<Props> = ({ row, cardsPack_id, meID }) => {
   return (
-    <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell component="th" scope="row">
         {row.questionImg ? (
           <img src={row.questionImg} alt="questionImg" className={s.imgQuest} />

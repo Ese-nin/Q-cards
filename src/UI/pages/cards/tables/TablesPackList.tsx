@@ -52,7 +52,13 @@ export function TablesPackList() {
 
   const tableBody = cardPacks.length ? (
     cardPacks.map((row) => (
-      <PackRow row={row} meID={meID} getPackPage={getPackPage} learnCards={learnCards}/>
+      <PackRow
+        key={row._id}
+        row={row}
+        meID={meID}
+        getPackPage={getPackPage}
+        learnCards={learnCards}
+      />
     ))
   ) : (
     <div className={s.tablesNotFound}>Packs not found. Choose other search parameters.</div>

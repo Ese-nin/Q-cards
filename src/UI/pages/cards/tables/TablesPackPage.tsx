@@ -60,7 +60,7 @@ export default function TablesPackPage() {
       <div className={s.tablesNotFound}>Cards not found. Choose other search parameters</div>
     ) : (
       cards.map((row) => (
-        <CardRow row={row} cardsPack_id={cardsPack_id} meID={meID}/>
+        <CardRow key={row._id} row={row} cardsPack_id={cardsPack_id} meID={meID} />
       ))
     );
 

@@ -27,7 +27,7 @@ export const PackRow: FC<Props> = ({ row, getPackPage, meID, learnCards }) => {
   };
 
   return (
-    <TableRow key={row._id} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+    <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell>
         <div className={s.coverContainer + " " + s.cover}>
           <img
