@@ -63,7 +63,12 @@ export const PackRow: FC<Props> = ({ row, getPackPage, meID, learnCards }) => {
         </button>
         {meID === row.user_id && (
           <>
-            <EditPackModal name={row.name} id={row._id} userId={row.user_id} />
+            <EditPackModal
+              name={row.name}
+              id={row._id}
+              userId={row.user_id}
+              deckCover={row.deckCover}
+            />
             <SuperButton className={s.button_style}>
               <DeletePackModal name={row.name} id={row._id} userId={row.user_id} />
             </SuperButton>

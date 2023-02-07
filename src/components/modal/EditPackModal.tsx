@@ -8,12 +8,13 @@ import { renameCardPackTC } from "bll/reducers/packs-reducer";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import { user_idSelector } from "bll/selectors";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import { InputTypeFileInModal } from "../../UI/common/inputTypeFileCover/inputTypeFileInModal";
+import { AddImageCover } from "../../UI/pages/cards/tables/AddImageCover";
 
 type PropsType = {
   name: string;
   id: string;
   userId: string;
+  deckCover: string;
 };
 
 export const EditPackModal = (props: PropsType) => {
@@ -24,10 +25,15 @@ export const EditPackModal = (props: PropsType) => {
 
   const Title = "Edit pack";
 
-  // для инпутаff
+  // для инпута
   const [namePack, setNamePack] = React.useState<string>(props.name);
 
-  const [cover, setCover] = useState<string>("");
+  // отрисовка картинки в теле модалки==========================
+  const [deckCover, setdeckCover] = useState(props.deckCover);
+  const handlerChangeDeckCover = (file64: string) => {
+    setdeckCover(file64);
+  };
+
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNamePack(e.target.value);
   };
@@ -41,7 +47,6 @@ export const EditPackModal = (props: PropsType) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => {
     setOpen(true);
-    console.log("open");
   };
   const handleClose = () => setOpen(false);
 
@@ -55,18 +60,18 @@ export const EditPackModal = (props: PropsType) => {
         <div className={s.firstBlock}>
           <span>{Title}</span>
         </div>
+
         <div>
           <div className={s.coverContainer}>
-            <div className={s.coverMenu}>
-              <div>Cover</div>
+            <div style={{ margin: "auto" }}>
+              <img src={deckCover} alt="questionImg" className={s.imgQuest} />
             </div>
             <div className={s.cover}>
-              <div className={s.cover}>
-                <InputTypeFileInModal cover={cover} setCover={setCover} />
-              </div>
+              <AddImageCover setCover={handlerChangeDeckCover} />
             </div>
           </div>
         </div>
+
         <div>
           <TextField
             id="standard-basic"
@@ -82,7 +87,10 @@ export const EditPackModal = (props: PropsType) => {
           <Button variant="outlined" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="contained" onClick={() => renamePack(PackId, namePack, UserId, cover)}>
+          <Button
+            variant="contained"
+            onClick={() => renamePack(PackId, namePack, UserId, deckCover)}
+          >
             Save
           </Button>
         </div>
