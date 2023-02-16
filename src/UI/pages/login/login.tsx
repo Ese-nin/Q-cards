@@ -15,7 +15,7 @@ import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { InputWithEyeIcon } from "../register/InputWithEyeIcon/InputWithEyeIcon";
-import { PATH } from "../../../bll/Path";
+import { PATH } from "bll/Path";
 import { isLoggedInSelector } from "bll/selectors";
 
 type LoginFormikErrorsType = {
@@ -70,6 +70,22 @@ export const LoginPage = () => {
 
   return (
     <div className={s.regContainer}>
+      <div>
+        <p>
+          To log in get registered
+          <NavLink to={"/register"} target={"_blank"} rel="noreferrer">
+            {" "}
+            here
+          </NavLink>
+        </p>
+        <p>or use common test account credentials:</p>
+        <p>
+          <b>Email</b>: trest.example@gmail.com
+        </p>
+        <p>
+          <b>Password</b>: 123456789
+        </p>
+      </div>
       <FormControl sx={{ m: 1, width: "35ch" }} variant="standard">
         <h2 className={s.regFormTitle}>Sign in</h2>
 
