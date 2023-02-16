@@ -81,16 +81,16 @@ export const AddNewCardModal = (props: PropsType) => {
 
           <Box sx={{ minWidth: 200, paddingTop: "15px" }}>
             <FormControl fullWidth>
-              <InputLabel id="select-label">Выберете формат вопроса</InputLabel>
+              <InputLabel id="select-label">Choose format</InputLabel>
               <Select
                 labelId="select-label1"
                 id="select-label"
                 value={chose}
-                label="Chose"
+                label="Choose format"
                 onChange={handleChange}
               >
-                <MenuItem value={1}>Текстовый вопрос</MenuItem>
-                <MenuItem value={2}>Изображение</MenuItem>
+                <MenuItem value={1}>Text</MenuItem>
+                <MenuItem value={2}>Image</MenuItem>
               </Select>
             </FormControl>
           </Box>
