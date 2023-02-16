@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { IconButton } from "@mui/material";
 import PartyModeIcon from "@mui/icons-material/PartyMode";
 import defaultAvatar from "./Ellipse 45.png";
@@ -34,8 +34,7 @@ export const InputTypeFile = () => {
   };
   console.log({ Avatar });
 
-  const wrongImg = (e: SyntheticEvent<HTMLImageElement, Event>) => {
-    e.currentTarget.src = defaultAvatar;
+  const wrongImg = () => {
     setIsAvaBroken(true);
   };
 
