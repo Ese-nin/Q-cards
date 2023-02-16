@@ -41,7 +41,12 @@ export const InputTypeFile = () => {
 
   return (
     <>
-      <img src={Avatar} alt="avatar" className={s.imgAvatar} onError={wrongImg} />
+      <img
+        src={isAvaBroken ? defaultAvatar : Avatar}
+        alt="avatar"
+        className={s.imgAvatar}
+        onError={wrongImg}
+      />
       <IconButton component="label">
         <PartyModeIcon />
         <input
