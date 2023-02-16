@@ -28,6 +28,7 @@ export const AddImageQuestion = (props: PropsType) => {
       <Button variant="contained" component={"span"}>
         Загрузить вопрос в виде картинки
       </Button>
+      <span style={{ margin: "0 30%", opacity: ".5" }}>Max size - 100KB</span>
     </label>
   );
 };
