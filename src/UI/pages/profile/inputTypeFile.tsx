@@ -41,7 +41,7 @@ export const InputTypeFile = () => {
   return (
     <>
       <img
-        src={isAvaBroken ? defaultAvatar : Avatar}
+        src={isAvaBroken || !Avatar ? defaultAvatar : Avatar}
         alt="avatar"
         className={s.imgAvatar}
         onError={wrongImg}

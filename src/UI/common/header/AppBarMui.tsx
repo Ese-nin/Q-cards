@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import logo from "./Group 753.png";
+import defaultAvatar from "UI/pages/profile/Ellipse 45.png";
 import { useAppSelector } from "bll/store";
 import s from "./header.module.css";
 import { NavLink } from "react-router-dom";
@@ -29,7 +30,7 @@ export default function MenuAppBar() {
               <NavLink to={PATH.PROFILE} className={({ isActive }) => (isActive ? s.active : "")}>
                 {Name}
               </NavLink>
-              <img src={Avatar} alt="avatar" className={s.imgAvatar} />
+              <img src={Avatar ? Avatar : defaultAvatar} alt="avatar" className={s.imgAvatar} />
             </span>
           )}
           {isLoggedIn || (
