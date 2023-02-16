@@ -31,6 +31,7 @@ export const authReducer = (
         email: action.email,
         user_id: action.user_id,
         publicCardPacksCount: action.publicCardPacksCount,
+        avatar: action.avatar,
       };
     case "AUTH/SET_LOG_OUT":
       return { ...state, isLoggedIn: action.isLoggedIn };
@@ -53,7 +54,8 @@ export const logInAC = (
   name: string,
   email: string,
   user_id: string,
-  publicCardPacksCount: number
+  publicCardPacksCount: number,
+  avatar: string
 ) =>
   ({
     type: "AUTH/SET_LOG_IN",
@@ -62,6 +64,7 @@ export const logInAC = (
     email,
     user_id,
     publicCardPacksCount,
+    avatar,
   } as const);
 export const logOutAC = () => ({ type: "AUTH/SET_LOG_OUT", isLoggedIn: false } as const);
 export const setHaveAccountAC = (isHaveAccount: boolean) =>
@@ -110,8 +113,8 @@ export const loginTC =
     authAPI
       .logIn(email, password, rememberMe)
       .then((res) => {
-        const { name, email, _id, publicCardPacksCount } = res.data;
-        dispatch(logInAC(name, email, _id, publicCardPacksCount));
+        const { name, email, _id, publicCardPacksCount, avatar } = res.data;
+        dispatch(logInAC(name, email, _id, publicCardPacksCount, avatar));
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
@@ -127,8 +130,8 @@ export const initializeProfileTC = (): AppThunk => (dispatch) => {
     .me()
     .then((res) => {
       if (res.data.name) {
-        const { name, email, _id, publicCardPacksCount } = res.data;
-        dispatch(logInAC(name, email, _id, publicCardPacksCount));
+        const { name, email, _id, publicCardPacksCount, avatar } = res.data;
+        dispatch(logInAC(name, email, _id, publicCardPacksCount, avatar));
         dispatch(changeAvatarAC(res.data.avatar));
         dispatch(setAppStatusAC("succeeded"));
       }

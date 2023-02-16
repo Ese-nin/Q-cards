@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IconButton } from "@mui/material";
 import PartyModeIcon from "@mui/icons-material/PartyMode";
 import defaultAvatar from "./Ellipse 45.png";
 import s from "./profile.module.css";
-import { setNewNameTC } from "../../../bll/reducers/auth-reducer";
-import { useAppDispatch, useAppSelector } from "../../../bll/store";
-import { avatarSelector, nameSelector } from "../../../bll/selectors";
-import { convertFileToBase64 } from "../../../bll/convertFileToBase64";
+import { setNewNameTC } from "bll/reducers/auth-reducer";
+import { useAppDispatch, useAppSelector } from "bll/store";
+import { avatarSelector, nameSelector } from "bll/selectors";
+import { convertFileToBase64 } from "bll/convertFileToBase64";
 
 export const InputTypeFile = () => {
   const dispatch = useAppDispatch();
@@ -34,19 +34,14 @@ export const InputTypeFile = () => {
   };
   console.log({ Avatar });
 
-  const wrongImg = () => {
-    alert("ошибка с картинкой !!!");
+  const wrongImg = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = defaultAvatar;
     setIsAvaBroken(true);
   };
 
   return (
     <>
-      <img
-        src={isAvaBroken ? defaultAvatar : Avatar}
-        alt="avatar"
-        className={s.imgAvatar}
-        onError={wrongImg}
-      />
+      <img src={Avatar} alt="avatar" className={s.imgAvatar} onError={wrongImg} />
       <IconButton component="label">
         <PartyModeIcon />
         <input
