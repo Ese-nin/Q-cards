@@ -11,18 +11,19 @@ import TableRow from "@mui/material/TableRow";
 type Props = {
   row: CardType;
   meID: string;
-  cardsPack_id: string;
 };
 
-export const CardRow: FC<Props> = ({ row, cardsPack_id, meID }) => {
+export const CardRow: FC<Props> = ({ row, meID }) => {
+  const resultQuestion = row.questionImg ? (
+    <img src={row.questionImg} alt="questionImg" className={s.imgQuest} />
+  ) : (
+    row.question
+  );
+
   return (
     <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
       <TableCell component="th" scope="row">
-        {row.questionImg ? (
-          <img src={row.questionImg} alt="questionImg" className={s.imgQuest} />
-        ) : (
-          row.question
-        )}
+        {resultQuestion}
       </TableCell>
       <TableCell align="left">{row.answer}</TableCell>
       <TableCell align="left">{dateToDMY(row.updated)}</TableCell>
@@ -39,11 +40,12 @@ export const CardRow: FC<Props> = ({ row, cardsPack_id, meID }) => {
           >
             <EditCardModal
               cardId={row._id}
+              question={row.question}
               answer={row.answer}
               cardsPackId={row.cardsPack_id}
               questionImg={row.questionImg}
             />
-            <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={cardsPack_id} />
+            <DeleteCardModal id={row._id} name={row.answer} cardsPack_id={row.cardsPack_id} />
           </div>
         </TableCell>
       )}

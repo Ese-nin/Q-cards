@@ -22,7 +22,7 @@ import iconDown from "assets/icon/iconDown.png";
 import iconUp from "assets/icon/iconUp.png";
 import { CardRow } from "./tableBodies/CardRow";
 
-export default function TablesPackPage() {
+export function TablesPackPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const cards = useAppSelector(cardsSelector);
@@ -59,9 +59,7 @@ export default function TablesPackPage() {
     !cards.length && cardQuestion && appStatus !== "loading" ? (
       <div className={s.tablesNotFound}>Cards not found. Choose other search parameters</div>
     ) : (
-      cards.map((row) => (
-        <CardRow key={row._id} row={row} cardsPack_id={cardsPack_id} meID={meID} />
-      ))
+      cards.map((row) => <CardRow key={row._id} row={row} meID={meID} />)
     );
 
   return (
@@ -69,7 +67,6 @@ export default function TablesPackPage() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#EFEFEF" }}>
-            {/*здесь добавить проверку на наличие questionImg - если его нет то отображается письменный вопрос*/}
             <TableCell>Question</TableCell>
             <TableCell align="left">Answer</TableCell>
             <TableCell align="left">

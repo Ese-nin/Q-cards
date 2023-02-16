@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { Button } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "bll/store";
 import s from "./packList.module.css";
-import TablesPackPage from "./tables/TablesPackPage";
+import { TablesPackPage } from "./tables/TablesPackPage";
 import { PATH } from "bll/Path";
 import { getCardsPageTC } from "bll/reducers/cards-reducer";
 import { SearchInput } from "./SearchInput/SearchInput";

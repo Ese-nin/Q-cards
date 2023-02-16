@@ -47,7 +47,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
   ) : (
     <div className={s.span}>
       <span onDoubleClick={activateEditMode}>{props.value}</span>
-      <DriveFileRenameOutlineIcon onClick={activateEditMode} />
+      <DriveFileRenameOutlineIcon className={s.editIcon} onClick={activateEditMode} />
     </div>
   );
 });

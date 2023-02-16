@@ -1,3 +1,7 @@
 .span {
   display: flex;
 }
+
+.editIcon {
+  cursor: pointer;
+}

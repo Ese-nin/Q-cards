@@ -94,6 +94,12 @@ export const Learn = () => {
     navigate(PATH.PACK_PAGE + "?cardsPack_id=" + cardsPack_id);
   };
 
+  const resultQuestion = card.questionImg ? (
+    <img src={card.questionImg} alt="imgQuestion" width={"150px"} />
+  ) : (
+    card.question
+  );
+
   return (
     <div>
       <div className={s.backBlock} onClick={backToCards}>
@@ -104,7 +110,7 @@ export const Learn = () => {
         <div className={s.learnContainer}>
           <div className={s.namePack}>{cardsPack.packName}</div>
           <div className={s.questionContainer}>
-            <div className={s.question}>Question: {card.question}</div>
+            <div className={s.question}>Question: {resultQuestion}</div>
             <div className={s.rating}>Количество попыток ответить на этот вопрос: {card.shots}</div>
 
             {visibleAnswer ? (

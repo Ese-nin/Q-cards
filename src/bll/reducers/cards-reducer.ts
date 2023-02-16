@@ -58,7 +58,6 @@ export const getCardsPageTC =
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
-        console.log("сломалось");
         handleServerNetworkError(err, dispatch);
       });
   };
@@ -74,7 +73,6 @@ export const addNewCardTC =
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
-        console.log("сломалось");
         handleServerNetworkError(err, dispatch);
       });
   };
@@ -90,7 +88,6 @@ export const deleteCardTC =
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
-        console.log("сломалось");
         handleServerNetworkError(err, dispatch);
       });
   };
@@ -106,7 +103,6 @@ export const renameCardQuestionTC =
         dispatch(setAppStatusAC("succeeded"));
       })
       .catch((err: AxiosError<{ error: string }>) => {
-        console.log("сломалось");
         handleServerNetworkError(err, dispatch);
       });
   };
@@ -117,7 +113,6 @@ export const putAGradeTC =
     dispatch(setAppStatusAC("loading"));
     learnAPI.putAGrade(grade, card_id).then((res) => {
       /*dispatch(putAGradeAC(res.data));*/
-      console.log(res.data);
       dispatch(setAppStatusAC("succeeded"));
     });
   };
