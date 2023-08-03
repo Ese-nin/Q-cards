@@ -14,13 +14,13 @@ const rootReducer = combineReducers({
   cards: cardsReducer,
 });
 
-export type AppRootStateType = ReturnType<typeof rootReducer>;
 type RootActionsType = AuthActionsType | AppActionsType | CardsActionType | CardsPageActionType;
 // const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(thunkMiddleware),
 });
+export type AppRootStateType = Retu rnType<typeof store.getState>;
 
 type ThunkAppDispatchType = ThunkDispatch<AppRootStateType, any, RootActionsType>;
 
