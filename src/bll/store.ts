@@ -1,8 +1,8 @@
 import { applyMiddleware, combineReducers, legacy_createStore as createStore } from "redux";
-import { AuthActionsType, authReducer } from "./reducers/auth-reducer";
+import { authReducer } from "./reducers/auth-reducer";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { AppActionsType, appReducer } from "./reducers/app-reducer";
+import { AppActionsType, appReducer, AuthActionsType } from "./reducers/app-reducer";
 import { CardsActionType, packsReducer } from "./reducers/packs-reducer";
 import { cardsReducer, CardsPageActionType } from "./reducers/cards-reducer";
 import { configureStore } from "@reduxjs/toolkit";
